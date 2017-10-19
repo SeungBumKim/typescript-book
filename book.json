@@ -8,11 +8,11 @@
       "ignoreSpecialCharacters": true
     },
     "edit-link": {
-      "base": "https://github.com/basarat/typescript-book/tree/master",
+      "base": "https://github.com/SeungBumKim/typescript-book/tree/master",
       "label": "Edit This Page"
     },
     "github": {
-      "url": "https://github.com/basarat/typescript-book/"
+      "url": "https://github.com/SeungBumKim/typescript-book/"
     },
     "adsense": {
       "client": "ca-pub-4656761253552116",
