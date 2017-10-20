@@ -1,7 +1,12 @@
-TypeScript Deep Dive
+TypeScript Deep Dive (한국어)
 =======
 
-I've been looking at the issues that turn up commonly when people start using TypeScript. This is based on the lessons from [StackOverflow](http://stackoverflow.com/tags/typescript/topusers) / [DefinitelyTyped](https://github.com/DefinitelyTyped/) and general engagement with the [TypeScript community](https://github.com/TypeStrong/). You can [follow for updates](https://twitter.com/basarat) and [don't forget to ★ on Github](https://github.com/basarat/typescript-book) 🌹
+TypeScrip 공부하면서 하는 번역입니다. 개발자라서 번역이 매끄럽지도 않을 것이고, 영어실력도 좋지 못해서 구글의 도움을 많이 받아 작업하겠습니다. ^^;
+굳이 불피요한 부분은 번역 안했습니다.
+문의사항이나 지적사항 있으시면 sbkim0729@gmail.com으로 연락주세요.
+
+원문
+사람들이 TypeScript를 사용하기 시작할 때 일반적으로 나타나는 문제를 살펴 보았습니다. 이 책은 [StackOverflow](http://stackoverflow.com/tags/typescript/topusers) / [DefinitelyTyped](https://github.com/DefinitelyTyped/)의 교훈과 [TypeScript community](https://github.com/TypeStrong/)의 일반적인 참여s내용를 기반으로 하였습니다. [팔로우하세요.](https://twitter.com/basarat)과 [Github에 ★을 잊지 마세요](https://github.com/basarat/typescript-book) 🌹
 
 ## Reviews
 
@@ -31,10 +36,10 @@ I've been looking at the issues that turn up commonly when people start using Ty
 * Deep dive to typescript is awesome in so many levels. i find it very insightful. Thanks [link](https://twitter.com/orenmizr/status/891083492787970053)
 
 ## Get Started
-If you are here to read the book online [get started](http://basarat.gitbooks.io/typescript/content/docs/getting-started.html).
+온라인으로 읽으시려면 [get started]로 이동하세요. [get started](https://seungbumkim.gitbooks.io/typescript/content/ko/docs/getting-started.html).
 
 ## Other Options
-You can also download one of the following:
+아래와 같이 다운로드 받으실 수 있습니다(원문입니다):
 * [EPUB for iPad,iPhone,Mac](https://www.gitbook.com/download/epub/book/basarat/typescript)
 * [PDF for Windows and others](https://www.gitbook.com/download/pdf/book/basarat/typescript)
 * [MOBI for Kindle](https://www.gitbook.com/download/mobi/book/basarat/typescript)
@@ -43,4 +48,5 @@ You can also download one of the following:
 All the amazing [contributors](https://github.com/basarat/typescript-book/graphs/contributors) 🌹
 
 ## Share
-Share URL: http://basarat.gitbooks.io/typescript/
+Share URL(Original): http://basarat.gitbooks.io/typescript/
+Share URL(Translation): Share URL: https://seungbumkim.gitbooks.io/typescript/
