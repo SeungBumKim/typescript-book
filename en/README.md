@@ -43,5 +43,5 @@ You can also download one of the following:
 All the amazing [contributors](https://github.com/basarat/typescript-book/graphs/contributors) 🌹
 
 ## Share
-Share URL(Original): http://basarat.gitbooks.io/typescript/ </br>
-Share URL(Translation): https://seungbumkim.gitbooks.io/typescript/
+ * Original: http://basarat.gitbooks.io/typescript/
+ * Translation(ko): https://seungbumkim.gitbooks.io/typescript/ko
