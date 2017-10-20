@@ -1,0 +1,25 @@
+{
+  "plugins": ["edit-link", "github", "adsense","header"],
+  "pluginsConfig": {
+    "layout": {
+      "headerPath" : "header.html"
+    },
+    "lunr": {
+      "ignoreSpecialCharacters": true
+    },
+    "edit-link": {
+      "base": "https://github.com/SeungBumKim/typescript-book/tree/master",
+      "label": "Edit This Page"
+    },
+    "github": {
+      "url": "https://github.com/SeungBumKim/typescript-book/"
+    },
+    "adsense": {
+      "client": "ca-pub-4656761253552116",
+      "slot": "2017468453",
+      "format": "auto",
+      "element": ".page-inner section",
+      "position": "bottom"
+    }
+  }
+}
