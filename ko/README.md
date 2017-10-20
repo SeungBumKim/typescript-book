@@ -1,9 +1,10 @@
 TypeScript Deep Dive (한국어)
 =======
 
-TypeScrip 공부하면서 하는 번역입니다.</br>
-개발자라서 번역이 매끄럽지도 않을 것이고, 영어실력도 좋지 못해서 구글의 도움을 많이 받아 작업하겠습니다. ^^;</br>
-불필요한 부분은 굳이 번역하지 않았습니다.</br>
+TypeScrip 공부하면서 하는 번역입니다.
+개발자라서 번역이 매끄럽지도 않을 것이고, 영어실력도 좋지 못해서 구글의 도움을 많이 받아 작업하겠습니다. ^^;
+불필요한 부분은 굳이 번역하지 않았습니다.
+
 문의사항이나 지적사항 있으시면 sbkim0729@gmail.com으로 연락주세요.
 
 #### 원문
@@ -49,5 +50,5 @@ TypeScrip 공부하면서 하는 번역입니다.</br>
 All the amazing [contributors](https://github.com/basarat/typescript-book/graphs/contributors) 🌹
 
 ## Share
-Share URL(원문): http://basarat.gitbooks.io/typescript/ </br>
-Share URL(한글): https://seungbumkim.gitbooks.io/typescript/
+ * 원문: http://basarat.gitbooks.io/typescript/
+ * 한글: https://seungbumkim.gitbooks.io/typescript/ko
