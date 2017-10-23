@@ -1,31 +1,28 @@
-* [Getting Started with TypeScript](#getting-started-with-typescript)
-* [TypeScript Version](#typescript-version)
+# TypeScript 시작하기
 
-# Getting Started With TypeScript
+TypeScript는 JavaScript로 컴파일됩니다. JavaScript는 실제로 브라우저나 서버에서 실행될 것 입니다. 그래서 다음 내용을 필요로 합니다 :
 
-TypeScript compiles into JavaScript. JavaScript is what you are actually going to execute (either in the browser or on the server). So you are going to need the following:
+* TypeScript 컴파일러 (활용 가능한 OSS  [in source](https://github.com/Microsoft/TypeScript/)와 [NPM](https://www.npmjs.com/package/typescript))
 
-* TypeScript compiler (OSS available [in source](https://github.com/Microsoft/TypeScript/) and on [NPM](https://www.npmjs.com/package/typescript))
-* A TypeScript editor (you can use notepad if you want but I use [alm 🌹](http://alm.tools). Also [lots of other IDES support it as well]( https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support))
+* TypeScript 에디터 (원하시면 노트패드를 사용하셔도 됩니다. 저자는 [alm 🌹](http://alm.tools)을 사용합니다. 이 외에 [지원하는 다양한 IDE들이 있습니다]( https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support))
 
 
 ![](https://raw.githubusercontent.com/alm-tools/alm-tools.github.io/master/screens/main.png)
 
 
-## TypeScript Version
+## TypeScript 버전
 
-Instead of using the *stable* TypeScript compiler we will be presenting a lot of new stuff in this book that may not be associated with a version number yet. I generally recommend people to use the nightly version because **the compiler test suite only catches more bugs over time**.
-
-You can install it on the command line as
+*안정적인* TypeScript 컴파일러를 사용하는 대신에 아직 버전에 연결이 안 된 많은 새로운 내용들이 책에 제시 될 것입니다. **시간이 지남에 따라 컴파일러 테스트 셋에서 더 많은 버그를 잡을 수 있기 때문에** 야간 버전을 사용하는 것을 추천합니다.
+다음과 같은 명령어로 설치 할 수 있습니다.
 
 ```
 npm install -g typescript@next
 ```
 
-And now the command line `tsc` will be the latest and greatest. Various IDEs support it too, e.g.
+이제 명령어 'tsc'는 가장 마지막이고, 가장 훌륭할 것 입니다. 다양한 IDE에서 이와같은 기능을 지원 할 것입니다. 예를들면,
 
-* `alm` always ships with the latest TypeScript version.
-* You can ask vscode to use this version by creating `.vscode/settings.json` with the following contents:
+* `alm` 항상 최신 TypeScript와 함께 제공됩니다.
+* vscode에 다음과 같은 내용으로 `.vscode / settings.json`을 생성하여 지정한 버전을 사용하도록 요청할 수 있습니다.
 
 ```json
 {
@@ -33,12 +30,14 @@ And now the command line `tsc` will be the latest and greatest. Various IDEs sup
 }
 ```
 
-## Getting the Source Code
-The source for this book is available in the books github repository https://github.com/basarat/typescript-book/tree/master/code most of the code samples can be copied into alm and you can play with them as is. For code samples that need additional setup (e.g. npm modules), we will link you to the code sample before presenting the code. e.g.
+## 소스코드 가져오기
+
+이 책의 소스는 github 저장소인 https://github.com/SeungBumKim/typescript-book/tree/master/ko/code 에서 볼 수 있습니다. 대부분의 샘플 코드는 alm으로 복사하여 그대로 사용할 수 있습니다. 추가 설정이 필요한 샘플 코드(예: npm 모듈)의 경우, 코드가 시작되기 전에 해당 링크를 제공할 것 입니다. 예를들면 아래와 같습니다.
 
 `this/will/be/the/link/to/the/code.ts`
 ```ts
 // This will be the code under discussion
 ```
 
-With a dev setup out of the way let's jump into TypeScript syntax.
+
+개발환경 설치가 끝났다면, TypeScript 구문을 보시면됩니다.
