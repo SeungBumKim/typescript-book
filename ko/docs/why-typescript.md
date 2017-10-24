@@ -1,23 +1,25 @@
-# Why TypeScript
-There are two main goals of TypeScript:
-* Provide an *optional type system* for JavaScript.
-* Provide planned features from future JavaScript editions to current JavaScript engines
+# 왜 TypeScript 인가?
+TypeScript에는 두 가지 주요 목적이 있습니다:
+* JavaScript를 위한 *선택적 type system*을 제공합니다.
+* 향후 자바 스크립트 에디션에서 현재 자바 스크립트 엔진에 이르기까지 관련 기능 제공이 계획되어 있습니다.
 
+이러한 목표에 대한 염원은 다음과 같습니다.
 The desire for these goals is motivated below.
 
-## The TypeScript type system
+## TypeScript의 type system
 
-You might be wondering "**Why add types to JavaScript?**"
+"**왜 JavaScript에 type을 추가했지?**" 라고 궁금해 하실수도 있습니다..
 
-Types have proven ability to enhance code quality and understandability. Large teams (google,microsoft,facebook) have continually arrived at this conclusion. Specifically:
+Type은 코드 품질 및 이해 가능성을 향상시킨다는 입증 되었습니다. 대규모 팀(google, microsoft, facebook)들이 이런 결론에 계속해서 도달했습니다. 특히:
 
+* Type은 리팩토링 속도를 높여줍니다. *컴파일러가 오류를 잡는 것이 런타임에 오류가 발생하는 것보다 더 좋습니다.*
 * Types increase your agility when doing refactoring. *It's better for the compiler to catch errors than to have things fail at runtime*.
-* Types are one of the best forms of documentation you can have. *The function signature is a theorem and the function body is the proof*.
+* Type은 최상의 문서 형식 중 하나입니다. *함수 시그니처는 정리(theorem)이고 함수 본문은 증명(proof)입니다.*
 
-However types have a way of being unnecessarily ceremonious. TypeScript is very particular about keeping the barrier to entry as low as possible. Here's how:
+그러나 type은 불필요하게 의식적으로 사용해야 합니다. TypeScript는 이러한 장벽을 가능한 한 낮게 유지하는 것을 중요하게 여깁니다. 방법은 다음과 같습니다:
 
-### Your JavaScript is TypeScript
-TypeScript provides compile time type safety for your JavaScript code. This is no surprise given its name. The great thing is that the types are completely optional. Your JavaScript code `.js` file can be renamed to a `.ts` file and TypeScript will still give you back valid `.js` equivalent to the original JavaScript file. TypeScript is *intentionally* and strictly a superset of JavaScript with optional Type checking.
+### 당신의 JavaScript는 TypeScript입니다.
+TypeScript는 JavaScript 코드에 대해 컴파일 타임 type 안전성을 제공합니다. 이름을 주어지 것은 놀랍지도 않습니다. 가장 좋은 점은 type은 완전히 선택 사항이라는 것입니다. JavaScript 코드 `.js` 파일은 `.ts` 파일로 이름을 바꿀 수 있고, TypeScript는 원래 JavaScript 파일과 동일하게 유효한 `.js`를 제공합니다. TypeScript는 *의도적이고* 엄격하게 선택적 type 검사가 적용된 JavaScript 슈퍼셋입니다.
 
 ### Types can be Implicit
 TypeScript will try to infer as much of the type information as it can in order to give you type safety with minimal cost of productivity during code development. For example, in the following example TypeScript will know that foo is of type `number` below and will give an error on the second line as shown:
