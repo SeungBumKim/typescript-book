@@ -13,16 +13,15 @@ The desire for these goals is motivated below.
 Type은 코드 품질 및 이해 가능성을 향상시킨다는 입증 되었습니다. 대규모 팀(google, microsoft, facebook)들이 이런 결론에 계속해서 도달했습니다. 특히:
 
 * Type은 리팩토링 속도를 높여줍니다. *컴파일러가 오류를 잡는 것이 런타임에 오류가 발생하는 것보다 더 좋습니다.*
-* Types increase your agility when doing refactoring. *It's better for the compiler to catch errors than to have things fail at runtime*.
 * Type은 최상의 문서 형식 중 하나입니다. *함수 시그니처는 정리(theorem)이고 함수 본문은 증명(proof)입니다.*
 
 그러나 type은 불필요하게 의식적으로 사용해야 합니다. TypeScript는 이러한 장벽을 가능한 한 낮게 유지하는 것을 중요하게 여깁니다. 방법은 다음과 같습니다:
 
-### 당신의 JavaScript는 TypeScript입니다.
+### 당신의 JavaScript는 TypeScript다.
 TypeScript는 JavaScript 코드에 대해 컴파일 타임 type 안전성을 제공합니다. 이름을 주어지 것은 놀랍지도 않습니다. 가장 좋은 점은 type은 완전히 선택 사항이라는 것입니다. JavaScript 코드 `.js` 파일은 `.ts` 파일로 이름을 바꿀 수 있고, TypeScript는 원래 JavaScript 파일과 동일하게 유효한 `.js`를 제공합니다. TypeScript는 *의도적이고* 엄격하게 선택적 type 검사가 적용된 JavaScript 슈퍼셋입니다.
 
-### Types can be Implicit
-TypeScript will try to infer as much of the type information as it can in order to give you type safety with minimal cost of productivity during code development. For example, in the following example TypeScript will know that foo is of type `number` below and will give an error on the second line as shown:
+### Types은 암시적일 수 있다.
+TypeScript는 코드 개발 중 최소의 생산성 비용으로 type 안전성을 제공하기 위해 최대한 많은 type 정보를 유추하려고 합니다. 예를들면, 다음 예제에서 TypeScript는 foo가 'number'유형임을 알 것이며 아래 보여지는 것 같이 두 번째 줄에 오류가 발생 할 것 입니다:
 
 ```ts
 var foo = 123;
@@ -30,25 +29,25 @@ foo = '456'; // Error: cannot assign `string` to `number`
 
 // Is foo a number or a string?
 ```
-This type inference is well motivated. If you do stuff like shown in this example, then, in the rest of your code, you cannot be certain that `foo` is a `number` or a `string`. Such issues turn up often in large multi-file code bases. We will deep dive into the type inference rules later.
+이러한 type의 추론은 관계가 명확히 잘 되어 있습니다. 이 예제에서 보여준 것과 같이 한다면, 나머지 코드에서는`foo`가 `number` 인지 `string` 인지 확신 할 수 없습니다. 이러한 문제는 대규모 다중 파일 코드 기반에서 자주 발생합니다. 나중에 type 유추 규칙에 대해 자세히 살펴볼 것입니다.
 
-### Types can be Explicit
-As we've mentioned before, TypeScript will infer as much as it can safely, however you can use annotations to:
-1. Help along the compiler, and more importantly document stuff for the next developer who has to read your code (that might be future you!).
-1. Enforce that what the compiler sees, is what you thought it should see. That is your understanding of the code matches an algorithmic analysis of the code (done by the compiler).
+### Types은 명시적일 수 있다.
+이전에 언급했듯이 TypeScript는 최대한 안전하게 유추 할 수 있지만, type을 지정 할 수 있습니다:
+1. 컴파일러를 도와주며, 코드를 읽어야하는 다음 개발자를 위한 중요한 문서가 될 것입니다.(미래의 개발자 본인을 위한 것 일 수도 있습니다!)
+1. 컴파일러가 바라보는 것을 강요하는 것이 당신이 생각해야 할 것 입니다. 그것은 코드에 대한 당신의 이해를 (컴파일러에 의해 수행되는) 알고리즘의 분석과 일치시키는 것 입니다.
 
-TypeScript uses postfix type annotations popular in other *optionally* annotated languages (e.g. ActionScript and F#).
+TypeScript는 다른 *선택적* type주석을 사용하는 언어(예, ActionScript and F#)에서 널리 사용되는 접미사 유형의 type주석를 사용합니다.
 
 ```ts
 var foo: number = 123;
 ```
-So if you do something wrong the compiler will error e.g.:
+그래서 뭔가 잘못하면 컴파일러에서 오류가 발생합니다. 예를들면:
 
 ```ts
 var foo: number = '123'; // Error: cannot assign a `string` to a `number`
 ```
 
-We will discuss all the details of all the annotation syntax supported by TypeScript in a later chapter.
+TypeScript에서 지원되는 모든 type주석 구문에 대한 자세한 내용은 이후 장에서 다룰 것입니다.
 
 ### Types are structural
 In some languages (specifically nominally typed ones) static typing results in unnecessary ceremony because even though *you know* that the code will work fine the language semantics force you to copy stuff around. This is why stuff like [automapper for C#](http://automapper.org/) is *vital* for C#. In TypeScript because we really want it to be easy for JavaScript developers with a minimum cognitive overload, types are *structural*. This means that *duck typing* is a first class language construct. Consider the following example. The function `iTakePoint2D` will accept anything that contains all the things (`x` and `y`) it expects:
