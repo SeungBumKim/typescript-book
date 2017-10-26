@@ -49,8 +49,8 @@ var foo: number = '123'; // Error: cannot assign a `string` to a `number`
 
 TypeScript에서 지원되는 모든 type주석 구문에 대한 자세한 내용은 이후 장에서 다룰 것입니다.
 
-### Types are structural
-In some languages (specifically nominally typed ones) static typing results in unnecessary ceremony because even though *you know* that the code will work fine the language semantics force you to copy stuff around. This is why stuff like [automapper for C#](http://automapper.org/) is *vital* for C#. In TypeScript because we really want it to be easy for JavaScript developers with a minimum cognitive overload, types are *structural*. This means that *duck typing* is a first class language construct. Consider the following example. The function `iTakePoint2D` will accept anything that contains all the things (`x` and `y`) it expects:
+### Types는 구조적이다.
+몇몇 언어(특히 일반적으로 type을 지정하는 언어)는, 정적 입력 결과를 의식할 필요가 없을 것 입니다. 왜냐하면 언어 의미론적으로 당신이 무언가를 복사(동일한 형식)된 것을 사용하도록 강요되기에 당신은 그 코드를 잘 동작 할 것을 알고 있기 때문입니다. 이러한 이유로 [automapper for C#](http://automapper.org/)같은 것은 C#에서는 필수적입니다. TypeScript에서는 JavaScript 개발자가 최소한으로 부하없이 쉽게 사용할 수 있기를 원하기 때문에, type은 *구조적*으로 하였습니다. 즉, *duck typing*으로 일류 언어 구조입니다. 다음 예제를 보시면, `iTakePoint2D` 함수는 기대되는 (`x`와`y`)을 포함하는 것은 어떤 것이든 받아 들일 것입니다:
 
 ```ts
 interface Point2D {
