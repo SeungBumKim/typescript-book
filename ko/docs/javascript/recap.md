@@ -38,6 +38,6 @@ function add(a,b) {
 
 ## 여전히 JavaScript를 학습할 필요가 있습니다.
 
-That said TypeScript is very pragmatic about the fact that *you do write JavaScript* so there are some things about JavaScript that you still need to know in order to not be caught off-guard. Let's discuss them next.
+TypeScript가 *JavaScript로 작성할 수 있다는 것*이 매우 실용적이라고 언급했기 때문에, 자바 스크립트에 관해서도 알아야 할 것 들이 있습니다. 다음부터 이에 관해 이야기해 봅시다.
 
-> Note: TypeScript is a superset of JavaScript. Just with documentation that can actually be used by compilers / IDEs ;)
+> 노트: TypeScript는 JavaScript를 포함하고 있습니다. 실제로 컴파일러나 IDE에서 사용할 수 있는 형식으로만 작성되어 있으면 됩니다.
