@@ -1,8 +1,9 @@
+## 참조
 ## References
 
-Beyond literals, any Object in JavaScript (including functions, arrays, regexp etc) are references. This means the following
+문자형태 이외에 JavaScript의 오브젝트(함수, 배열, 정규식 등)는 참조형이다. 이 말의 의미는 다음과 같다.
 
-### Mutations are across all references
+### 변형된 값은 모두 참조형이다.
 
 ```js
 var foo = {};
@@ -12,7 +13,7 @@ foo.baz = 123;
 console.log(bar.baz); // 123
 ```
 
-### Equality is for references
+### 동등연산자는 참조에 대한 처리이다.
 
 ```js
 var foo = {};
