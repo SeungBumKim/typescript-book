@@ -1,8 +1,8 @@
 ## this
 
-Any access to `this` keyword within a function is actually controlled by how the function is actually called. It is commonly referred to as the `calling context`.
+함수내의 `this` 키워드에 대한 모든 액세스는 실제로 어떤 함수에서 호출하느냐에 따라 결정됩니다. 이런 상황을 일반적으로 `calling context`라고 합니다.
 
-Here is an example:
+아래 예제가 있습니다:
 
 ```ts
 function foo() {
@@ -16,6 +16,6 @@ let bar = {
 bar.foo(); // Logs out `bar` as `foo` was called on `bar`
 ```
 
-So be mindful of your usage of `this`. If you want to disconnect `this` in a class from the calling context use an arrow function, [more on that later][arrow].
+그러므로 `this` 사용에 대해서 유의해야합니다. 호출 컨텍스트에서 `this`를 연결 해제하려면 화살표 함수를 사용하십시오. [자세한 내용은 뒷부분에][화살표 함수].
 
-[arrow]:../arrow-functions.md
+[화살표 함수]:../arrow-functions.md
