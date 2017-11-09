@@ -8,7 +8,7 @@ TypeScrip 공부하면서 하는 번역입니다.
 문의사항이나 지적사항 있으시면 sbkim0729@gmail.com으로 연락주세요.
 
 #### 원문
-사람들이 TypeScript를 사용하기 시작할 때 일반적으로 나타나는 문제를 살펴 보았습니다. 이 책은 [StackOverflow](http://stackoverflow.com/tags/typescript/topusers) / [DefinitelyTyped](https://github.com/DefinitelyTyped/)의 교훈과 [TypeScript community](https://github.com/TypeStrong/)의 일반적인 참여s내용를 기반으로 하였습니다. [팔로우하세요.](https://twitter.com/basarat)과 [Github에 ★을 잊지 마세요](https://github.com/basarat/typescript-book) 🌹
+사람들이 TypeScript를 사용하기 시작할 때 일반적으로 나타나는 문제 위주로 작성하였습니다. 이 책은 [StackOverflow](http://stackoverflow.com/tags/typescript/topusers) / [DefinitelyTyped](https://github.com/DefinitelyTyped/)의 교훈과 [TypeScript community](https://github.com/TypeStrong/)의 내용를 기반으로 하였습니다. [팔로우하세요.](https://twitter.com/basarat)과 [Github에 ★을 잊지 마세요](https://github.com/basarat/typescript-book) 🌹
 
 ## Reviews
 
