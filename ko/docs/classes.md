@@ -114,26 +114,26 @@ class FooChild extends FooBase {
 }
 ```
 
-As always these modifiers work for both member properties and member functions.
+이러한 접근 제한자는 멤버속성과 멤버함수에 모두 적용합니다.
 
-### Abstract
-`abstract` can be thought of as an access modifier. We present it separately because opposed to the previously mentioned modifiers it can be on a `class` as well as any member of the class. Having an `abstract` modifier primarily means that such functionality *cannot be directly invoked* and a child class must provide the functionality.
+### 추상성
+`추상성`은 접근제한자처럼 생각할 수 있습니다. 앞에서 다룬 접근제한자와는 다르게 클래스의 모든 멤버뿐만 아니라 클래스에서도 있을 수 있기 때문에 별도로 다루어 집니다. `abstract` 한정자를 갖는 것은 기능적으로 *직접 호출 할 수 없으며* 하위 클래스가 기능을 제공해야 함을 의미합니다.
 
-* `abstract` **classes** cannot be directly instantiated. Instead the user must create some `class` that inherits from the `abstract class`.
-* `abstract` **members** cannot be directly accessed and a child class must provide the functionality.
+* `abstract` **classes**는 직접 인스턴트화 할 수 없습니다. 대신 사용자는 `abstract class`를 상속받은 `class`를 생성해야합니다.
+* `abstract` **members**는 직접 접근할 수 없고, 하위클래스에서 반드시 제공을 해주어야합니다.
 
-### Constructor is optional
+### 생성자는 선택사항입니다.
 
-The class does not need to have a constructor. e.g. the following is perfectly fine. 
+클래스는 생성자가 필요하지 않습니다. 예를들어, 다음과 같이 사용가능합니다.
 
 ```ts
 class Foo {}
 var foo = new Foo();
 ```
 
-### Define using constructor
+### 생성자 정의
 
-Having a member in a class and initializing it like below:
+클래스내에 멤버를 갖을 수 있고, 아래와 같이 초기화 할 수 있습니다:
 
 ```ts
 class Foo {
@@ -143,7 +143,7 @@ class Foo {
     }
 }
 ```
-is such a common pattern that TypeScript provides a shorthand where you can prefix the member with an *access modifier* and it is automatically declared on the class and copied from the constructor. So the previous example can be re-written as (notice `public x:number`):
+TypeScript가 *접근제한자*를 접두어로 붙일 수있는 일반적인 패턴이며 클래스에 자동으로 선언되고 생성자에서 복사됩니다. 그래서 위의 예는 아래와 같이 적을 수 있습니다.(`public x:number`를 참고하세요.)
 
 ```ts
 class Foo {
@@ -153,7 +153,7 @@ class Foo {
 ```
 
 ### Property initializer
-This is a nifty feature supported by TypeScript (from ES7 actually). You can initialize any member of the class outside the class constructor, useful to provide default (notice `members = []`)
+이 기능은 TypeScript에서 지원되는 멋진 기능입니다(실제로 ES7에서 제공됨). 클래스 생성자 밖에서 클래스의 멤버를 초기화 할 수 있으며, 기본형을 제공하는 데 유용합니다.(`members = []`를 참고하세요.)
 
 ```ts
 class Foo {
