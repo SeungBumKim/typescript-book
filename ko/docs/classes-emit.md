@@ -1,5 +1,5 @@
-#### What's up with the IIFE
-The js generated for the class could have been:
+#### IIFE는 무엇인가?
+클래스에 대해서 아래와 같이 js로 생성합니다:
 ```ts
 function Point(x, y) {
     this.x = x;
@@ -10,7 +10,7 @@ Point.prototype.add = function (point) {
 };
 ```
 
-The reason its wrapped in an Immediately-Invoked Function Expression (IIFE) i.e.
+예와같이 Immediately-Invoked Function Expression (IIFE)로 둘러싸인 이유는
 
 ```ts
 (function () {
@@ -21,7 +21,7 @@ The reason its wrapped in an Immediately-Invoked Function Expression (IIFE) i.e.
 })();
 ```
 
-has to do with inheritance. It allows TypeScript to capture the base class as a variable `_super` e.g.
+상속과 관련이 있습니다. TypeScript가 기본클래스를 변수`_super`로 접근 할 수 있게합니다. 예를들면 아래와 같습니다.
 
 ```ts
 var Point3D = (function (_super) {
@@ -38,7 +38,7 @@ var Point3D = (function (_super) {
 })(Point);
 ```
 
-Notice that the IIFE allows TypeScript to easily capture the base class `Point` in a `_super` variable and that is used consistently in the class body.
+IIFE는 TypeScript가`_super`변수의 `Point`라는 기본 클래스를 쉽게 접근 할 수 있게하고, 해당 내용은 클래스의 본문내용에서 일관되게 사용됩니다.
 
 ### `__extends`
 You will notice that as soon as you inherit a class TypeScript also generates the following function:
