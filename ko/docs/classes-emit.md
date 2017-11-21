@@ -41,7 +41,7 @@ var Point3D = (function (_super) {
 IIFE는 TypeScript가`_super`변수의 `Point`라는 기본 클래스를 쉽게 접근 할 수 있게하고, 해당 내용은 클래스의 본문내용에서 일관되게 사용됩니다.
 
 ### `__extends`
-You will notice that as soon as you inherit a class TypeScript also generates the following function:
+클래스를 상속하면 TypeScript는 다음과 같은 함수를 생성합니다:
 ```ts
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -50,15 +50,15 @@ var __extends = this.__extends || function (d, b) {
     d.prototype = new __();
 };
 ```
-Here `d` refers to the derived class and `b` refers to the base class. This function does two things:
-1. copies the static members of the base class onto the child class i.e. `for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];`
-1. sets up the child class function's prototype to optionally lookup members on the parent's `proto` i.e. effectively `d.prototype.__proto__ = b.prototype`
+여기에서 'd'는 파생된 클래스를 의미하고 'b'는 베이스가 되는 클래스를 의미합니다. 이 함수는 두 가지 작업을 수행합니다.
+1. 기본 클래스의 정적 멤버를 자식 클래스에 복사합니다. 예를들면, `for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];` 구문입니다.
+1. 자식 클래스 함수의 프로토타입에 부모의 `proto`멤버에 접근하게 설정합니다. 예를들면, `d.prototype.__proto__ = b.prototype` 구문입니다.
 
-People rarely have trouble understanding 1, but many people struggle with 2. So an explanation is in order.
+대부분 첫번째 내용을 이해하는데 어려움이 없으나 두번째 내용은 노력이 필요할 것입니다. 그래서 아래 이어서 설명하겠습니다.
 
 #### `d.prototype.__proto__ = b.prototype`
 
-After having tutored many people about this I find the following explanation to be simplest. First we will explain how the code from `__extends` is equivalent to the simple `d.prototype.__proto__ = b.prototype`, and then why this line in itself is significant. To understand all this you need to know these things:
+이것에 대해 많은 사람들을 가르친 후에야 다음과 같은 설명이 가장 단순하다는 것을 알게되었습니다. 먼저`__extends`의 코드가 어떻게 간단한 `d.prototype .__ proto__ = b.prototype`과 같은지 설명 할 것입니다. 그리고 왜 이 구문이 중요한지 설명하겠습니다. 이 모든 것을 이해하기 위해서는 아래와같은 것들을 알아야합니다: 
 
 1. `__proto__`
 1. `prototype`
