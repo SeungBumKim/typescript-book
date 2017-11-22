@@ -62,10 +62,10 @@ var __extends = this.__extends || function (d, b) {
 
 1. `__proto__`
 1. `prototype`
-1. effect of `new` on `this` inside the called function
-1. effect of `new` on `prototype` and `__proto__`
+1. 호출 된 함수안의 `this`에 `new`가 미치는 영향
+1. `prototype`과 `__proto__`에 `new`가 미치는 영향
 
-All objects in JavaScript contain a `__proto__` member. This member is often not accessible in older browsers (sometimes documentation refers to this magical property as `[[prototype]]`). It has one objective: If a property is not found on an object during lookup (e.g. `obj.property`) then it is looked up at `obj.__proto__.property`. If it is still not found then `obj.__proto__.__proto__.property` till either: *it is found* or *the latest `.__proto__` itself is null*. This explains why JavaScript is said to support *prototypal inheritance* out of the box. This is shown in the following example, which you can run in the chrome console or Node.js:
+모든 JavaScript 오브젝트에는 `__proto__`멤버가 포함되어 있습니다. 이 멤버는 오래된 브라우저에서는 쓰지 못하기도 합니다.(일부 브라우저에서는 `[[prototype]]`로 쓰이며 마법같은 속이라 말하기도 합니다.) 이 멤버는 하나의 오브젝트만 갖고있습니다: 오브젝트에서 프로퍼티를 찾지못하면(예, `obj.property`) `obj.__proto__.property`와 같이 해당 프로퍼티를 찾으려고합니다. 만약 여전히 찾지 못한다면 `obj.__proto__.__proto__.property`와 같이 *`.__proto__`가 null*이 되거나 *찾을때까지* 반복할 것입니다. 이런한 내용은 왜 JavaScript가 자동으로 *프로토타입 상속*을 지원한다고 말하는지 알 수 있습니다. 이러한 내용은 chrome console 또는 Node.js에서 실행가능한 다음예를 통해 알 수 있습니다. 
 
 ```ts
 var foo = {}
@@ -81,7 +81,7 @@ delete foo.__proto__.bar; // remove from foo.__proto__
 console.log(foo.bar); // undefined
 ```
 
-Cool so you understand `__proto__`. Another useful information is that all `function`s in JavaScript have a property called `prototype` and that it has a member `constructor` pointing back to the function. This is shown below:
+`__proto__`을 명확하게 이해할 수 있습니다. 또 다른 유용한 정보는 JavaScript의 모든 `함수`는 `prototype`이라는 속성을 가지고 있고, `prototype`은 함수자체를 가리키는 '생성자'멤버가 있음을 알 수 있습니다. 이러한 내용은 아래 확인할 수 있습니다:
 
 ```ts
 function Foo() { }
@@ -89,7 +89,7 @@ console.log(Foo.prototype); // {} i.e. it exists and is not undefined
 console.log(Foo.prototype.constructor === Foo); // Has a member called `constructor` pointing back to the function
 ```
 
-Now let's look at *effect of `new` on `this` inside the called function*. Basically `this` inside the called function is going to point to the newly created object that will be returned from the function. It's simple to see if you mutate a property on `this` inside the function:
+이제 *호출 된 함수안의 `this`에 `new`가 미치는 영향*를 살펴보겠습니다. 기본적으로 호출된 함수 내부의 `this`는 함수에서 반환될 새로 생성된 객체를 가리킬 것입니다. 함수안의 `this`의 프로퍼티를 변경시키는 것으로 간단한게 이해할 수 있습니다:
 
 ```ts
 function Foo() {
@@ -101,7 +101,7 @@ var newFoo = new Foo();
 console.log(newFoo.bar); // 123
 ```
 
-Now the only other thing you need to know is that calling `new` on a function assigns the `prototype` of the function to the `__proto__` of the newly created object that is returned from the function call. Here is the code you can run to completely understand it:
+이제 알아야 할 유일한 다른 것은 함수에서 `new`를 호출하면 함수 호출에서 반환된 새로 생성된 객체의 `__proto__`에 함수의 `prototype`이 할당된다는 것입니다. 아래에 완전히 이해하기 위한 실행할 수 있는 코드가 있습니다:
 
 ```ts
 function Foo() { }
