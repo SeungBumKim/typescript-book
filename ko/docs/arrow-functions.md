@@ -1,17 +1,17 @@
-* [Arrow Functions](#arrow-functions)
+* [화살표 함수](#arrow-functions)
 * [Tip: Arrow Function Need](#tip-arrow-function-need)
 * [Tip: Arrow Function Danger](#tip-arrow-function-danger)
 * [Tip: Libraries that use `this`](#tip-arrow-functions-with-libraries-that-use-this)
 * [Tip: Arrow Function inheritance](#tip-arrow-functions-and-inheritance)
 
-### Arrow Functions
+### 화살표 함수
 
-Lovingly called the *fat arrow* (because `->` is a thin arrow and `=>` is a fat arrow) and also called a *lambda function* (because of other languages). Another commonly used feature is the fat arrow function `()=>something`. The motivation for a *fat arrow* is:
-1. You don't need to keep typing `function`
-2. It lexically captures the meaning of `this`
-2. It lexically captures the meaning of `arguments`
+*굵은 화살표*(`->`은 얇은 화살표이고, `=>` 굵은 화살표이기 때문에)라 부르고 또한 *람다 함수*(다른 언어에서)라고도 한다. 일반적으로 사용되는 굵은 화살표의 또 다른 기능은 `()=>something` 함수 입니다. *굵은 화살표*의 생성계기는:
+1. `function` 타이핑을 하기 싫다.
+2. 어휘적으로 `this`의 의미를 갖고싶다.
+2. 어휘적으로 `arguments`의 의미를 갖고싶다.
 
-For a language that claims to be functional, in JavaScript you tend to be typing `function` quite a lot. The fat arrow makes it simple for you to create a function
+JavaScript같이 기능적이라고 주장하는 언어에서 `function`을 많이 입력하는 경향이 있습니다. 굵은 화살표는 사용자가 함수를 간단하게 만들 수 있게 합니다.
 ```ts
 var inc = (x)=>x+1;
 ```
