@@ -111,7 +111,7 @@ var foo = new Foo();
 console.log(foo.__proto__ === Foo.prototype); // True!
 ```
 
-That's it. Now look at the following straight out of `__extends`. I've taken the liberty to number these lines:
+이게 전부입니다. 이제`__extends` 다음 내용을 보셔도 됩니다. 아래 줄에 번호를 메겨놓았습니다:
 
 ```ts
 1  function __() { this.constructor = d; }
@@ -119,13 +119,13 @@ That's it. Now look at the following straight out of `__extends`. I've taken the
 3   d.prototype = new __();
 ```
 
-Reading this function in reverse the `d.prototype = new __()` on line 3 effectively means `d.prototype = {__proto__ : __.prototype}` (because of the effect of `new` on `prototype` and `__proto__`), combining it with the previous line (i.e. line 2 `__.prototype = b.prototype;`) you get `d.prototype = {__proto__ : b.prototype}`.
+이 함수를 거꾸로 보면 라인3의 `d.prototype = new __()`는 `d.prototype = {__proto__ : __.prototype}`의 의미(`prototype` 와 `__proto__`에서 `new`를 하였기 때문에)를 갖고, 앞의 라인(라인2의 `__.prototype = b.prototype;`)과 합쳐져서 `d.prototype = {__proto__ : b.prototype}`와 같이 얻게됩니다.
 
-But wait, we wanted `d.prototype.__proto__` i.e. just the proto changed and maintain the old `d.prototype.constructor`. This is where the significance of the first line (i.e. `function __() { this.constructor = d; }`) comes in. Here we will effectively have `d.prototype = {__proto__ : __.prototype, d.constructor = d}` (because of the effect of `new` on `this` inside the called function). So, since we restore `d.prototype.constructor`, the only thing we have truly mutated is the `__proto__` hence `d.prototype.__proto__ = b.prototype`.
+하지만 우리가 예를들어 `d.prototype.__proto__`와 같은 원한다면 그저 proto만 변경하고 `d.prototype.constructor`은 유지해도됩니다. 이러한 내용은 첫 번째 라인의 의미(예를들면 `function __() { this.constructor = d; }`)에 들어있습니다. 여기에는 `d.prototype = {__proto__ : __.prototype, d.constructor = d}`한 의미(호출된 함수의 `this`에서 `new`를 해서)가 있습니다. 그래서`d.prototype.constructor`를 복원한 후에는 변겨되는 것은 `__proto__`뿐이므로 `d.prototype .__ proto__ = b.prototype`와 같이 볼 수 있습니다.
 
 #### `d.prototype.__proto__ = b.prototype` significance
 
-The significance is that it allows you to add member functions to a child class and inherit others from the base class. This is demonstrated by the following simple example:
+중요한 점은 하위 클래스에 멤버 함수를 추가하고 기본 클래스에서 다른 멤버를 상속 할 수 있다는 것입니다. 이것은 다음의 간단한 예제에 의해 증명됩니다:
 
 ```ts
 function Animal() { }
@@ -139,4 +139,4 @@ var bird = new Bird();
 bird.walk();
 bird.fly();
 ```
-Basically `bird.fly` will be looked up from `bird.__proto__.fly` (remember that `new` makes the `bird.__proto__` point to `Bird.prototype`) and `bird.walk` (an inherited member) will be looked up from `bird.__proto__.__proto__.walk` (as `bird.__proto__ == Bird.prototype` and `bird.__proto__.__proto__` == `Animal.prototype`).
+기본적으로 `bird.fly`는 `bird.__proto__.fly`에서부터(`new`는 `Bird.prototype`를 가르키는 `bird.__proto__`을 만든다는 것을 기억해봅시다.) 찾고, `bird.walk`(상속된 멤버)는 `bird.__proto__.__proto__.walk`에서부터 찾을 것입니다. (`bird.__proto__ == Bird.prototype` 이고 `bird.__proto__.__proto__` == `Animal.prototype`이기 때문에)
