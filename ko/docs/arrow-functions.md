@@ -1,5 +1,5 @@
 * [화살표 함수](#arrow-functions)
-* [테스트 함수](#tip-arrow-function-need11)
+* [Tip: Arrow Function Need11](#tip-arrow-function-need11)
 * [Tip: Arrow Function Need](#tip-arrow-function-need)
 * [Tip: Arrow Function Danger](#tip-arrow-function-danger)
 * [Tip: Libraries that use `this`](#tip-arrow-functions-with-libraries-that-use-this)
@@ -73,7 +73,7 @@ setTimeout(function() { console.log(person.age); },2000); // 2
 
 > [A sweet video about this pattern 🌹](https://egghead.io/lessons/typescript-make-usages-of-this-safe-in-class-methods)
 
-#### 테스트 함수
+#### Tip: Arrow Function Need11
 #### Tip: Arrow Function Need
 Beyond the terse syntax, you only *need* to use the fat arrow if you are going to give the function to someone else to call. Effectively:
 ```ts
