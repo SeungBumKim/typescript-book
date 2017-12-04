@@ -1,6 +1,6 @@
 ### let
 
-`var` Variables in JavaScript are *function scoped*. This is different from many other languages (C# / Java etc.) where the variables are *block scoped*. If you bring a *block scoped* mindset to JavaScript, you would expect the following to print `123`, instead it will print `456`:
+`var`는 JavaScript의 *함수 범위*의 변수입니다. 이런한 범위는 다른 많은 언어(C# / Java 등)의 변수의 *블럭 범위*는 다릅니다. 만약 *블럭 범위* 기준을 JavaScript에 적용하면, `123`이 출력되는 것을 기대할 것이나 `456`이 출력됩니다:
 
 ```ts
 var foo = 123;
@@ -9,6 +9,7 @@ if (true) {
 }
 console.log(foo); // 456
 ```
+이는 `{`이 *변수의 범위* 생성하지 않기 때문입니다. 변수 `foo`는 *블럭*안의 것과 블럭밖의 것이 동일합니다. 이는 JavaScript 프로그래밍에서 대게 잘못사용는 소스코입니다. 그래서 TypeScript(그리고 ES6)에서는 *블럭 범위*의 변수를 정의하는 키워드 `let`을 추가하였습니다. `var`대신에 `let`을 사용하면 범위밖에서 정의한 것과 분리된 진정한 고유 요소를 얻게됩니다. 아래 동일한 예제로 `let`을 설명할 수 있습니다.
 This is because `{` does not create a new *variable scope*. The variable `foo` is the same inside the if *block* as it is outside the if block. This is a common source of errors in JavaScript programming. This is why TypeScript (and ES6) introduces the `let` keyword to allow you to define variables with true *block scope*. That is if you use `let` instead of `var` you get a true unique element disconnected from what you might have defined outside the scope. The same example is demonstrated with `let`:
 
 ```ts
@@ -19,7 +20,7 @@ if (true) {
 console.log(foo); // 123
 ```
 
-Another place where `let` would save you from errors is loops.
+`let`이 에러를 방지 할 수있는 또 다른 장소는 루프입니다.
 ```ts
 var index = 0;
 var array = [1, 2, 3];
@@ -28,7 +29,7 @@ for (let index = 0; index < array.length; index++) {
 }
 console.log(index); // 0
 ```
-In all sincerity we find it better to use `let` whenever possible as it leads to lesser surprises for new and existing multi-lingual developers.
+신규 및 기존 다른언어 개발자들에게는 덜놀랍겠지만 가능하면 언제든지 `let`을 사용하는 것이 더 낫다는 것을 발견 할 수 있습니다.
 
 #### Functions create a new scope
 Since we mentioned it, we'd like to demonstrate that functions create a new variable scope in JavaScript. Consider the following:
