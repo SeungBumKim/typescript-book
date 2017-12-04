@@ -1,10 +1,10 @@
-* [화살표 함수](#arrow-functions)
+* [Test](#arrow-functions)
 * [Tip: Arrow Function Need](#tip-arrow-function-need)
 * [Tip: Arrow Function Danger](#tip-arrow-function-danger)
 * [Tip: Libraries that use `this`](#tip-arrow-functions-with-libraries-that-use-this)
 * [Tip: Arrow Function inheritance](#tip-arrow-functions-and-inheritance)
 
-### 화살표 함수
+### Test
 
 *굵은 화살표*(`->`은 얇은 화살표이고, `=>` 굵은 화살표이기 때문에)라 부르고 또한 *람다 함수*(다른 언어에서)라고도 한다. 일반적으로 사용되는 굵은 화살표의 또 다른 기능은 `()=>something` 함수 입니다. *굵은 화살표*의 생성계기는:
 1. `function` 타이핑을 하기 싫다.
