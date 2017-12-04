@@ -1,14 +1,14 @@
 ### const
 
-`const` is a very welcomed addition offered by ES6 / TypeScript. It allows you to be immutable with variables. This is good from a documentation as well as a runtime perspective. To use const just replace `var` with `const`:
+`const`가 ES6 / TypeScript에 추가된 것은 매우 환영받을 일이다. 변수를 사용하여 변경할 수 없게합니다. 이것은 코드뿐아니라 런타임 관점에서도 유용합니다. 사용방식은 `var`위치에 `const`를 사용하면 됩니다:
 
 ```ts
 const foo = 123;
 ```
 
-> The syntax is much better (IMHO) than other languages that force the user to type something like `let constant foo` i.e. a variable + behavior specifier.
+> 이 구문은 사용자가 `let constant foo`와 같이 입력하도록 강요하는 다른 언어(IMHO)보다 훨씬 낫습니다. 예를들면 변수 + 동작 지정자.
 
-`const` is a good practice for both readability and maintainability and avoids using *magic literals* e.g.
+`const`는 가독성과 유지보수에 좋고, *매직 상수*를 피할 수 있습니다. 예를들면,
 
 ```ts
 // Low readability
@@ -21,23 +21,23 @@ if (x > maxRows) {
 }
 ```
 
-#### const declarations must be initialized
-The following is a compiler error:
+#### const 선언은 반드시 초기화해야한다.
+다음은 컴파일 에러가 발생합니다:
 
 ```ts
 const foo; // ERROR: const declarations must be initialized
 ```
 
-#### Left hand side of assignment cannot be a constant
-Constants are immutable after creation, so if you try to assign them to a new value it is a compiler error:
+#### 상수는 좌변으로 사용할 수 없다.
+상수는 생성한 후에는 변경할 수 없고, 만약 새로운 값을 할당하려고하면 컴파일 에러가 발생합니다:
 
 ```ts
 const foo = 123;
 foo = 456; // ERROR: Left-hand side of an assignment expression cannot be a constant
 ```
 
-#### Block Scoped
-A `const` is block scoped like we saw with [`let`](./let.md):
+#### 블럭 범위
+`const`는 [`let`](./let.md)과 같은 블럭범위를 갖습니다:
 
 ```ts
 const foo = 123;
@@ -47,14 +47,14 @@ if (true) {
 ```
 
 #### Deep immutability
-A `const` works with object literals as well, as far as protecting the variable *reference* is concerned:
+`const`는 상수오브젝트로 동작할뿐아니라 *참조*변수에 대해서도 보호합니다:
 
 ```ts
 const foo = { bar: 123 };
 foo = { bar: 456 }; // ERROR : Left hand side of an assignment expression cannot be a constant
 ```
 
-However it still allows sub properties of objects to be mutated, as shown below:
+그러나 오브젝의 하위 프로퍼티에 대해서는 아래와 같이 허용합니다:
 
 ```ts
 const foo = { bar: 123 };
@@ -62,4 +62,4 @@ foo.bar = 456; // Allowed!
 console.log(foo); // { bar: 456 }
 ```
 
-For this reason I recommend using `const` with primitives or immutable data structures.
+이러한 이유로 기본변수나 변하지 않을 데이터 구조체로 `const`를 사용할 것을 권장합니다.
