@@ -1,5 +1,5 @@
 ### for...of
-A common error experienced by beginning JavaScript developers is that `for...in` for an array does not iterate over the array items. Instead it iterates over the *keys* of the object passed in. This is demonstrated in the below example. Here you would expect `9,2,5` but you get the indexes `0,1,2`:
+보통 초급 JavaScript 개발자들은 `for...in`에서 배열 항목이 반복되지 않는 에러를 경험한다. 대신 배열의 *키값*들 반복된다. 이런 경우는 아래에 예에서 설명된다. 우리는 `9,2,5`를 기대하지만 실제로는 `0,1,2` 인덱스 값을 얻는다.:
 
 ```ts
 var someArray = [9, 2, 5];
@@ -8,7 +8,7 @@ for (var item in someArray) {
 }
 ```
 
-This is one of the reasons why `for...of` exists in TypeScript (and ES6). The following iterates over the array correctly logging out the members as expected:
+이것은 TypeScript(와 ES6)에서 `for...of`가 있는 한가지 이유가 된다. 다음 반복문은 정확하게 기대되는 멤버값을 출력해준다:
 
 ```ts
 var someArray = [9, 2, 5];
@@ -17,7 +17,7 @@ for (var item of someArray) {
 }
 ```
 
-Similarly TypeScript has no trouble going through a string character by character using `for...of`:
+유사하게 TypeScript는 `for...of`을 이용해서 문자열의 문자를 출력하는데 문제가 없다:
 
 ```ts
 var hello = "is it me you're looking for?";
@@ -26,8 +26,8 @@ for (var char of hello) {
 }
 ```
 
-#### JS Generation
-For pre ES6 targets TypeScript will generate the standard `for (var i = 0; i < list.length; i++)` kind of loop. For example here's what gets generated for our previous example:
+#### JS 생성
+ES6 이전 버전에 대해서 TypeScript는 `for (var i = 0; i < list.length; i++)`와 같은 표준화된 루프를 생성한다. 예를들어 앞의 예가 어떻게 생성되는지 보여준다:
 ```ts
 var someArray = [9, 2, 5];
 for (var item of someArray) {
@@ -41,12 +41,12 @@ for (var _i = 0; _i < someArray.length; _i++) {
     console.log(item);
 }
 ```
-You can see that using `for...of` makes *intent* clearer and also decreases the amount of code you have to write (and variable names you need to come up with).
+위에서 보았듯이 `for...of`을 사용하면 명료하게 *직관적*이고 작성하는 코드(변수이름 등)를 줄일 수 있다.
 
-#### Limitations
-If you are not targeting ES6 or above, the generated code assumes the property `length` exists on the object and that the object can be indexed via numbers e.g. `obj[2]`. So it is only supported on `string` and `array` for these legacy JS engines.
+#### 제한
+만약 ES6나 그 이후버전이 타겟이라면, `length`속성이 있다고 가정하고 객체의 인덱스된 번호를 사용한다. 예를들면 `obj[2]`와 같다. 그래서 오직 `string`와 `array`에 대해서만 지원한다.
 
-If TypeScript can see that you are not using an array or a string it will give you a clear error *"is not an array type or a string type"*;
+문자열이나 배열이 아닌 경우에 사용한다면 TypeScript에서는 *"is not an array type or a string type"* 와 같이 에러가 발생한다;
 ```ts
 let articleParagraphs = document.querySelectorAll("article > p");
 // Error: Nodelist is not an array type or a string type
@@ -55,7 +55,7 @@ for (let paragraph of articleParagraphs) {
 }
 ```
 
-Use `for...of` only for stuff that *you know* to be an array or a string. Note that this limitation might be removed in a future version of TypeScript.
+`for...of`을 사용할 때 배열이나 문자열에서만 허용된다는 것을 *명심*하면됩니다. 이러한 제한사항은 TypeScript의 후속버전에서는 개선될 것입니다.
 
-#### Summary
-You would be surprised at how many times you will be iterating over the elements of an array. The next time you find yourself doing that, give `for...of` a go. You might just make the next person who reviews your code happy.
+#### 요약
+배열의 요소를 반복할 때 얼마나 많이 걸리지 알면 놀랄것입니다. 다음번에는 `for...of`을 사용해보세요. 코드를 검토하는 다음 사람을 행복하게 만들 수 있습니다. 
