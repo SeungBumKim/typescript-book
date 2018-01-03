@@ -1,8 +1,7 @@
 ### Iterators
 
-Iterator itself is not a TypeScript or ES6 feature, Iterator is a
-Behavioral Design Pattern common for Object oriented programming languages.
-It is, generally, an object which implements the following interface:
+Iterator자체는 TypeScript 또는 ES6의 기능이 아니며 Iterator는 객체 지향 프로그래밍 언어의 Behavioral Design Pattern입니다.
+일반적으로 다음과 같은 인터페이스를 구현한 객체입니다:
 
 ```ts
 interface Iterator<T> {
@@ -12,8 +11,8 @@ interface Iterator<T> {
 }
 ```
 
-This interface allows to retrieve a value from some collection or sequence
-which belongs to the object.
+
+이 인터페이스를 사용하면 객체에 속한 일부 컬렉션 또는 시퀀스에서 값을 검색 할 수 있습니다.
 
 The `IteratorResult` is simply a `value`+`done` pair: 
 ```ts
@@ -23,9 +22,7 @@ interface IteratorResult<T> {
 }
 ```
 
-Imagine that there's an object of some frame, which includes the list of
-components of which this frame consists. With Iterator interface it is possible
-to retrieve components from this frame object like below:
+프레임의 구성요소로 이루어진 컴포넌트들을 포함하는 프레임 오브젝트가 있다고 생각해보십시오. 프레임 오브젝트의 Interator인터페이스를 이용해서 아래와같이 컴포넌트를 찾을 수 있습니다:
 
 ```ts
 'use strict';
@@ -65,13 +62,9 @@ let iteratorResult5 = frame.next(); //{ done: true }
 //It is possible to access the value of iterator result via the value property:
 let component = iteratorResult1.value; //Component { name: 'top' }
 ```
-Again. Iterator itself is not a TypeScript feature, this code could work without
-implementing Iterator and IteratorResult interfaces explicitly.
-However it is very helpful to use these common
-ES6 [interfaces](./types/interfaces.md) for code consistency.
+다시한번 말하지만 Iterator는 TypeScript의 기능이 아니며 이 코드는 명시적으로 Iterator 및 IteratorResult 인터페이스를 구현하지 않고도 동작할 것입니다. 하지만 코드 일관성을 위해서 일반적인 ES6 [interfaces](./types/interfaces.md)을 사용하는 것이 도움이 될 것입니다.
 
-Ok, Nice, but could be more helpful. ES6 defines the *iterable protocol*
-which includes [Symbol.iterator] `symbol` if Iterable interface implemented:
+다음과 같이 인터페이스에 ES6의 [Symbol.iterator] `symbol`에 정의된 *iterable protocol*을 쓰면 더욱 도움이 될 것입니다:
 ```ts
 //...
 class Frame implements Iterable<Component> {
@@ -111,8 +104,7 @@ for (let cmp of frame) {
 }
 ```
 
-Unfortunately `frame.next()` won't work with this pattern and it also looks
-a bit clunky. IterableIterator interface to the rescue!
+`frame.next()`의 패턴은 동작하지 않는게 조금 아쉽게 느껴집니다. IterableIterator의 인터페이스 다음과 같이 해결할 수 있습니다!
 ```ts
 //...
 class Frame implements IterableIterator<Component> {
@@ -142,10 +134,10 @@ class Frame implements IterableIterator<Component> {
 }
 //...
 ```
-Both `frame.next()` and `for` cycle now work fine with IterableIterator interface.
+`frame.next()`와`for`의 순환동작은 IterableIterator의 인터페이스에서 이제 잘 동작할 것 입니다.
 
-Iterator does not have to iterate a finite value.
-The typical example is a Fibonacci sequence:
+Iterator로 정해진 값을 반복할 필요는 없습니다.
+특별한 예제로 피보나치 수열을 보겠습니다:
 ```ts
 class Fib implements IterableIterator<number> {
 
@@ -194,9 +186,6 @@ for(let num of fibMax21) {
 }
 ```
 
-#### Building code with iterators for ES5 target
-Code examples above require ES6 target, however it could work
-with ES5 target as well if target JS engine supports `Symbol.iterator`.
-This can be achieved by using ES6 lib with ES5 target
-(add es6.d.ts to your project) to make it compile.
-Compiled code should work in node 4+, Google Chrome and in some other browsers.
+####  ES5에서의 iterators의 빌드 코드
+예제코드는 ES6이상의 환경이 요구되나 `Symbol.iterator`가 지원되는 JS 엔진이라면 ES5에서도 문제없이 동작합니다.
+ES5(프로젝트에 es6.d.ts 추가)에서는 ES6 lib를 사용하여 컴파일 할 수 있습니다. 컴파일된 코드는 노드 4+와 구글 크롬, 기타 다른브라우저에서 동작합니다.
