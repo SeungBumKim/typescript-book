@@ -1,14 +1,14 @@
-## Generators
+## 생성기
 
-> NOTE: You cannot use generators in TypeScript in a meaningful way (the ES5 emitter is in progress). However that will change soon so we still have this chapter.
+> 참고: TypeScript 생성기는 의미있게 사용하기는 사용하기는 힘들 것 입니다. 그러나 조만간 바뀔 것 이라 해당 챕터는 계속 유지 할 것입니다.
 
-`function *` is the syntax used to create a *generator function*. Calling a generator function returns a *generator object*. The generator object just follows the [iterator][iterator] interface (i.e. the `next`, `return` and `throw` functions). 
+`function *`의 구문은 *생성기 함수*를 만들 때 사용합니다. 생성기 함수를 호출하면 *생성기 오브젝트*를 리턴합니다. 생성기 오브젝트는 [iterator][iterator] 인터페이스(예를들면,`next`, `return`, `throw` 함수들) 를 따릅니다.
 
-There are two key motivations behind generator functions: 
+생성기 함수에는 두가지 주요한 목적이 있습니다:
 
 ### Lazy Iterators
 
-Generator functions can be used to create lazy iterators e.g. the following function returns an **infinite** list of integers on demand:
+생성기 함수는 **무한반복**으로 요청시 만들어지는 정수형 리스트를 리턴하는 아래와 같이 lazy iterators을 만들어 사용할 수 있다:
 
 ```ts
 function* infiniteSequence() {
@@ -24,7 +24,7 @@ while (true) {
 }
 ```
 
-Of course if the iterator does end, you get the result of `{ done: true }` as demonstrated below:
+물론, 반복이 끝난다면 아래 설명된 것과 같이 `{ done: true }`의 결과를 얻을 수 있다:
 
 ```ts
 function* idMaker(){
@@ -42,9 +42,9 @@ console.log(gen.next()); // { done: true }
 ```
 
 ### Externally Controlled Execution
-This is the part of generators that is truly exciting. It essentially allows a function to pause its execution and pass control (fate) of the remainder of the function execution to the caller.
+이번에 설명할 생성기의 내용은 매우 유동적입니다. 함수가 멈추거나 콜러에서 남아있는 다음단계의 함수(fate)로 넘어갈 때 필요한 기능입니다. 
 
-A generator function does not execute when you call it. It just creates a generator object. Consider the following example along with a sample execution:
+생성기 함수는 함수가 호출되었을 때는 실행되지 않습니다. 단지 생성기 오브젝트만 생성할 뿐이다. 다음 예로든 간단한 실행 동작을 살펴보겠습니다:
 
 ```ts
 function* generator(){
@@ -62,7 +62,7 @@ console.log(iterator.next()); // { value: 1, done: false }
 console.log(iterator.next()); // { value: undefined, done: true }
 ```
 
-If you run this you get the following output:
+실행시키면 다음과 같은 출력이 나올것입니다:
 
 ```
 $ node outside.js
@@ -75,18 +75,18 @@ Execution resumed
 { value: undefined, done: true }
 ```
 
-* The function only starts execution once `next` is called on the generator object.
-* The function *pauses* as soon as a `yield` statement is encountered.
-* The function *resumes* when `next` is called.
+* 함수는 시작해서 생성기 오브젝트의 `next` 함수를 한번 호출합니다.
+* 함수가 *pauses* 되면 바로 `yield`의 상태값이 증가합니다.
+* 함수는 `next` 호출되면 *resumes*합니다.
 
-> So essentially the execution of the generator function is controllable by the generator object.
+> 따라서 본질적으로 생성기 함수의 실행은 생성기 오브젝트에 의해 제어 가능합니다.
 
-Our communication using the generator has been mostly one way with the generator returning values for the iterator. One extremely powerful feature of generators in JavaScript is that they allow two way communications!
+생성기를 사용하는 방식은 대부분 iterator에 대한 값을 반환하는 생성자가 있는 한 가지 방법이었습니다. JavaScript의 생성기의 강력한 기능중 한가지는 양방향을 허용한다는 것입니다!
 
-* you can control the resulting value of the `yield` expression using `iterator.next(valueToInject)`
-* you can throw an exception at the point of the `yield` expression using `iterator.throw(error)`
+* `iterator.next(valueToInject)`을 통해 `yield`표현식의 결과값을 컨트롤 할 수 있습니다.
+* `iterator.throw(error)`통해서 `yield`표현식의 지점에서 예외상황을 발생시킬 수 있습니다.
 
-The following example demonstrates `iterator.next(valueToInject)`:
+다음 예제는 `iterator.next(valueToInject)`을 설명합니다:
 
 ```ts
 function* generator() {
@@ -102,7 +102,7 @@ console.log(foo.value); // foo
 const nextThing = iterator.next('bar');
 ```
 
-The following example demonstrates `iterator.throw(error)`:
+다음 예제는 `iterator.throw(error)`을 설명합니다: 
 
 ```ts
 function* generator() {
@@ -122,12 +122,13 @@ console.log(foo.value); // foo
 var nextThing = iterator.throw(new Error('bar'));
 ```
 
+이제 여기서 다시 정리해보면:
 So here is the summary:
-* `yield` allows a generator function to pause its communication and pass control to an external system
-* the external system can push a value into the generator function body
-* the external system can throw an exception into the generator function body
+* `yield`는 생성기 함수의 처리과정을 멈추게하고 외부 시스템에서 컨트롤 할 수 있게 해줍니다.
+* 외부 시스템에서 생성기 함수 내부에 값을 넣을 수 있습니다.
+* 외부 시스템에서 생성기 함수 내부에서  예외처리를 발생 시킬 수 있습니다.
 
-How is this useful? Jump to the next section [**async/await**][async-await] and find out.
+도움이 되었나요? 다음 [**async/await**][async-await]세션으로 이동해보세요.
 
 [iterator]:./iterators.md
 [async-await]:./async-await.md
