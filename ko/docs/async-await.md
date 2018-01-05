@@ -1,6 +1,6 @@
 ## Async Await
 
-As a thought experiment imagine the following: a way to tell the JavaScript runtime to pause the executing of code on the `await` keyword when used on a promise and resume *only* once (and if) the promise returned from the function is settled:
+다음과 같은 경우가 있다고 상상해보겠습니다: JavaScript를 실행 중 잠시멈추게 하려면 promise 사용할 때 `await`키워드를 코드에 넣으면 (promise의 결과를 잘 리턴한다면) 단 *한번*만 재개됩니다:
 
 ```ts
 // Not actual code. A thought experiment
@@ -15,6 +15,8 @@ async function foo() {
 }
 ```
 
+promise의 동작이 끝나면,
+* 이 상황이 만족된다면, await는 결과값을 리턴할 것입니다.
 When the promise settles execution continues,
 * if it was fulfilled then await will return the value,
 * if it's rejected an error will be thrown synchronously which we can catch.
