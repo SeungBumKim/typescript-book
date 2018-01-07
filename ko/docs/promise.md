@@ -1,10 +1,12 @@
 ## Promise
 
-The `Promise` class is something that exists in many modern JavaScript engines and can be easily [polyfilled][polyfill]. The main motivation for promises is to bring synchronous style error handling to Async / Callback style code.
 
-### Callback style code
+`Promise`클래스는 많은 최신 JavaScript 엔진에 존재하며 쉽게 [polyfilled][polyfill]할 수 있습니다.
+promise의 주된 목적는 비동기/콜백 스타일의 코드에서 동기화된 스타일의 에러처리를 할 수 있게 해줍니다.
 
-In order to fully appreciate promises let's present a simple sample that proves the difficulty of creating reliable Async code with just callbacks. Consider the simple case of authoring an async version of loading JSON from a file. A synchronous version of this can be quite simple:
+### 콜백 스타일의 코드
+
+promises를 완전히 이해하기 위해서 신뢰할 수 있는 비동기 코드를 작성하는 것이 어렵다는 것을 보여주는 간단한 샘플을 제시하겠습니다. 파일에서 JSON을로드하는 비동기 버전을 작성하는 간단한 경우를 생각해보십시오. 동기화된 버전은 다음과 같이 상당히 간단합니다:
 
 ```ts
 import fs = require('fs');
@@ -33,7 +35,7 @@ catch (err) {
 }
 ```
 
-There are three behaviors of this simple `loadJSONSync` function, a valid return value, a file system error or a JSON.parse error. We handle the errors with a simple try/catch as you are used to when doing synchronous programming in other languages. Now let's make a good async version of such a function. A decent initial attempt with a trivial error checking logic would be as follows:
+`loadJSONSync` 함수에는 정상적인 값 리턴과 파일시스템과 JSON.parse 에러를 체크하는 세가지 동작이 있습니다. 다른 언어의 동기화된 프로그래밍에서라면 에러를 핸들링하기 위해서 간단히 try/catch를 이용할 수 있을 것입니다. 이제 해당 함수의 비동화된 버전을 보겠습니다. 에러를 확인하는 로직으로 다음과 같이 시작해볼 수 있을 것입니다: 
 
 ```ts
 import fs = require('fs');
@@ -47,12 +49,11 @@ function loadJSON(filename: string, cb: (error: Error, data: any) => void) {
 }
 ```
 
-Simple enough, it takes a callback, passes any file system errors to the callback. If no file system errors, it returns the `JSON.parse` result. A few points to keep in mind when working with async functions based on callbacks are:
+충분히 간단합니다. 콜백을 통해서 파일 시스템의 에러를 전달합니다. 파일 시스템에 에러가 없다면 `JSON.parse`의 결과를 리턴할 것입니다. 비동기 함수를 처리할 떄 조심해야할 사항이 몇가지 있습니다:
+1. 콜백함수가 두번 호출되지 않게 하라.
+1. 에러를 throw 시키지 마라.
 
-1. Never call the callback twice.
-1. Never throw an error.
-
-This simple function however fails to accommodate for point two. In fact `JSON.parse` throws an error if it is passed bad JSON and the callback never gets called and the application crashes. This is demonstrated in the below example:
+간단한 함수이지만 두군데의 잘못된 곳이 있다. `JSON.parse`에서 에러가 발생한다면 잘못된 JSON이 넘어갈 것가 잘못된 값에 접근 한 앱은 문제가 생길 것이다. 아래의 예로 설명이 될 것입니다:
 
 ```ts
 import fs = require('fs');
@@ -73,7 +74,7 @@ loadJSON('invalid.json', function (err, data) {
 });
 ```
 
-A naive attempt at fixing this would be to wrap the `JSON.parse` in a try catch as shown in the below example:
+간단한 해결책은 아래와 같이 `JSON.parse`을 try/catch로 감싸는 것입니다:
 
 ```ts
 import fs = require('fs');
@@ -102,7 +103,7 @@ loadJSON('invalid.json', function (err, data) {
 });
 ```
 
-However there is a subtle bug in this code. If the callback (`cb`), and not `JSON.parse`, throws an error, since we wrapped it in a `try`/`catch`, the `catch` executes and we call the callback again i.e. the callback gets called twice! This is demonstrated in the example below:
+그러나 자세히보면 이 코드도 버그가 있습니다. 콜백(`cb`)이 실행되고, `JSON.parse`가 없는 상태에서 에러가 던져지면 `try`/`catch`로 둘러싸여서 `catch`가 실행되면서 다시 콜백이 실행됩니다. 즉 콜백이 두번 실행된 것이다! 아래 예제에서 설명됩니다: 
 
 ```ts
 import fs = require('fs');
@@ -144,11 +145,11 @@ our callback called
 Error: Cannot read property 'bar' of undefined
 ```
 
-This is because our `loadJSON` function wrongfully wrapped the callback in a `try` block. There is a simple lesson to remember here.
+`loadJSON`함수의 `try`블럭안에 잘못되게 콜백함수가 사용된 것입니다. 여기서 간단한 교훈 한가지를 짚어 보겠습니다.
 
-> Simple lesson: Contain all your sync code in a try catch, except when you call the callback.
+> 교훈: try/catch안에는 콜백을 호출할 때를 제외하고는 동기화된 코드를 넣으세요. 
 
-Following this simple lesson, we have a fully functional async version of `loadJSON` as shown below:
+이 간단한 교훈을 통해서 우리는 `loadJSON`의 완벽한 버전의 비동기 함수를 아래와 같이 만들 수 있습니다:
 
 ```ts
 import fs = require('fs');
@@ -168,15 +169,15 @@ function loadJSON(filename: string, cb: (error: Error) => void) {
     });
 }
 ```
-Admittedly this is not hard to follow once you've done it a few times but nonetheless it’s a lot of boiler plate code to write simply for good error handling. Now let's look at a better way to tackle asynchronous JavaScript using promises.
+틀림없이 몇 번 해보면 이 작업을 수행하기가 어렵지 않지만 오류 처리를 위해 간단히 작성하는 보일러 플레이트 코드가 많았습니다. 이제 promises을 사용하여 비동기 JavaScript를 처리하는 더 좋은 방법을 살펴 보겠습니다.
 
-## Creating a Promise
+## Promise의 생성
 
-A promise can be either `pending` or `fulfilled` or `rejected`.
+promise는 `pending`나 `fulfilled` 또는 `rejected` 중에 하나 일 수 있니다.
 
 ![](https://raw.githubusercontent.com/basarat/typescript-book/master/images/promise%20states%20and%20fates.png)
 
-Let's look at creating a promise. It's a simple matter of calling `new` on `Promise` (the promise constructor). The promise constructor is passed `resolve` and `reject` functions for settling the promise state:
+promise의 생성을 살펴보면 간단하게 `Promise`앞에 `new`(promise 생성자)를 넣어주면 됩니다. promise 생성자는 promise 상태를 정하는 `resolve`와 `reject`함수를 전달합니다:
 
 ```ts
 const promise = new Promise((resolve, reject) => {
@@ -184,9 +185,9 @@ const promise = new Promise((resolve, reject) => {
 });
 ```
 
-### Subscribing to the fate of the promise
+### promise의 fate 연결하기
 
-The promise fate can be subscribed to using `.then` (if resolved) or `.catch` (if rejected).
+promise의 fate는 `.then`(해결될 경우)나 `.catch`(거절될 경우)을 통해서 연결됩니다.
 
 ```ts
 const promise = new Promise((resolve, reject) => {
@@ -212,13 +213,14 @@ promise.catch((err) => {
 });
 ```
 
-> TIP: Promise Shortcuts
-* Quickly creating an already resolved promise: `Promise.resolve(result)`
-* Quickly creating an already rejected promise: `Promise.reject(error)`
+> 팁: Promise 바로접근하기
+* 이미 resolved promise를 이용해서 빠르게 생성: `Promise.resolve(result)`
+* 이미 rejected promise를 이용해서 빠르게 생성: `Promise.reject(error)`
 
-### Chain-ability of Promises
-The chain-ability of promises **is the heart of the benefit that promises provide**. Once you have a promise, from that point on, you use the `then` function to create a chain of promises.
+### Promises의 연쇄성
+Promises의 연쇄성은 *promises가 제공하는 핵심기능* 입니다. promise를 생성했다면 그곳을 기점으로 `then`함수를 이용해서 연결되는 promise들을 생성할 수 있습니다.
 
+* 체인안의 특정 함수에서 promise를 리턴한다면, `.then`은 오직 값이 resolved 된경우에만 호출됩니다.  
 * If you return a promise from any function in the chain, `.then` is only called once the value is resolved:
 
 ```ts
@@ -237,7 +239,7 @@ Promise.resolve(123)
     })
 ```
 
-* You can aggregate the error handling of any preceding portion of the chain with a single `catch`:
+* 체인에서 한개의 'catch'로 선행부분의 오류를 처리 할 수 있습니다.
 
 ```ts
 // Create a rejected promise
@@ -259,6 +261,7 @@ Promise.reject(new Error('something bad happened'))
     });
 ```
 
+* `catch`는 실제로 새로운 promise(새로운 promise 연결을 효과적으로 생성함)를 리턴합니다:
 * The `catch` actually returns a new promise (effectively creating a new promise chain):
 
 ```ts
@@ -277,7 +280,7 @@ Promise.reject(new Error('something bad happened'))
     })
 ```
 
-* Any synchronous errors thrown in a `then` (or `catch`) result in the returned promise to fail:
+* `then` (또는 `catch`)안에서 동기화된 에러를 던지면 리턴되는 promise는 실패입니다:
 
 ```ts
 Promise.resolve(123)
@@ -294,7 +297,7 @@ Promise.resolve(123)
     })
 ```
 
-* Only the relevant (nearest tailing) `catch` is called for a given error (as the catch starts a new promise chain).
+* 오직 관련된(가장 가까운 연결) `catch`로 에러가 발생되었을 때 호출됩니다.(여기서부터 새로운 promise 체인을 시작합니다)
 
 ```ts
 Promise.resolve(123)
@@ -315,7 +318,7 @@ Promise.resolve(123)
     })
 ```
 
-* A `catch` is only called in case of an error in the preceeding chain: 
+* `catch`는 앞 단계의 체인에서의 에러상황에서만 호출 됩니다:
 
 ```ts
 Promise.resolve(123)
@@ -327,16 +330,15 @@ Promise.resolve(123)
     })
 ```
 
-The fact that:
+관련 사실을 정리하면:
+* 에러가 발생하면 뒤에 있는 `catch`(중간에 있는 `then`은 넘어갑니다.) 로 이동하고
+* 동기화된 에러처리 역시 뒤에 있는 `catch`에 잡힙니다.
 
-* errors jump to the tailing `catch` (and skip any middle `then` calls) and
-* synchronous errors also get caught by any tailing `catch`.
-
-effectively provides us with an async programming paradigm that allows better error handling than raw callbacks. More on this below.
+실제로 원시적인 콜백보다 더 나은 오류처리를 제공하는 비동기 프로그래밍 패러다임을 제공합니다. 추가적인 내요은 아래 있습니다.
 
 
-### TypeScript and promises
-The great thing about TypeScript is that it understands the flow of values through a promise chain:
+### TypeScript와 promises
+TypeScript의 좋은점은 promise의 연결에서 값의 흐름을 이해 한다는 것입니다:
 
 ```ts
 Promise.resolve(123)
@@ -350,14 +352,14 @@ Promise.resolve(123)
     });
 ```
 
-Of course it also understands unwrapping any function calls that might return a promise:
+물론 promise를 리턴하는 함수의 호출도 이해할 수 있습니다:
 
 ```ts
 function iReturnPromiseAfter1Second(): Promise<string> {
     return new Promise((resolve) => {
         setTimeout(() => resolve("Hello world!"), 1000);
     });
-}
+} 
 
 Promise.resolve(123)
     .then((res) => {
@@ -371,13 +373,13 @@ Promise.resolve(123)
 ```
 
 
-### Converting a callback style function to return a promise
+### 콜백 스타일을 promise리턴 형태로 변경하기
 
-Just wrap the function call in a promise and
-- `reject` if an error occurs,
-- `resolve` if it is all good.
+함수를 promise로 감싸고
+- 에러가 발생하면 `reject`,
+- 잘 처리 되었다면 `resolve`한다.
 
-E.g. let's wrap `fs.readFile`:
+예. `fs.readFile`를 감싸봅시다:
 
 ```ts
 import fs = require('fs');
@@ -392,9 +394,9 @@ function readFileAsync(filename: string): Promise<any> {
 ```
 
 
-### Revisiting the JSON example
+### 앞의 JSON 예를 다시 살펴봅니다.
 
-Now let's revisit our `loadJSON` example and rewrite an async version that uses promises. All that we need to do is read the file contents as a promise, then parse them as JSON and we are done. This is illustrated in the below example:
+앞의 `loadJSON`의 예를 다시보고 promise를 사용해서 비동기화 버전 코드를 다시 작성해보겠습니다. 필요한 부분은 파일을 읽는 부분은 promise로 한다음 그것을 JSON으로 파싱하면 됩니다. 이것을 아래와 같이 작성할 수 있습니다:
 
 ```ts
 function loadJSONAsync(filename: string): Promise<any> {
@@ -405,7 +407,7 @@ function loadJSONAsync(filename: string): Promise<any> {
 }
 ```
 
-Usage (notice how similar it is to the original `sync` version introduced at the start of this section 🌹):
+사용법(이 섹션의 시작부분에 있는 원래의 `동기화`버전과 얼마나 유사한지 살펴보세요):
 ```ts
 // good json file
 loadJSONAsync('good.json')
@@ -433,12 +435,12 @@ loadJSONAsync('good.json')
     });
 ```
 
-The reason why this function was simpler is because the "`loadFile`(async) + `JSON.parse` (sync) => `catch`" consolidation was done by the promise chain. Also the callback was not called by *us* but called by the promise chain so we didn't have the chance of making the mistake of wrapping it in a `try/catch`.
+이 함수가 더 간단한 이유는 "`loadFile`(async) + `JSON.parse` (sync) => `catch`"과정이 promise의 연결로 간편해졌기 때문입니다. 또한 콜백이 *우리*에 의해서 호출되지 않고 promise연결에 의해서 호출되므로 `try/catch`를 감싸면서 만들 수 있는 실수도 줄일 수 있습니다.
 
-### Parallel control flow
-We have seen how trivial doing a serial sequence of async tasks is with promises. It is simply a matter of chaining `then` calls.
+### 병렬 처리의 흐름
+promise로 사용된 일련의 비동기화 작업 시퀀스가 얼마나 간단한지 보았습니다. 간단하게 `then`의 호출로 연결해주면 됩니다.
 
-However you might potentially want to run a series of async tasks and then do something with the results of all of these tasks. `Promise` provides a static `Promise.all` function that you can use to wait for `n` number of promises to complete. You provide it with an array of `n` promises and it gives you an array of `n` resolved values. Below we show Chaining as well as Parallel:
+그러나 일련의 비동기 작업을 실행한 다음 이러한 모든 작업의 ​​결과로 무언가를 수행하려고 할 수 있습니다. `Promise`는 `n`의 promise가 끝나는 것을 기다려주는 `Promise.all` static 함수를 제공합니다. `n`개의 promise를 제공하고 `n`의 성공된 결과를 줍니다. 아래 병렬과 연결에 대한 예를 보여드립니다:
 
 ```ts
 // an async function to simulate loading an item from some server
@@ -471,7 +473,7 @@ Promise.all([loadItem(1), loadItem(2)])
     }); // overall time will be around 1s
 ```
 
-Sometimes, you want to run a series of async tasks, but you get all you need as long as any one of these tasks is settled. `Promise` provides a static `Promise.race` function for this scenario:
+때때로 일련의 비동기화된 작업을 실행시키고 이작업 중 한개만 해결되어도 모든 결과를 얻을 수 있는 경우가 있을 수 있습니다. `Promise`는 이러한 시나리오에 `Promise.race`를 static 함수로 제공하고 있습니다:
 
 ```ts
 var task1 = new Promise(function(resolve, reject) {
@@ -487,15 +489,15 @@ Promise.race([task1, task2]).then(function(value) {
 });
 ```
 
-### Converting callback functions to promise
+### 콜백함수를 promise 바꾸기 
 
-The most reliable way to do this is to hand write it. e.g. converting `setTimeout` into a promisified `delay` function is super easy:
+가장 안정적인 방법은 직접 작성하는 것입니다. 예를 들면 `setTimeout`를 promise된 `delay`로 변경하는 것은 매우 쉽습니다:
 
 ```ts
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 ```
 
-Note that there is a handy dandy function in NodeJS that does this `node style function => promise returning function` magic for you:
+NodeJS에는 `node 스타일 함수 => promise 리턴 함수`로 변경해주는 함수가 있다는 것을 알아두세요: 
 
 ```ts
 /** Sample usage */
