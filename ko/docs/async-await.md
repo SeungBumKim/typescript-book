@@ -16,22 +16,19 @@ async function foo() {
 ```
 
 promise의 동작이 끝나면,
-* 이 상황이 만족된다면, await는 결과값을 리턴할 것입니다.
-When the promise settles execution continues,
-* if it was fulfilled then await will return the value,
-* if it's rejected an error will be thrown synchronously which we can catch.
+* 만족된다면, await는 결과값을 리턴할 것입니다.
+* 에러로 거절된다면 동적으로 catch로 보내질 것입니다.
 
-This suddenly (and magically) makes asynchronous programming as easy as synchronous programming.  Three things needed for this thought experiment are:
+이 놀라운 방식은 비동기화 프로그래밍을 동기화 프로그램을 작성하듯 편하게 만들어줍니다. 위 테스크 코드를 위해서는 세가지가 필요합니다:
+* *일시정지 함수*를 수행하는 기능.
+* 함수안에 *값을 넣는* 기능.
+* 함수안에서 *예외를 발생시키느* 기능.
 
-* Ability to *pause function* execution.
-* Ability to *put a value inside* the function.
-* Ability to *throw an exception inside* the function.
+이러한 부분은 생성기가 허용해주는 부분입니다! 위 테스트 코드는 *실제로 있으며* TypeScript/JavaScript에서 `async`/`await`로 수행됩니다.
 
-This is exactly what generators allowed us to do! The thought experiment *is actually real* and so is the `async`/`await` implementation in TypeScript / JavaScript. Under the covers it just uses generators.
+### JavaScript 생성
 
-### Generated JavaScript
-
-You don't have to understand this, but it's fairly simple if you've [read up on generators][generators]. The function `foo` can be simply wrapped up as follows:
+직접 이해할 필요는 없으나 [generators][generators]를 보았다면 꽤 간단할 것입니다. `foo` 함수는 다음과 같이 간단한게 감싸집니다:
 
 ```ts
 const foo = wrapToReturnPromise(function* () {
@@ -45,8 +42,8 @@ const foo = wrapToReturnPromise(function* () {
 });
 ```
 
-where the `wrapToReturnPromise` just executes the generator function to get the `generator` and then use `generator.next()`, if the value is a `promise` it would `then`+`catch` the promise and depending upon the result call `generator.next(result)` or `generator.throw(error)`. That's it!
-
+`wrapToReturnPromise`부분은 `생성기`를 얻기위해서 생성기 함수를 그저 실행하였고, 그 후 `generator.next()`를 사용합니다. 
+결과값이 `promise`이면 promise의 `then`+`catch`수행하고 결과에 따라`generator.next (result)` 또는`generator.throw (error)`를 호출합니다.
 
 
 ### Async Await Support in TypeScript
