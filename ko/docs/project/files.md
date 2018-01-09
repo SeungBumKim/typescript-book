@@ -1,6 +1,6 @@
-## Which files?
+## 어느 file들을 사용할까?
 
-You can either use `files` to be explicit:
+명시적으로 `files`에 작성하거나:
 
 ```json
 {
@@ -10,7 +10,7 @@ You can either use `files` to be explicit:
 }
 ```
 
-or `include` and `exclude` to specify files. E.g.:
+특정 파일들을 `include` 또는 `exclude` 시킨다. 예를들면:
 
 
 ```json
@@ -25,7 +25,7 @@ or `include` and `exclude` to specify files. E.g.:
 }
 ```
 
-Some notes:
+알아둘 사항: 
 
-* if `files` is specified, other options are ignored
-* `**/*` (e.g. sample usage `somefolder/**/*`) means all folder and any files (the extensions `.ts`/`.tsx` will be included and even `.js`/`.jsx` if `allowJs` is true)
+* `files`을 작성하면 다른 옵션은 무시된다.
+* `**/*`(예를들어 `somefolder/**/*` 식으로 작성하면)의 모든 폴더와 파일들(확장자가 `.ts`/`.tsx`와 `allowJs`값이 true이면 `.js`/`.jsx`도 포함한다.)이라는 의미이다.
