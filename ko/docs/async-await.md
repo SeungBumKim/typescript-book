@@ -46,13 +46,13 @@ const foo = wrapToReturnPromise(function* () {
 결과값이 `promise`이면 promise의 `then`+`catch`수행하고 결과에 따라`generator.next (result)` 또는`generator.throw (error)`를 호출합니다.
 
 
-### Async Await Support in TypeScript
-**Async - Await** has been supported by [TypeScript since version 1.7](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-1-7.html). Asynchronous functions are prefixed with the *async* keyword; *await* suspends the execution until an asynchronous function return promise is fulfilled and unwraps the value from the *Promise* returned.
-It was only supported for **target es6** transpiling directly to **ES6 generators**.
+### TypeScript의 Async Await 지원
+**Async - Await** [TypeScript since version 1.7](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-1-7.html)부터 지원됩니다. 비동기화 함수앞에 *async* 키워드를 붙이고 *await*는 비동기 함수를 promise가 수행되고 *Promise*의 결과값을 받을 때까지 멈추어둡니다. **ES6 생성기**로 직접 변경가능한 **es6 대상**에서만 지원됩니다.
 
-**TypeScript 2.1** [added the capability to ES3 and ES5 run-times](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-1.html), meaning you’ll be free to take advantage of it no matter what environment you’re using. It's important to notice that we can use async / await with TypeScript 2.1 and many browsers are supported, of course, having globally added a **polyfill for Promise**.
+**TypeScript 2.1** [added the capability to ES3 and ES5 run-times](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-1.html)에서는 어떤 환경을 사용하든 관계없이 자유롭게 사용할 수 있습니다. async/await를 TypeScript 2.1와 많은 브라우저(**Promise를 polyfill** 된)에서 사용할 수 있습니다.  
+**TypeScript 2.1** [added the capability to ES3 and ES5 run-times](https://www.typescriptlang.org/docs/handbook/release-
 
-Let's see this **example** and take a look at this code to figure out how TypeScript async / await **notation** works: 
+**example**을 살펴보고 async/await **표기** 동작이 어떻게 사용되지는 알아보겠습니다:
 ```ts
 function delay(milliseconds: number, count: number): Promise<number> {
     return new Promise<number>(resolve => {
@@ -78,7 +78,7 @@ async function dramaticWelcome(): Promise<void> {
 dramaticWelcome();
 ```
 
-**Transpiling to ES6 (--target es6)**
+**ES6로 변환 (--target es6)**
 ```js
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -109,10 +109,10 @@ function dramaticWelcome() {
 }
 dramaticWelcome();
 ```
-You can see full example [here][asyncawaites6code].
+다음을 통해서 충분한 예를 보실 수 있습니다.[here][asyncawaites6code].
 
 
-**Transpiling to ES5 (--target es5)**
+**ES5로의 (--target es5)**
 ```js
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -185,11 +185,11 @@ function dramaticWelcome() {
 }
 dramaticWelcome();
 ```
-You can see full example [here][asyncawaites5code].
+다음을 통해서 충분한 예를 보실 수 있습니다.[here][asyncawaites5code]
 
 
-**Note**: for both target scenarios, we need to make sure our run-time has an ECMAScript-compliant Promise available globally. That might involve grabbing a polyfill for Promise. We also need to make sure that TypeScript knows Promise exists by setting your lib flag to something like "dom", "es2015" or "dom", "es2015.promise", "es5". 
-**We can see what browsers DO have Promise support (native and polyfilled) [here](https://kangax.github.io/compat-table/es6/#test-Promise).**
+**참고**: 위 두개의 대상에 대한 시나리오는 실행할 때 공용의 ECMAScript-컴파일러를 준수하는 Promise가 있는지 확인해야합니다. Promise에 대해 polyfill된 것도 포함될 수 있습니다. 또한 lib플래그를 "dom", "es2015" 또는 "dom", "es2015.promise", "es5"와 같은 것으로 설정하여 TypeScript에서 Promise가 있는지 확인해야합니다.
+**Promise의 브라우저에서 지원여부(네이티브 또는 poilyfill)는 다음에서 알 수 있습니다. [here](https://kangax.github.io/compat-table/es6/#test-Promise).**
 
 [generators]:./generators.md
 [asyncawaites5code]:../code/async-await/es5/asyncAwaitES5.js
