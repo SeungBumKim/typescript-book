@@ -1,12 +1,14 @@
-## Dynamic import expressions 
+## 동적으로 표현식 가져오기
 
-**Dynamic import expressions** are a new feature and part of **ECMAScript** that allows users to asynchronously request a module at any arbitrary point in your program.
-**TC39** JavaScript committee has it’s own proposal which is in stage 3, and it’s called [import() proposal for JavaScript](https://github.com/tc39/proposal-dynamic-import).
+**동적으로 표현식 가져오기**는 새로운 기능으로 프로그램의 임의의 부분에서 비동기적으로 모듈을 요청하는 것을 허용하도록한 **ECMAScript**입니다.
+**TC39**로 JavaScript 위원회에서는 3단계에 있는 자체 제안서를 가지고 있으며 [import() proposal for JavaScript](https://github.com/tc39/proposal-dynamic-import)라고 부르기로 했습니다.
 
-From other side, **webpack** bundler has a feature called [**Code Splitting**](https://webpack.js.org/guides/code-splitting/) which allows you to split your bundle into chunks which can be downloaded asynchronously at a later time. For instance, this allows to serve a minimal bootstrap bundle first and to asynchronously load additional features later.
+다른쪽에서는 **웹팩** 번들이 갖고있는 기능으로 번들을 나중에 비동기적으로 다운로드 할 수 있는 청크로 나눌 수 있게 한 것으로 이를 [**Code Splitting**](https://webpack.js.org/guides/code-splitting/)라고 부르기로했습니다. 예를들면 서버에서는 작은 부트스트랩 번들을 보내고 나중에 비동기적으로 추가적으로 필요한 요소를 로딩하는 것입니다.
 
-At first glance, it’s natural to think (if we are using webpack in our dev workflow) that by using [TypeScript 2.4 dynamic import expressions](https://github.com/Microsoft/TypeScript/wiki/What%27s-new-in-TypeScript#dynamic-import-expressions), will **automatically produce** bundle chunks and automatically code-split you JS final bundle. BUT, that is not as easy as it seems, because it depends on the **tsconfig.json configuration** we are working with.
+들으면 (만약 현재 개발에서 웹팩을 사용하고 있다면) 자연스럽게 [TypeScript 2.4 dynamic import expressions](https://github.com/Microsoft/TypeScript/wiki/What%27s-new-in-TypeScript#dynamic-import-expressions)을 사용해서 
+자동으로 번들청크를 생성하고 JS 최종번들은 자동으로 코드분할 할거라고 생각할 것입니다. 그러나 **tsconfig.json구성**따라 다르므로 그렇게 쉽지는 않습니다.
 
+웹팩코드 분할을 달성하기 위해 두 가지 유사한 기술을 지원한다는 것입니다. **import()**(선호되는 것으로 ECMAScript에서 제안)이나 **require.ensure()**(레거시방식으로 웹펙의 스펙)입니다. 
 The thing is that webpack code splitting supports two similar techniques to achieve this goal: using **import()** (preferred, ECMAScript proposal) and **require.ensure()** (legacy, webpack specific). And what that means is the expected TypeScript output is **leave the import() statement as it is** instead of transpile it to anything else.
 
 Let’s see and example to figure out how to configure webpack + TypeScript 2.4.
