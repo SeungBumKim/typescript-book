@@ -8,12 +8,11 @@
 들으면 (만약 현재 개발에서 웹팩을 사용하고 있다면) 자연스럽게 [TypeScript 2.4 dynamic import expressions](https://github.com/Microsoft/TypeScript/wiki/What%27s-new-in-TypeScript#dynamic-import-expressions)을 사용해서 
 자동으로 번들청크를 생성하고 JS 최종번들은 자동으로 코드분할 할거라고 생각할 것입니다. 그러나 **tsconfig.json구성**따라 다르므로 그렇게 쉽지는 않습니다.
 
-웹팩코드 분할을 달성하기 위해 두 가지 유사한 기술을 지원한다는 것입니다. **import()**(선호되는 것으로 ECMAScript에서 제안)이나 **require.ensure()**(레거시방식으로 웹펙의 스펙)입니다. 
-The thing is that webpack code splitting supports two similar techniques to achieve this goal: using **import()** (preferred, ECMAScript proposal) and **require.ensure()** (legacy, webpack specific). And what that means is the expected TypeScript output is **leave the import() statement as it is** instead of transpile it to anything else.
+웹팩코드 분할을 달성하기 위해 두 가지 유사한 기술을 지원한다는 것입니다. **import()**(선호되는 것으로 ECMAScript에서 제안)이나 **require.ensure()**(레거시방식으로 웹펙의 스펙)입니다. 이것이 의미는 예상되는 TypeScript 출력의 *import()문을 다른 것으로 변환하는 대신 그대로* 둡니다.
 
-Let’s see and example to figure out how to configure webpack + TypeScript 2.4.
+웹팩 + TypeScript 2.4을 설정하는 방법과 예제를 보겠습니다.
 
-In the following code I want to **lazy load the library moment** but I am interested on code splitting as well, which means, having moment library in a separate chunk of JS (javascript file) and that will be loaded only when required.
+다음 코드를 보면 **moment 라이브러리의 늦은 로딩**을 하나 코드 분할에도 관심이 있습니다. 즉, moment 라이브러리를 JS (javascript 파일)의 별도의 청크에 넣고 필요한 경우에만 로드합니다.
 
 ```ts
 import(/* webpackChunkName: "momentjs" */ "moment")
@@ -29,7 +28,7 @@ import(/* webpackChunkName: "momentjs" */ "moment")
   });
 ```
 
-Here is the tsconfig.json:
+여기에 tsconfig.json이 있습니다:
 
 ```json
 {
@@ -61,12 +60,10 @@ Here is the tsconfig.json:
 ```
 
 
-**Important notes**:
+**중요한 참고사항**:
+- **"module": "esnext"** 을 사용하면 TypeScript는 웹팩 코드 분할에 입력할 mimic import()문을 생성합니다. 
+- 자세한 내용은 이 기사를 읽으십시오: [Dynamic Import Expressions and webpack 2 Code Splitting integration with TypeScript 2.4](https://blog.josequinto.com/2017/06/29/dynamic-import-expressions-and-webpack-code-splitting-integration-with-typescript-2-4/).
 
-- Using **"module": "esnext"** TypeScript produces the mimic import() statement to be input for Webpack Code Splitting.
-- For further information read this article: [Dynamic Import Expressions and webpack 2 Code Splitting integration with TypeScript 2.4](https://blog.josequinto.com/2017/06/29/dynamic-import-expressions-and-webpack-code-splitting-integration-with-typescript-2-4/).
-
-
-You can see full example [here][dynamicimportcode].
+전체 예제는 다음에서 볼 수 있습니다: [here][dynamicimportcode].
 
 [dynamicimportcode]:../code/dynamic-import-expressions
