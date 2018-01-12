@@ -1,19 +1,19 @@
-# TypeScript in the browser
-If you are using TypeScript to create a web application here are my recommendations:
+# 브라우저에서의 TypeScript
+웹어플리케이션을 만드는데 TypeScript를 사용한다면 여기에 추천할 내용이 있습니다:
 
-## General Machine Setup
+## 일반적인 머신 설정
 
-* Install [Node.js](https://nodejs.org/en/download/)
+* 설치 [Node.js](https://nodejs.org/en/download/)
 
-## Project Setup
-* Create a project dir:
+## 프로젝트 설정
+* 프로젝트 디렉토리 생성:
 
 ```
 mkdir your-project
 cd your-project
 ```
 
-* Create `tsconfig.json`. We discuss [modules here](../project/external-modules.md). Also good to have it setup for `tsx` compilation out of the box:
+* `tsconfig.json` 생성합니다. 관련해서는 다음에서 언급했었습니다([modules here](../project/external-modules.md)). 또한 `tsx` 컴파일을 위해 설정해 주셔도 좋습니다:
 
 ```json
 {
@@ -30,25 +30,25 @@ cd your-project
 }
 ```
 
-* Create an npm project:
+* npm 프로젝트를 생성합니다:
 
 ```
 npm init -y
 ```
 
-* Install [TypeScript-nightly](https://github.com/Microsoft/TypeScript), [`webpack`](https://github.com/webpack/webpack), [`ts-loader`](https://github.com/TypeStrong/ts-loader/), [`typings`](https://github.com/typings/typings):
+* 설치 [TypeScript-nightly](https://github.com/Microsoft/TypeScript), [`webpack`](https://github.com/webpack/webpack), [`ts-loader`](https://github.com/TypeStrong/ts-loader/), [`typings`](https://github.com/typings/typings):
 
 ```
 npm install typescript@next webpack ts-loader typings --save-dev
 ```
 
-* Init typings (creates a `typings.json` file for you):
+* typings 초기화(`typings.json`파일을 생성합니다.):
 
 ```
 "./node_modules/.bin/typings" init
 ```
 
-* Create a `webpack.config.js` to bundle your modules into a single `bundle.js` file that contains all your resources:
+* 모든 리소스를 담고있는 하나의 `bundle.js`파일로 모듈을 묶는 `webpack.config.js` 파일을 만드십시오:
 
 ```js
 const path = require('path');
@@ -73,7 +73,7 @@ module.exports = {
 }
 ```
 
-* Setup an npm script to run a build. Also have it run `typings install` on `npm install`. In your `package.json` add a `script` section:
+* 빌드를 위한 npm 스크립트를 설정하세요. `npm install`에서 `typings install`를 실행 시켰습니다. `package.json`의 `script`섹션에 추가하세요:
 
 ```json
 "scripts": {
@@ -82,16 +82,16 @@ module.exports = {
 },
 ```
 
-Now just run the following (in the directory that contains `webpack.config.js`):
+이제 다음과 같이 실행 시키면됩니다.(디렉토리안에 `webpack.config.js`을 포함해서요.):
 
 ```
 npm run watch
 ```
 
-Now if you make edits to your `ts` or `tsx` file webpack will generate `bundle.js` for you. Serve this up using your web server 🌹.
+이제 `ts` or `tsx`을 편집하면 웹팩은 `bundle.js`을 생성할 것 입니다. 이 것을 웹서브를 위해서 사용하세요🌹.
 
-## More
-If you are going to use React (which I highly recommend you give a look), here are a few more steps:
+## 추가
+React를 사용하고 있다면(아래 내용을 보기를 추천합니다.), 아래 몇가지 작업을 더 해야합니다:
 
 ```
 npm install react react-dom --save
@@ -105,7 +105,7 @@ npm i @types/react --save
 npm i @types/react-dom --save
 ```
 
-A demo `index.html`:
+`index.html` 데모는:
 
 ```
 <html>
@@ -122,7 +122,7 @@ A demo `index.html`:
 </html>
 ```
 
-A demo `./src/app.tsx`:
+`./src/app.tsx` 데모는:
 
 ```ts
 import * as React from "react";
@@ -143,13 +143,13 @@ ReactDOM.render(
 );
 ```
 
-You can clone this demo project here: https://github.com/basarat/react-typescript
+다음에서 데모 프로젝트를 클론받을 수 있습니다: https://github.com/basarat/react-typescript
 
-## Live reload
+## 실시간 리로드
 
-Add webpack dev server. Super easy: 
+웹팩을 개발 서버에 추가하세요. 매우 쉽습니다:
 
-* Install : `npm install webpack-dev-server` 
-* Add to your `package.json`: `"start": "webpack-dev-server --hot --inline --no-info"`
+* 설치 : `npm install webpack-dev-server` 
+* `package.json`에 추가하세요 : `"start": "webpack-dev-server --hot --inline --no-info"`
 
-Now when you run `npm start` it will start the webpack dev server with live reload.
+`npm start`으로 실행시키면 개발 서버에서 웹팩이 시작되고 실시간으로 리로드 될것입니다. 
