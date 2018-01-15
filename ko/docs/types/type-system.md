@@ -1,14 +1,15 @@
-# TypeScript Type System
-We covered the main features of the TypeScript Type System back when we discussed [Why TypeScript?](../why-typescript.md). The following are a few key takeaways from that discussion which don't need further explanation:
-* The type system in typescript is designed to be *optional* so that *your javascript is typescript*.
-* TypeScript does not block *JavaScript emit* in the presence of Type Errors, allowing you to *progressively update your JS to TS*.
+# TypeScript Type 시스템
+우리는 다음에서 TypeScript Type 시스템의 주요 기능을 다루었었습니다.[Why TypeScript?](../why-typescript.md).
+다음은 앞에서 다루어진 중요한 사항으로 더 이상의 추가적인 설명을 하지않을 부분입니다:
+* typescript의 type시스템은 *추가적인*기능 부분으로 *javascript로 작성한 것은 typescript가 될 수 있습니다.*
+* TypeScript는 Type 에러가 있는 *JavaScript emit*을 차단하지 않으므로 *점진적으로 JS를 TS로 업데이트* 할 수 있습니다.
 
-Now let's start with the *syntax* of the TypeScript type system. This way you can start using these annotations in your code immediately and see the benefit. This will prepare you for a deeper dive later.
+이제 TypeScript type 시스템의 *구문*부터 시작합겠습니다. 이렇게하면 코드에서 이러한 내용을 즉시 사용하고 이점을 확인할 수 있습니다. 이러한 방식은 보다 더 깊은 내용을 다룰 준비가 되게합니다.
 
-## Basic Annotations
-As mentioned before Types are annotated using `:TypeAnnotation` syntax. Anything that is available in the type declaration space can be used as a Type Annotation.
+## 기본 키워드
+앞에서도 다루었듯이 `:TypeAnnotation`구문으로 타입을 선언합니다. 타입 선언 공간에서 사용할 수 있는 것은 타입 키워드로 사용할 수 있습니다.
 
-The following example demonstrates type annotations can be used for variables, function parameters and function return values:
+다음 예제로 타입키워드가 변수와 함수인자 그리고 함수 리턴값으로 사용되는 것을 볼 수 있습니다:
 
 ```
 var num: number = 123;
@@ -17,8 +18,8 @@ function identity(num: number): number {
 }
 ```
 
-### Primitive Types
-The JavaScript primitive types are well represented in the TypeScript type system. This means `string`, `number`, `boolean` as demonstrated below:
+### 기본 Type들
+JavaScript의 기본 type들은 TypeScript의 type 시스템에 잘 표현되어 있습니다. 이 말의 의미는 `string`, `number`, `boolean`을 아래와 같이 사용하다는 것입니다:
 
 ```ts
 var num: number;
@@ -37,8 +38,8 @@ bool = false;
 bool = 'false'; // Error
 ```
 
-### Arrays
-TypeScript provides dedicated type syntax for arrays to make it easier for you to annotate and document your code. The syntax is basically postfixing `[]` to any valid type annotation (e.g. `:boolean[]`). It allows you to safely do any array manipulation that you would normally do and protects you from errors like assigning a member of the wrong type.  This is demonstrated below:
+### 배열
+TypeScript는 코드에 형식을 붙이고 문서화하기 쉽게 배열을 위한 전용 type 구문을 제공합니다. 기본적으로 가능한 type키워드 뒤에 `[]` 붙입니다(예, `:boolean[]`). 평소에 할 수 있는 배열 조작을 안전하게 할 수 있게 해주고 잘못된 타입의 멤버를 할당하는 것과 같은 오류로부터 보호합니다. 아래 설명되어있습니다: 
 
 ```ts
 var boolArray: boolean[];
@@ -54,8 +55,8 @@ boolArray = 'false'; // Error!
 boolArray = [true, 'false']; // Error!
 ```
 
-### Interfaces
-Interfaces are the core way in TypeScript to compose multiple type annotations into a single named annotation. Consider the following example:
+### 인터페이스
+인터페이스는 여러 개의 type 키워드를 단일 명명된 키워드로 작성하는 TypeScript의 핵심적인 방법입니다. 다음 예제를 고려해보세요:
 
 ```ts
 interface Name {
@@ -78,7 +79,7 @@ name = {           // Error : `second` is the wrong type
 };
 ```
 
-Here we've composed the annotations `first: string` + `second: string` into a new annotation `Name` that enforces the type checks on individual members. Interfaces have a lot of power in TypeScript and we will dedicate an entire section to how you can use that to your advantage.
+`Name`키워드 안에 `first: string` + `second: string`로 구성되었고, 강제로 각각의 멤버의 type을 체크하고있습니다. 인터페이스는 TypeScript에서 많은 힘을 발휘하는데, 관련된 섹션을 통해 인터페이스의 장점에 어떻게 사용할 수 있는지에 대해 설명 할 것입니다.
 
 ### Inline Type Annotation
 Instead of creating a new `interface` you can annotate anything you want *inline* using `:{ /*Structure*/ }`. The previous example presented again with an inline type:
