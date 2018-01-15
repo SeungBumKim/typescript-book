@@ -81,8 +81,8 @@ name = {           // Error : `second` is the wrong type
 
 `Name`키워드 안에 `first: string` + `second: string`로 구성되었고, 강제로 각각의 멤버의 type을 체크하고있습니다. 인터페이스는 TypeScript에서 많은 힘을 발휘하는데, 관련된 섹션을 통해 인터페이스의 장점에 어떻게 사용할 수 있는지에 대해 설명 할 것입니다.
 
-### Inline Type Annotation
-Instead of creating a new `interface` you can annotate anything you want *inline* using `:{ /*Structure*/ }`. The previous example presented again with an inline type:
+### 인라인 Type Annotation
+`interface`대신에 `:{ /*Structure*/ }`와 같이 *인라인*을 이용해서 키워드를 적용할 수 있습니다. 앞의 예를 인라인을 적용해서 다시보겠습니다:
 
 ```ts
 var name: {
@@ -103,13 +103,13 @@ name = {           // Error : `second` is the wrong type
 };
 ```
 
-Inline types are great for quickly providing a one off type annotation for something. It saves you the hassle of coming up with (a potentially bad) type name. However, if you find yourself putting in the same type annotation inline multiple times it's a good idea to consider refactoring it into an interface (or a `type alias` covered later in this section).
+인라인 유형은 신속하게 유형에 대한 일회성 키워드 선언을 제공하는데 적합합니다. 이는 (잠재적으로 잘못된)type 이름을 생각해내는 번거로움을 덜어줍니다. 그러나 동일한 유형의 키워드를 여러번 인라인하는 경우 인터페이스(또는 뒷부분에서 다루는 `type alias`)로 리팩터링하는 것이 좋습니다. 
 
-## Special Types
-Beyond the primitive types that have been covered there are few types that have special meaning in TypeScript. These are `any`, `null`, `undefined`, `void`.
+## 특수한 Types
+`any`, `null`, `undefined`, `void` 기본 유형 외에도 TypeScript에서 특별한 의미를 갖는 유형은 거의 없습니다.
 
 ### any
-The `any` type holds a special place in the TypeScript type system. It gives you an escape hatch from the type system to tell the compiler to bugger off. `any` is compatible with *any and all* types in the type system. This means that *anything can be assigned to it* and *it can be assigned to anything*. This is demonstrated in the example below:
+`any` type은 TypeScript type 시스템에서 특별한 위치를 가지고 있습니다. 이는 type 시스템에서 벗어나기 위해 컴파일러에게 알려주는 역할을 합니다. `any`는 type 시스템에서 *어떤 또는 모든* type들을 호환시켜줍니다. 이말의 의미는 *어떤한 것도 할당할 수*있고 *어떠한 것으로도 할 당 받을 수*있다는 것입니다. 아래 예제에서 설명하겠습니다:
 
 ```ts
 var power: any;
@@ -124,11 +124,11 @@ power = num;
 num = power;
 ```
 
-If you are porting JavaScript code to TypeScript, you are going to be close friends with `any` in the beginning. However, don't take this friendship too seriously as it means that *it is up to you to ensure the type safety*. You are basically telling the compiler to *not do any meaningful static analysis*.
+초보자가 JavaScript 코드를 TypeScript로 변환하려면 `any`와 매우 친해져야 할 것입니다. 그러나 *type의 안전까지 보장하지 않으므로* 이러한 편리함에 너무 기대를 많이 갖으면 안됩니다. 기본적으로 컴파일러에게 *의미있는 정적 분석을하지 말아 달라고*을 명령말하기 때문입니다.
 
-### `null` and `undefined`
+### `null`과 `undefined`
 
-The `null` and `undefined` JavaScript literals are effectively treated by the type system the same as something of type `any`. These literals can be assigned to any other type. This is demonstrated in the below example:
+JavaScript에서의 `null`과 `undefined` 문법은 `any` type과 같이 type 시스템에서 효과적으로 다루어집니다. 이러한 문법은 다른 유형으로 할당 될 수 있습니다. 아래 예를 통해서 살펴보겠습니다:
 
 ```ts
 var num: number;
@@ -140,7 +140,7 @@ str = undefined;
 ```
 
 ### `:void`
-Use `:void` to signify that a function does not have a return type:
+`:void`을 사용하면 함수는 리턴 type이 없다는 것을 명시합니다:
 
 ```ts
 function log(message): void {
@@ -149,7 +149,7 @@ function log(message): void {
 ```
 
 ## Generics
-Many algorithms and data structures in computer science do not depend on the *actual type* of the object. However you still want to enforce a constraint between various variables. A simple toy example is a function that takes a list of items and returns a reversed list of items. The constraint here is between what is passed in to the function and what is returned by the function:
+컴퓨터 과학의 많은 알고리즘과 데이터 구조는 객체의 *실제 유형*에 의존하지 않습니다. 그러나 여전히 다양한 변수간에 제약 조건을 적용하려고합니다. 간단한 예제는 항목 목록을 가져와 역순으로 나열된 항목 목록을 반환하는 함수입니다. 여기서 제약된 내용은 함수에 전달되는 것과 함수에 의해 반환되는 것 사이의 관계입니다:
 
 ```ts
 function reverse<T>(items: T[]): T[] {
@@ -172,7 +172,7 @@ reversed[0] = 1;       // Okay
 reversed = [1, 2];     // Okay
 ```
 
-Here you are basically saying that the function `reverse` takes an array (`items: T[]`) of *some* type `T` (notice the type parameter in `reverse<T>`) and returns an array of type `T` (notice `: T[]`). Because the `reverse` function returns items of the same type as it takes, TypeScript knows the `reversed` variable is also of type `number[]` and will give you Type safety. Similarly if you pass in an array of `string[]` to the reverse function the returned result is also an array of `string[]` and you get similar type safety as shown below:
+여기서 `reverse` 함수는 *어떠한* type `T`의 배열 (`items : T []`)을 취하고 (`reverse <T>`에 있는 type 매개 변수에 주목하십시오) 해당 유형의 배열을 반환한다는 것을 기본적으로 말합니다`T`(주의 :`T []`). `reverse` 함수는 동일한 타입의 항목을 반환하기 때문에 TypeScript는`reversed` 변수가`number []` type이기도하고 type 안전성을 제공한다는 것을 알고 있습니다. 유사하게 `string[]`을 reserve함수에 넘긴다면 역시 `string[]`을 반환 할 것이고 아래와 type 안정성도 갖게 될 것입니다:
 
 ```ts
 var strArr = ['1', '2'];
@@ -181,7 +181,7 @@ var reversedStrs = reverse(strArr);
 reversedStrs = [1, 2]; // Error!
 ```
 
-In fact JavaScript arrays already have a `.reverse` function and TypeScript does indeed use generics to define its structure:
+사실은 JavaScript배열은 이미 `.reverse`함수를 갖고있고 TypeScript는 사실 제네릭을 사용하여 구조를 정의합니다:
 
 ```ts
 interface Array<T> {
@@ -190,7 +190,7 @@ interface Array<T> {
 }
 ```
 
-This means that you get type safety when calling `.reverse` on any array as shown below:
+이것은 아래와 같이 배열에서`.reverse`를 호출 할 때 type 안전성을 얻는다는 것을 의미합니다:
 
 ```ts
 var numArr = [1, 2];
@@ -199,10 +199,10 @@ var reversedNums = numArr.reverse();
 reversedNums = ['1', '2']; // Error!
 ```
 
-We will discuss more about the `Array<T>` interface later when we present `lib.d.ts` in the section **Ambient Declarations**.
+나중에 **Ambient Declarations** 섹션에서 `lib.d.ts`를 제시 할 때 `Array<T>` 인터페이스에서 더 자세히 논의 할 것입니다.
 
-## Union Type
-Quite commonly in JavaScript you want to allow a property to be one of multiple types e.g. *a `string` or a `number`*. This is where the *union type* (denoted by `|` in a type annotation e.g. `string|number`) comes in handy. A common use case is a function that can take a single object or an array of the object e.g.:
+## 유니온 Type
+JavaScript에서 일반적으로 속성을 여러 유형 중 하나가 되게 하려는 경우가 많습니다. 예를들면, *`문자열`또는`숫자`*. 여기서 *유니온 type*(형식 키워드에서`|`로 표시됨, 예를 들어`string | number`)가 유용합니다. 일반적인 사용 사례는 하나의 객체 또는 객체의 배열을 취할 수 있는 함수입니다:
 
 ```ts
 function formatCommandline(command: string[]|string) {
@@ -218,7 +218,7 @@ function formatCommandline(command: string[]|string) {
 ```
 
 ## Intersection Type
-`extend` is a very common pattern in JavaScript where you take two objects and create a new one that has the features of both these objects. An **Intersection Type** allows you to use this pattern in a safe way as demonstrated below:
+`extend`는 JavaScript에서 두 개의 객체를 가져와 두 객체의 기능을 가진 새로운 객체를 만드는 매우 일반적인 패턴입니다. **Intersection Type**을 사용하면 아래에 설명된 것처럼 안전하게이 패턴을 사용할 수 있습니다:
 
 ```ts
 function extend<T, U>(first: T, second: U): T & U {
@@ -241,8 +241,8 @@ var a = x.a;
 var b = x.b;
 ```
 
-## Tuple Type
-JavaScript doesn't have first class tuple support. People generally just use an array as a tuple. This is exactly what the TypeScript type system supports. Tuples can be annotated using `:[typeofmember1, typeofmember2]` etc. A tuple can have any number of members. Tuples are demonstrated in the below example:
+## 튜플 Type
+JavaScript에는 튜플 지원이 없습니다. 일반적으로 튜플 배열로 만들어서 사용합니다. 이것은 정확히 TypeScript type 시스템이 지원하는 것입니다. 튜플은 `:[typeofmember1, typeofmember2]`와 같은 방식으로 사용합니다. 튜플은 여러개의 멤버를 가질 수 있습니다. 튜플은 아래에 설명된 예로 볼 수 있습니다:
 
 ```ts
 var nameNumber: [string, number];
@@ -254,7 +254,7 @@ nameNumber = ['Jenny', 8675309];
 nameNumber = ['Jenny', '867-5309'];
 ```
 
-Combine this with the destructuring support in TypeScript, tuples feel fairly first class despite being arrays underneath:
+이것을 TypeScript의 구조적 지원과 결합하면 튜플은 배열임에도 불구하고 상당히 우수하다고 느껴집니다.
 
 ```ts
 var nameNumber: [string, number];
@@ -263,8 +263,8 @@ nameNumber = ['Jenny', 8675309];
 var [name, num] = nameNumber;
 ```
 
-## Type Alias
-TypeScript provides convenient syntax for providing names for type annotations that you would like to use in more than one place. The aliases are created using the `type SomeName = someValidTypeAnnotation` syntax. An example is demonstrated below:
+## Type 별칭
+TypeScript는 두 개 이상의 장소에서 사용하려는 유형 키워드에 이름을 제공하기 위한 편리한 구문을 제공합니다. 별칭은 `type SomeName = someValidTypeAnnotation`와 같은 구문으로 만들 수 있습니다. 아래의 예제와 같이 설명됩니다:
 
 ```ts
 type StrOrNum = string|number;
@@ -278,7 +278,8 @@ sample = '123';
 sample = true; // Error!
 ```
 
-Unlike an `interface` you can give a type alias to literally any type annotation (useful for stuff like union and intersection types). Here are a few more examples to make you familiar with the syntax:
+
+`interface`와는 달리 문자 그대로 type 키워드에 type 별칭을 줄 수 있습니다(union과 intersection type과 같은 것들에 유용합니다). 아래에 좀더 구문을 친숙하게 사용할 수 있는 예제가 있습니다:
 
 ```ts
 type Text = string | { text: string };
@@ -286,9 +287,9 @@ type Coordinates = [number, number];
 type Callback = (data: string) => void;
 ```
 
-> TIP: If you need to have hierarchies of Type annotations use an `interface`. They can be used with `implements` and `extends`
+> 팁: Type 키워드의 계층을 가질 필요가 있다면 `interface`를 사용하십시오. `implements`와 `extends`와 함께 사용할 수 있습니다.
 
-> TIP: Use a type alias for simpler object structures (like `Coordinates`) just to give them a semantic name. Also when you want to give semantic names to Union or Intersection types, a Type alias is the way to go.
+> 팁: 의미가있는 이름을 주기위한 더 간단한 객체 구조(`Coordinates`와 같은)를 위해 타입 별명을 사용하십시오. 또한 Union 또는 Intersection 유형에 의미론적 이름을 지정하려는 경우 Type 별칭을 사용하십시오.
 
-## Summary
-Now that you can start annotating most of your JavaScript code we can jump into the nitty gritty details of all the power available in the TypeScript's Type System.
+## 요약
+이제 대부분의 JavaScript 코드에 키워드를 달기 시작할 수 있으므로 TypeScript의 type 시스템에서 사용할 수 있는 모든 기능에 대해 자세히 살펴볼 수 있습니다.
