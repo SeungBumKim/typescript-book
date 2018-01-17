@@ -218,12 +218,11 @@ var lie = 0;
 1. 열거형의 사용(`Tristate.False`의 `0`)은 코드로 *인라인*화 됩니다.
 1. 열거형의 정의는 JavaScript로 생성되지 않으며 (런타임에 `Tristate`은 없습니다.) 인라인화되어 사용됩니다.
 
-##### Const enum preserveConstEnums
-인라인시키면 동작속도에는 효과적입니다. 
-Inlining has obvious performance benefits. The fact that there is no `Tristate` variable at runtime is simply the compiler helping you out by not generating JavaScript that is not actually used at runtime. However you might want the compiler to still generate the JavaScript version of the enum definition for stuff like *number to string* or *string to number* lookups as we saw. In this case you can use the compiler flag `--preserveConstEnums` and it will still generate the `var Tristate` definition so that you can use `Tristate["False"]` or `Tristate[0]` manually at runtime if you want. This does not impact *inlining* in any way.
+##### 열거형의 상수화된 보존
+인라인시키면 동작속도에는 효과적입니다. 런타임에 `Tristate` 변수가 없다는 사실은 런타임에 실제로 사용되지 않는 JavaScript를 컴파일러가 생성하지 않게 도와줍니다. 그러나 컴파일러가 *number to string* 또는 *string to number*와 같은 항목에 대한 열거형 정의의 JavaScript 버전을 계속 생성하도록 할 수 있습니다. 이러한 경우에는 `--preserveConstEnums` 컴파일 플래그를 사용하고 그러면 `var Tristate`정의를 생성해줍니다. 그래서 원할경우 런타임에`Tristate [ "False"]` 또는 `Tristate [0]`을 수동으로 사용할 수 있습니다. 이러한 내용은 *인라인*에 영향을 주지 않습니다.
 
-### Enum with static functions
-You can use the declaration `enum` + `namespace` merging to add static methods to an enum. The following demonstrates an example where we add a static member `isBusinessDay` to an enum `Weekday`:
+### 정적함수에서의 열거형
+선언문 `enum` + `namespace`를 병합하여 열거형에 정적 메서드를 추가 할 수 있습니다. 다음은 정적멤버 `isBusinessDay`를 열거형 `Weekday`에 추가하는 예제입니다:
 
 ```ts
 enum Weekday {
