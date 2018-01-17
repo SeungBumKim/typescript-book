@@ -131,8 +131,7 @@ interface DateConstructor {
 }
 ```
 
-[`datejs`](https://github.com/abritinthebay/datejs)프로젝트를 참고하세요. 
-Consider the project [`datejs`](https://github.com/abritinthebay/datejs). DateJS adds members to both the `Date` global variable and `Date` instances. Therefore a TypeScript definition for this library would look like ([BTW the community has already written this for you in this case](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/datejs/index.d.ts)):
+[`datejs`](https://github.com/abritinthebay/datejs)프로젝트를 참고하세요. DateJS는 `Date` 글로벌 변수와 `Date` 인스턴스 모두에 멤버를 추가합니다. 따라서이 라이브러리의 TypeScript 정의는 다음과 같습니다. ([BTW the community has already written this for you in this case](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/datejs/index.d.ts)):
 
 ```ts
 /** DateJS Public Static Methods */
@@ -149,16 +148,17 @@ interface Date {
     // ... so on and so forth
 }
 ```
-This allows you to do stuff like the following in a TypeSafe manner:
+이렇게하면 Type 안정적인 방식으로 다음과 같은 작업을 수행 할 수 있습니다:
 
 ```ts
 var today = Date.today();
 var todayAfter1second = today.addMilliseconds(1000);
 ```
 
-#### Example `string`
+#### 예 `string`
 
-If you look inside `lib.d.ts` for string you will find stuff similar to what we saw for `Date` (`String` global variable, `StringConstructor` interface, `String` interface). One thing of note though is that the `String` interface impacts string *literals* as well as demonstrated in the below code sample:
+문자열에 `lib.d.ts`를 들여다보면 `Date`에 대해 본 것과 비슷한 것들을 발견 할 수 있습니다.(`String` 전역변수, `StringConstructor` 인터페이스, `String` 인터페이스). 
+한 가지 주목할 점은 `String` 인터페이스가 문자열 *리터럴*에 영향을 주며 아래의 코드 샘플에도 설명되어 있습니다:
 
 ```ts
 
@@ -175,11 +175,11 @@ console.log('foo bar'.endsWith('bas')); // false
 console.log('foo bas'.endsWith('bas')); // true
 ```
 
-Similar variable / interfaces exist for other things that have both static and instance member like `Number`, `Boolean`, `RegExp`, etc. and these interfaces affect literal instances of these types as well.
+비슷한 변수/인터페이스는 `Number`,`Boolean`,`RegExp` 등과 같이 정적 멤버와 인스턴스 멤버 모두를 가진 것들을 위해 존재합니다. 이러한 인터페이스는 이러한 유형의 문자 그대로의 인스턴스에도 영향을 줍니다.
 
-### Example `string` redux
+### 예 `string` 리덕스 
 
-We recommended creating a `global.d.ts` for maintainability reasons. However you can break into the *global namespace* from within *a file module* if you desire so. This is done using `declare global { /*global namespace here*/ }`. E.g. the previous example can also be done as:
+`global.d.ts`를 만드는 것이 유지보수 차원에서 추천드립니다. 그러나 원하는 경우 *파일 모듈*에서 *전역 네임 스페이스*로 접근 할 수 있습니다. 이것은 `declare global {/ * global namespace here * /}`를 사용하여 수행됩니다. 예제: 이전 예도 다음과 같이 수행 할 수 있습니다:
 
 ```ts
 // Ensure this is treated as a module.
@@ -200,29 +200,29 @@ console.log('foo bar'.endsWith('bas')); // false
 console.log('foo bas'.endsWith('bas')); // true
 ```
 
-### Using your own custom lib.d.ts
-As we mentioned earlier using the `noLib` boolean compiler flag causes TypeScript to exclude the automatic inclusion of `lib.d.ts`. There are various reasons why this is a useful feature. Here are a few of the common ones:
+### 사용자 정의 lib.d.ts
+앞에서 언급했듯이 `noLib`의 컴파일 플래그는 TypeScript에서 자동으로 `lib.d.ts`을 포함하는 것을 하지 않게 합니다. 해당 내용이 유용한 이유는 다양합니다. 여기에 대표적인 것들을 소개하겠습니다: 
 
-* You are running in a custom JavaScript environment that differs *significantly* from the standard browser based runtime environment.
-* You like to have *strict* control over the *globals* available in your code. E.g. lib.d.ts defines `item` as a global variable and you don't want this to leak into your code.
+* 표준 브라우저 기반 런타임 환경과 *크게* 다른 사용자 정의 JavaScript 환경에서 실행하려고 할 떄 입니다.
+* 코드에서 사용할 수 있는 전역 변수를 *엄격하게* 제어하려고합니다. 예를 들면, lib.d.ts에 전역변수로 `item`을 정의하고 이러한 내용이 코드로 보여지기를 원할 떄 사용할 수 있습니다. 
 
-Once you have excluded the default `lib.d.ts` you can include a similarly named file into your compilation context and TypeScript will pick it up for type checking.
+기본 `lib.d.ts`을 포함하지 않으면 비슷하게 명명된 파일을 컴파일 컨텍스트에 포함시킬 수 있으며 TypeScript는 type 검사를 위해 이를 가져옵니다.
 
-> Note: be careful with `--noLib`. Once you are in noLib land, if you chose to share your project with others, they will be *forced* into noLib land (or rather *your lib* land). Even worse, if you bring *their* code into your project you might need to port it to *your lib* based code.
+> 노트: `--noLib` 사용에 주의하세요. noLib을 사용하고 다른 프로젝트와 공유하면 *강제로* noLib가 적용됩니다.(또는 *당신의 라이브러리*가 포함됩니다.). 더 나쁜 것은, *이러한* 코드를 프로젝트에 가져오면 *당신의 라이브러리* 코드로 이식해야 할 수도 있습니다.
 
-### Compiler target effect on `lib.d.ts`
+### `lib.d.ts`에 대한 컴파일러 타겟 효과
 
-Setting the compiler target to be `es6` causes the `lib.d.ts` to include *additional* ambient declarations for more modern (es6) stuff like `Promise`. This magical effect of the compiler target changing the *ambience* of the code is desirable for some people and for others it's problematic as it conflates *code generation* with *code ambience*.
+컴파일러 타겟을 `es6`으로 설정하면 `lib.d.ts`는 `Promise`와 같은보다 현대적인 (es6) 것들을 위한 *추가​​* 주변 선언을 포함하게 됩니다. 컴파일러 타겟이 코드의 *주변선언*를 변경하는 이 마법같은 효과는 일부 사람들에게는 바람직하지만 다른 사람들에게는 *코드 생성*을 *코드 주변선언*과 융합시키는 것이 문제가 됩니다.
 
-However if you want finer grained control of your environment you should use the `--lib` option which we discuss next.
+그러나 환경을 세밀하게 제어하려면 다음에 설명할 `--lib` 옵션을 사용해야합니다.
 
-### lib option
+### lib 옵션
 
-Sometimes (many times) you want to decouple the relationship between the compile target (the generated JavaScript version) and the ambient library support. A common example is `Promise`, e.g. today (in June 2016) you most likely want to `--target es5` but still use latest stuff like `Promise`. To support this you can take explicit control of `lib` using the `lib` compiler option.
+때로(혹은 많이) 컴파일대상(생성된 JavaScript 버전)과 주변 라이브러리 지원 사이의 관계를 분리하려고 합니다. 일반적인 예는 `Promise`입니다. 오늘(2016년6월) 당신은 `--target es5`를 원하지만 `Promise`와 같은 최신 내용을 사용하고 싶을 것입니다. 이를 지원하기 위해 `lib` 컴파일러 옵션을 사용하여 `lib`를 명시적으로 제어 할 수 있습니다.
 
-> Note: using `--lib` decouples any lib magic from `--target` giving you better control.
+> 노트: `--lib`를 사용하면 `--target`의 모든 lib를 분리하여 더 잘 제어 할 수 있습니다.
 
-You can provide this option on the command line or in `tsconfig.json` (recommended):
+이 옵션은 명령행이나 `tsconfig.json`(권장)을 통해서 적용 할 수 있습니다:
 
 **Command line**:
 ```
@@ -235,7 +235,7 @@ tsc --target es5 --lib dom,es6
 }
 ```
 
-The libs can be categorized into categories:
+libs는 범주로 분류 될 수 있습니다:
 
 * JavaScript Bulk Feature:
     * es5
@@ -266,12 +266,12 @@ The libs can be categorized into categories:
     * esnext.asynciterable
 
 
-> NOTE: the `--lib` option provides extremely fine tuned control. So you most likey want to pick an item from the bulk + enviroment categories.
-> If --lib is not specified a default library is injected:
-  - For --target es5 => es5, dom, scripthost
-  - For --target es6 => es6, dom, dom.iterable, scripthost
+> 노트: `--lib` 옵션은 매우 미세한 제어를 제공합니다. 따라서 가장 큰 환경 카테고리에서 항목을 선택할 수 있습니다.
+> --lib가 지정되지 않으면 기본 라이브러리가 주입됩니다.
+  - --target es5 => es5, dom, scripthost
+  - --target es6 => es6, dom, dom.iterable, scripthost
 
-My Personal Recommentation:
+개인적으로 추천하자면:
 
 ```json
 "compilerOptions": {
@@ -280,9 +280,9 @@ My Personal Recommentation:
 }
 ```
 
-Example Including Symbol with ES5
-Symbol API is not included when target is es5. In fact, we receive an error like: [ts] Cannot find name 'Symbol'.
-We can use "target": "es5" in combination with "lib" to provide Symbol API in TypeScript:
+ES5에 심볼 포함 예제
+심볼 API는 es5에는 포함되어있지 않습니다. 실제로, 다음과 같은 오류가 발생합니다: [ts] Cannot find name 'Symbol'.
+"target": "es5"를 "lib"와 함께 사용하여 TypeScript에서 Symbol API를 제공 할 수 있습니다.
 ```json
 "compilerOptions": {
     "target": "es5",
