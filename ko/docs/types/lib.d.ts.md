@@ -35,7 +35,7 @@ var bar = foo.toString(); // ERROR: Property 'toString' does not exist on type '
 ```ts
 declare var window: Window;
 ```
-변수이름(여기서는`window`)과 type 키워드(여기서는`Window` 인터페이스)에 대한 인터페이스가 뒤따르는 단순한 `declare var` 입니다. 이러한 변수는 일반적으로 전역 *인터페이스*를 가르킵니다. 예를들어 여기에 (실제로 꽤 방대한)`Window` 인터페이스의 작은 샘플이 있습니다:
+변수이름(여기서는`window`)과 type 어노테이션(여기서는`Window` 인터페이스)에 대한 인터페이스가 뒤따르는 단순한 `declare var` 입니다. 이러한 변수는 일반적으로 전역 *인터페이스*를 가르킵니다. 예를들어 여기에 (실제로 꽤 방대한)`Window` 인터페이스의 작은 샘플이 있습니다:
 
  These variables generally point to some global *interface* e.g. here is a small sample of the (actually quite massive) `Window` interface:
 
