@@ -6,10 +6,10 @@
 
 이제 TypeScript type 시스템의 *구문*부터 시작합겠습니다. 이렇게하면 코드에서 이러한 내용을 즉시 사용하고 이점을 확인할 수 있습니다. 이러한 방식은 보다 더 깊은 내용을 다룰 준비가 되게합니다.
 
-## 기본 키워드
-앞에서도 다루었듯이 `:TypeAnnotation`구문으로 타입을 선언합니다. 타입 선언 공간에서 사용할 수 있는 것은 타입 키워드로 사용할 수 있습니다.
+## 기본 어노테이션
+앞에서도 다루었듯이 `:TypeAnnotation`구문으로 타입을 선언합니다. 타입 선언 공간에서 사용할 수 있는 것은 타입 어노테이션으로 사용할 수 있습니다.
 
-다음 예제로 타입키워드가 변수와 함수인자 그리고 함수 리턴값으로 사용되는 것을 볼 수 있습니다:
+다음 예제로 타입 어노테이션이 변수와 함수인자 그리고 함수 리턴값으로 사용되는 것을 볼 수 있습니다:
 
 ```
 var num: number = 123;
@@ -39,7 +39,7 @@ bool = 'false'; // Error
 ```
 
 ### 배열
-TypeScript는 코드에 형식을 붙이고 문서화하기 쉽게 배열을 위한 전용 type 구문을 제공합니다. 기본적으로 가능한 type키워드 뒤에 `[]` 붙입니다(예, `:boolean[]`). 평소에 할 수 있는 배열 조작을 안전하게 할 수 있게 해주고 잘못된 타입의 멤버를 할당하는 것과 같은 오류로부터 보호합니다. 아래 설명되어있습니다: 
+TypeScript는 코드에 형식을 붙이고 문서화하기 쉽게 배열을 위한 전용 type 구문을 제공합니다. 기본적으로 가능한 type  뒤에 `[]` 붙입니다(예, `:boolean[]`). 평소에 할 수 있는 배열 조작을 안전하게 할 수 있게 해주고 잘못된 타입의 멤버를 할당하는 것과 같은 오류로부터 보호합니다. 아래 설명되어있습니다: 
 
 ```ts
 var boolArray: boolean[];
@@ -79,10 +79,10 @@ name = {           // Error : `second` is the wrong type
 };
 ```
 
-`Name`키워드 안에 `first: string` + `second: string`로 구성되었고, 강제로 각각의 멤버의 type을 체크하고있습니다. 인터페이스는 TypeScript에서 많은 힘을 발휘하는데, 관련된 섹션을 통해 인터페이스의 장점에 어떻게 사용할 수 있는지에 대해 설명 할 것입니다.
+`Name` 어노테이션 안에 `first: string` + `second: string`로 구성되었고, 강제로 각각의 멤버의 type을 체크하고있습니다. 인터페이스는 TypeScript에서 많은 힘을 발휘하는데, 관련된 섹션을 통해 인터페이스의 장점에 어떻게 사용할 수 있는지에 대해 설명 할 것입니다.
 
-### 인라인 Type Annotation
-`interface`대신에 `:{ /*Structure*/ }`와 같이 *인라인*을 이용해서 키워드를 적용할 수 있습니다. 앞의 예를 인라인을 적용해서 다시보겠습니다:
+### 인라인 Type 어노테이션
+`interface`대신에 `:{ /*Structure*/ }`와 같이 *인라인*을 이용해서 어노테이션을 적용할 수 있습니다. 앞의 예를 인라인을 적용해서 다시보겠습니다:
 
 ```ts
 var name: {
@@ -103,7 +103,7 @@ name = {           // Error : `second` is the wrong type
 };
 ```
 
-인라인 유형은 신속하게 유형에 대한 일회성 키워드 선언을 제공하는데 적합합니다. 이는 (잠재적으로 잘못된)type 이름을 생각해내는 번거로움을 덜어줍니다. 그러나 동일한 유형의 키워드를 여러번 인라인하는 경우 인터페이스(또는 뒷부분에서 다루는 `type alias`)로 리팩터링하는 것이 좋습니다. 
+인라인 유형은 신속하게 유형에 대한 일회성 어노테이션 선언을 제공하는데 적합합니다. 이는 (잠재적으로 잘못된)type 이름을 생각해내는 번거로움을 덜어줍니다. 그러나 동일한 유형의 어노테이션을 여러번 인라인하는 경우 인터페이스(또는 뒷부분에서 다루는 `type alias`)로 리팩터링하는 것이 좋습니다. 
 
 ## 특수한 Types
 `any`, `null`, `undefined`, `void` 기본 유형 외에도 TypeScript에서 특별한 의미를 갖는 유형은 거의 없습니다.
@@ -202,7 +202,7 @@ reversedNums = ['1', '2']; // Error!
 나중에 **Ambient Declarations** 섹션에서 `lib.d.ts`를 제시 할 때 `Array<T>` 인터페이스에서 더 자세히 논의 할 것입니다.
 
 ## 유니온 Type
-JavaScript에서 일반적으로 속성을 여러 유형 중 하나가 되게 하려는 경우가 많습니다. 예를들면, *`문자열`또는`숫자`*. 여기서 *유니온 type*(형식 키워드에서`|`로 표시됨, 예를 들어`string | number`)가 유용합니다. 일반적인 사용 사례는 하나의 객체 또는 객체의 배열을 취할 수 있는 함수입니다:
+JavaScript에서 일반적으로 속성을 여러 유형 중 하나가 되게 하려는 경우가 많습니다. 예를들면, *`문자열`또는`숫자`*. 여기서 *유니온 type*(type 어노테이션에서`|`로 표시됨, 예를 들어`string | number`)가 유용합니다. 일반적인 사용 사례는 하나의 객체 또는 객체의 배열을 취할 수 있는 함수입니다:
 
 ```ts
 function formatCommandline(command: string[]|string) {
@@ -264,7 +264,7 @@ var [name, num] = nameNumber;
 ```
 
 ## Type 별칭
-TypeScript는 두 개 이상의 장소에서 사용하려는 유형 키워드에 이름을 제공하기 위한 편리한 구문을 제공합니다. 별칭은 `type SomeName = someValidTypeAnnotation`와 같은 구문으로 만들 수 있습니다. 아래의 예제와 같이 설명됩니다:
+TypeScript는 두 개 이상의 장소에서 사용하려는 유형 어노테이션에 이름을 제공하기 위한 편리한 구문을 제공합니다. 별칭은 `type SomeName = someValidTypeAnnotation`와 같은 구문으로 만들 수 있습니다. 아래의 예제와 같이 설명됩니다:
 
 ```ts
 type StrOrNum = string|number;
@@ -279,7 +279,7 @@ sample = true; // Error!
 ```
 
 
-`interface`와는 달리 문자 그대로 type 키워드에 type 별칭을 줄 수 있습니다(union과 intersection type과 같은 것들에 유용합니다). 아래에 좀더 구문을 친숙하게 사용할 수 있는 예제가 있습니다:
+`interface`와는 달리 문자 그대로 type 어노테이션에 type 별칭을 줄 수 있습니다(union과 intersection type과 같은 것들에 유용합니다). 아래에 좀더 구문을 친숙하게 사용할 수 있는 예제가 있습니다:
 
 ```ts
 type Text = string | { text: string };
@@ -287,9 +287,9 @@ type Coordinates = [number, number];
 type Callback = (data: string) => void;
 ```
 
-> 팁: Type 키워드의 계층을 가질 필요가 있다면 `interface`를 사용하십시오. `implements`와 `extends`와 함께 사용할 수 있습니다.
+> 팁: Type 어노테이션의 계층을 가질 필요가 있다면 `interface`를 사용하십시오. `implements`와 `extends`와 함께 사용할 수 있습니다.
 
 > 팁: 의미가있는 이름을 주기위한 더 간단한 객체 구조(`Coordinates`와 같은)를 위해 타입 별명을 사용하십시오. 또한 Union 또는 Intersection 유형에 의미론적 이름을 지정하려는 경우 Type 별칭을 사용하십시오.
 
 ## 요약
-이제 대부분의 JavaScript 코드에 키워드를 달기 시작할 수 있으므로 TypeScript의 type 시스템에서 사용할 수 있는 모든 기능에 대해 자세히 살펴볼 수 있습니다.
+이제 대부분의 JavaScript 코드에 어노테이션을 달기 시작할 수 있으므로 TypeScript의 type 시스템에서 사용할 수 있는 모든 기능에 대해 자세히 살펴볼 수 있습니다.
