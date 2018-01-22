@@ -1,13 +1,10 @@
-* [Type Guard](#type-guard)
-* [User Defined Type Guards](#user-defined-type-guards)
-
-## Type Guard
-Type Guards allow you to narrow down the type of an object within a conditional block. 
+## Type 가드
+type 가드를 사용하면 객체 type의 범위를 조건 블록 내로 좁힐 수 있습니다.
 
 
 ### typeof
 
-TypeScript is aware of the usage of the JavaScript `instanceof` and `typeof` operators. If you use these in a conditional block, TypeScript will understand the type of the variable to be different within that conditional block. Here is a quick example where TypeScript realizes that a particular function does not exist on `string` and points out what was probably a user typo:
+TypeScript는 JavaScript `instanceof`와`typeof` 연산자의 사용법을 알고 있습니다. 조건부 블록에서 이들을 사용하면 TypeScript는 해당 조건부 블록 내에서 변수의 type이 다름을 인식합니다. 다음은 TypeScript가 특정 함수에서 `string`에 존재하지 않는다는 것을 깨닫고 아마도 사용자의 오자였던 것을 보여주는 빠른 예제입니다:
 
 ```ts
 function doSomething(x: number | string) {
@@ -21,7 +18,7 @@ function doSomething(x: number | string) {
 
 ### instanceof
 
-Here is an example with a class and `instanceof`:
+여기서는 클래스와 `instanceof`의 예제입니다:
 
 ```ts
 class Foo {
@@ -53,7 +50,7 @@ doStuff(new Foo());
 doStuff(new Bar());
 ```
 
-TypeScript even understands `else` so when an `if` narrows out one type it knows that within the else *it's definitely not that type*. Here is an example:
+TypeScript는 `else`를 이해하기 때문에 `if`가 하나의 타입을 좁히면 else 안에 *타입을 확실히 알 수 있습니다*. 여기 예제가 있습니다:
 
 ```ts
 class Foo {
@@ -79,9 +76,9 @@ doStuff(new Foo());
 doStuff(new Bar());
 ```
 
-### Literal Type Guard
+### 구문 Type 가드
 
-When you have literal types in a union you can check them to discriminate e.g. 
+여러 구문type을 가지고있을 때 그들을 차별 할 수 있는지 확인 할 수 있습니다. 예를들면:
 
 ```ts
 type Foo = {
@@ -105,8 +102,8 @@ function doStuff(arg: Foo | Bar) {
 }
 ```
 
-### User Defined Type Guards
-JavaScript doesn't have very rich runtime introspection support built in. When you are using just plain JavaScript Objects (using structural typing to your advantage), you do not even have access to `instanceof` or `typeof`. For these cases you can create *User Defined Type Guard functions*. These are just functions that return `someArgumentName is SomeType`. Here is an example:
+### 사용자 정의 type 가드
+JavaScript에는 다양한 런타임 검사 지원 기능이 내장되어 있지 않습니다. 일반적인 JavaScript 객체 만 사용하는 경우(개발 편의를 위한 구조적 type사용), `instanceof`나 `typeof`에 접근해서 사용할 수 없습니다. 이러한 경우에는 *사용자 정의형 type 가드 함수*를 생성해야 합니다. `someArgumentName is SomeType`를 반환하는 함수입니다. 여기에 예제가 있습니다:
 
 ```ts
 /**
