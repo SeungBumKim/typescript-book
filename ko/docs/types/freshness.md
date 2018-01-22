@@ -52,8 +52,7 @@ logIfHasName({neme: 'I just misspelled name to neme'}); // Error: object literal
 
 ### 추가 프로퍼티의 허용
 
-type은 추가 프로퍼티가 허용되었음을 명시적으로 나타내는 색인 특성을 포함 할 수 있습니다
-A type can include an index signature to explicitly indicate that excess properties are permitted:
+type은 추가 프로퍼티가 허용되었음을 명시적으로 나타내는 색인 특성을 포함 할 수 있습니다:
 
 ```ts
 var x: { foo: number, [x: string]: any };
