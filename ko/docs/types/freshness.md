@@ -1,7 +1,7 @@
 
 ## Freshness
 
-TypeScript는 **Freshness** (*엄격한 객체 구문 검사*라고도 함)개념을 제공하여 구조적 type 호환이 가능한 객체 규문 검사를 쉽게 입력 할 수 있게합니다.
+TypeScript는 **Freshness** (*엄격한 객체 리터럴 검사*라고도 함)개념을 제공하여 구조적 type 호환이 가능한 객체 리터럴 검사를 쉽게 입력 할 수 있게합니다.
 
 구조형식은 *매우 편리*합니다. 다음 코드를 참고해보겠습니다. 이렇게 하면 type 안전성을 유지하면서 JavaScript를 TypeScript로 매우 편리하게 업그레이드 할 수 있습니다:
 
@@ -30,9 +30,9 @@ logName({ name: 'matt' }); // okay
 logName({ name: 'matt', job: 'being awesome' }); // Error: object literals must only specify known properties. `job` is excessive here.
 ```
 
-이 오류는 *객체구문에서만 발생*합니다. 이 오류가 없으면 `logName ({name : 'matt', job : 'awesome'})`호출을 보고 *logName*이 실제로는 완전히 무무시될 `job`과 함께 유용하게 사용할 수 있다고 생각합니다.
+이 오류는 *객체 리터럴에서만 발생*합니다. 이 오류가 없으면 `logName ({name : 'matt', job : 'awesome'})`호출을 보고 *logName*이 실제로는 완전히 무무시될 `job`과 함께 유용하게 사용할 수 있다고 생각합니다.
 
-또 다른 많은 사용 케이스는 선택적 멤버가 있는 인터페이스와 같은 곳에서 객체 구문 검사가 없으면 오타가 올바르게 인식됩니다:
+또 다른 많은 사용 케이스는 선택적 멤버가 있는 인터페이스와 같은 곳에서 객체 리터럴 검사가 없으면 오타가 올바르게 인식됩니다:
 
 ```ts
 function logIfHasName(something: { name?: string }) {
@@ -48,7 +48,7 @@ logIfHasName(animal); // okay
 logIfHasName({neme: 'I just misspelled name to neme'}); // Error: object literals must only specify known properties. `neme` is excessive here.
 ```
 
-이런 식으로 객체구문 type을 검사하는 이유는 *실제로 사용되지 않는 추가 속성*이 거의 항상 오타 또는 API 오해이기 때문입니다.
+이런 식으로 객체리터럴 type을 검사하는 이유는 *실제로 사용되지 않는 추가 속성*이 거의 항상 오타 또는 API 오해이기 때문입니다.
 
 ### 추가 프로퍼티의 허용
 
