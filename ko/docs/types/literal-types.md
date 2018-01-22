@@ -1,22 +1,22 @@
-## Literals
-Literals are *exact* values that are JavaScript primitives. 
+## 리터럴
+리터럴은 JavaScript의 기본적으로 *고정된* 값을 말한다. 
 
-### String Literals
+### 문자열 리터럴
 
-You can use a string literal as a type. For example:
+문자열 리터럴은 type으로 사용할 수 있다. 예를들면:
 
 ```ts
 let foo: 'Hello';
 ```
 
-Here we have created a variable called `foo` that *will only allow the literal value `'Hello'` to be assigned to it*. This is demonstrated below:
+`'Hello'`를 *리터럴 값으로 사용한* `foo`변수를 생성하고 이에 값을 할당하려고 합니다. 아래 자세한 내용이 있습니다: 
 
 ```ts
 let foo: 'Hello';
 foo = 'Bar'; // Error: "Bar" is not assignable to type "Hello"
 ```
 
-They are not very useful on their own but can be combined in a type union to create a powerful (and useful) abstraction e.g.:
+그것들은 그 자체만으로는별로 유용하지 않지만, type 유니온에서 결합되어 강력한 (그리고 유용한) 추상화를 생성할 수 있습니다:
 
 ```ts
 type CardinalDirection =
@@ -33,8 +33,8 @@ move(1,"North"); // Okay
 move(1,"Nurth"); // Error!
 ```
 
-### Other literal types
-TypeScript also supports `boolean`, `numbers` as literals, e.g.: 
+### 그외 리터럴 types
+TypeScript는 `boolean`, `numbers`역시 리터럴로 지원가능합니다. 예를들면:
 
 ```ts
 type OneToFive = 1 | 2 | 3 | 4 | 5;
@@ -42,7 +42,7 @@ type Bools = true | false;
 ```
 
 ### Inference 
-Quite commonly you get an error like `Type string is not assignable to type "foo"`. The following example demonstrates this.
+보통 `Type string is not assignable to type "foo"`와 같은 에러를 받는 경우가 꽤 있을 것입니다. 다음 예제가 이와같습니다.
 
 ```js
 function iTakeFoo(foo: 'foo') { }
@@ -52,8 +52,7 @@ const test = {
 iTakeFoo(test.someProp); // Error: Argument of type string is not assignable to parameter of type 'foo'
 ```
 
-This is because `test` is inferred to be of type `{someProp: string}`. The fix here is to use a simple type assertion to tell TypeScript the literal you want it to infer as shown below: 
-
+이유는 `test`는 `{someProp: string}`type으로 추론되기 때문입니다. 여기에있는 수정 사항은 간단한 type 주장을 사용하여 TypeScript에 다음과 같이 유추할 문자를 알리는 것입니다:
 ```js
 function iTakeFoo(foo: 'foo') { }
 const test = {
@@ -62,12 +61,11 @@ const test = {
 iTakeFoo(test.someProp); // Okay!
 ```
 
-### Use cases
-Valid use cases for string literal types are:
+### 사용 케이스들
+문자열 리터럴의 유용한 사용 케이스들은:
 
-#### String based enums
-
-[TypeScript enums are number based](../enums.md). You can use string literals with union types to mock a string based enum as we did in the `CardinalDirection` example above. You can even generate a `Key:Value` structure using the following function: 
+#### 문자열 기반의 enums
+TypeScript의 enum은 숫자형을 기본으로합니다.[TypeScript enums are number based](../enums.md). 우리는 위의`CardinalDirection` 예제에서와 같이 문자열 기반의 enum을 사용하기 위해서 공용체 type을 가진 문자열 리터럴을 사용할 수 있습니다. 다음 함수를 사용하여`Key : Value` 구조체를 생성할 수도 있습니다: 
 
 ```ts
 /** Utility function to create a K:V from a list of strings */
@@ -79,7 +77,7 @@ function strEnum<T extends string>(o: Array<T>): {[K in T]: K} {
 }
 ```
 
-And then generate the literal type union using `keyof typeof`. Here is a complete example:
+그리고나서 `keyof typeof`을 사용해서 리터럴 type 조합를 생성할 수 있습니다. 여기에 완전한 예제가 있습니다:
 
 ```ts
 /** Utility function to create a K:V from a list of strings */
@@ -114,17 +112,14 @@ sample = 'North'; // Okay
 sample = 'AnythingElse'; // ERROR!
 ```
 
-#### Modelling existing JavaScript APIs
-
-E.g. [CodeMirror editor has an option `readOnly`](https://codemirror.net/doc/manual.html#option_readOnly) that can either be a `boolean` or the literal string `"nocursor"` (effective valid values `true,false,"nocursor"`).  It can be declared as:
-
+#### 기존 JavaScript API 모델링
+예를들어 CodeMirror에디터는 `boolean` 또는 리터럴 문자열 `"nocursor"`(유효한 유효값 `true,false,"nocursor"`))일 수 있는 `readOnly`옵션을 갖고있습니다.[here](https://codemirror.net/doc/manual.html#option_readOnly). ㅎ당내용은 아래와 같이 선언됩니다:
 ```ts
 readOnly: boolean | 'nocursor';
 ```
 
-#### Discriminated Unions
+#### 차별된 조합
 
-We will cover [this later in the book](./discriminated-unions.md).
-
+다음에서 다루겠습니다.[here](./discriminated-unions.md).
 
 [](https://github.com/Microsoft/TypeScript/pull/5185)
