@@ -1,5 +1,5 @@
 ## Readonly
-TypeScript's type system allows you to mark individual properties on an interface as `readonly`. This allows you to work in a functional way (unexpected mutation is bad):
+TypeScript의 type 시스템을 사용하면 인터페이스의 개별 속성을 `readonly`로 표시 할 수 있습니다. 이것은 기능적인 방법(예기치 않은 변화는 좋지 않은 경우)으로 일할 수 있게합니다:
 
 ```ts
 function foo(config: {
@@ -14,7 +14,7 @@ foo(config);
 // You can be sure that `config` isn't changed 🌹
 ```
 
-Of course you can use `readonly` in `interface` and `type` definitions as well e.g.:
+물론 `interface`나 `type` 정의에서도 `readonly`을 사용할 수 있습니다. 예를들면:
 
 ```ts
 type Foo = {
@@ -29,7 +29,7 @@ let foo: Foo = { bar: 123, bas: 456 };
 foo.bar = 456; // Error: Left-hand side of assignment expression cannot be a constant or a read-only property
 ```
 
-You can even declare a class property as `readonly`. You can initialize them at the point of declaration or in the constructor as shown below:
+또한 클래스의 프로퍼티로도 `readonly`을 선언할 수 있습니다. 아래 보는것 같이 선언할 때나 생성자에서 초기화 해줄 수 있습니다:
 
 ```ts
 class Foo {
@@ -41,10 +41,10 @@ class Foo {
 }
 ```
 
-### Various Use Cases
+### 다양한 사용 케이스들
 
 #### ReactJS
-One library that loves immutability is ReactJS and it's a great idea to mark your `Props` and `State` to be immutable e.g.:
+불변성을 좋아하는 라이브러리 중 하나는 ReactJS이며 `Props`와 `State`를 불변으로 표시하는 것이 좋습니다. 예를들면:
 
 ```ts
 interface Props {
@@ -60,9 +60,9 @@ export class Something extends React.Component<Props,State> {
 }
 ```
 
-#### Seamless Immutable
+#### 지속적인 불변성
 
-You can even mark index signatures as readonly:
+순서 표시에도 readonly을 달 수 있습니다:
 
 ```ts
 /**
@@ -80,7 +80,7 @@ console.log(foo[0]);   // Okay (reading)
 foo[0] = 456;          // Error (mutating): Readonly
 ```
 
-This is great if you want to use native JavaScript arrays in an *immutable* fashion. In fact TypeScript ships with a `ReadonlyArray<T>` interface to allow you to do just that:
+네이티브 JavaScript 배열을 *불변* 방식으로 사용하려는 경우에 유용합니다. 사실 TypeScript는 `ReadonlyArray <T>`인터페이스를 가지고 있습니다.:
 
 ```ts
 let foo: ReadonlyArray<number> = [1, 2, 3];
@@ -89,8 +89,8 @@ foo.push(4);           // Error: `push` does not exist on ReadonlyArray as it mu
 foo = foo.concat([4]); // Okay: create a copy
 ```
 
-#### Automatic Inference
-In some cases the compiler can automatically infer a particular item to be readonly e.g. within a class if you have a property that only has a getter but no setter, it is assumed readonly e.g.:
+#### 자동적인 추론
+경우에 따라 컴파일러는 특정 항목을 readonly로 자동 추론 할 수 있습니다. 예를들면 클래스에서 프로퍼티가 getter만 있고 setter가 없다면 이는 readonly로 가정합니다. 예:
 
 ```ts
 class Person {
@@ -106,16 +106,16 @@ console.log(person.fullName); // John Doe
 person.fullName = "Dear Reader"; // Error! fullName is readonly
 ```
 
-### Difference from `const`
+### `const`와의 차이
 `const`
-1. is for a variable reference
-1. the variable cannot be reassigned to anything else.
+1. 는 변수 참조용입니다.
+1. 변수를 어떠한경우에도 재할당 할 수 없습니다.
 
 `readonly` is
-1. for a property
-1. the property can be modified because of aliasing
+1. 프로퍼티를 위한 것입니다. 
+1. 프로퍼티는 aliasing때문에 수정가능합니다.
 
-Sample explaining 1:
+샘플 설명 1:
 
 ```ts
 const foo = 123; // variable reference
@@ -124,7 +124,7 @@ var bar: {
 }
 ```
 
-Sample explaining 2:
+ 샘플 설명 2:
 
 ```ts
 let foo: {
@@ -141,7 +141,7 @@ iMutateFoo(foo); // The foo argument is aliased by the foo parameter
 console.log(foo.bar); // 456!
 ```
 
-Basically `readonly` ensures that *cannot be modified by me*, but if you give it to someone that doesn't have that guarantee (allowed for type compatibility reasons) they can modify it. Of course if `iMutateFoo` said that they do not mutate `foo.bar` the compiler would correctly flag it as an error as shown:
+기본적으로 `readonly`는 *나에 의해서 수정하지 못하도록 보장*하나 보증되지 않는 사람에게 그것을 준다면(타입 호환성의 이유로 허용된다.) 그들은 그것을 수정할 수 있습니다. 물론 `iMutateFoo`가 `foo.bar`를 변경하지 않는다고 말하면, 컴파일러는 표시된 것처럼 올바르게 플래그를 지정합니다:
 
 ```ts
 interface Foo {
