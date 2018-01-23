@@ -151,15 +151,15 @@ function addOne(a) {
 }
 ```
 
-이는 리턴 type이 `addOne`에 대한 빈타입 정의의 영향을 받기 때문입니다(`a`는 `any`이므로 `addOne`의 리턴은 `any`이다. 그래서 `foo`의 리턴은`any`입니다.)
+이는 리턴 type이 `addOne`에 대한 빈타입 정의의 영향을 받기 때문입니다(`a`는 `any`이므로 `addOne`의 리턴은 `any`이다. 그래서 `foo`의 리턴은 `any`입니다.)
 
-> I find it simplest to always be explicit about function / returns. After all these annotations are a theorem and the function body is the proof.
+> 필자는 항상 함수/리턴에 대해 명시하는 것이 가장 간단하다는 것을 알았습니다. 이 모든 어노테이션이 이론이고 함수 몸체가 증명 된 후로부터 그렇습니다. 
 
-There are other cases that one can imagine, but the good news is that there is a compiler flag that can help catch such bugs.
+사람이 상상할 수 있는 다른 경우가 있습니다. 그러나 좋은 소식은 그러한 버그를 잡는 데 도움이 될 수 있는 컴파일러 플래그가 있다는 것입니다.
 
 ## `noImplicitAny`
 
-There is a boolean compiler flag `noImplicitAny` where the compiler will actually raise an error if it cannot infer the type of a variable (and therefore can only have it as an *implicit* `any` type). You can then
+부울형의 컴파일러 플래그`noImplicitAny`가 있습니다. 여기서 변수의 type을 추론 할 수 없다면(따라서 *암시적* `any` type으로만 가능) 컴파일러는 실제로 오류를 발생시킵니다. 그래서
 
-* either say that *yes I want it to be an `any`* by *explicitly* adding an `: any` type annotation
-* help the compiler out by adding a few more *correct* annotations.
+* `any :`type 어노테이션을 명시적으로 추가함으로써 `any`로 사용되기를 원합니다. 
+* 좀 더 *정확한* 어노테이션을 추가하여 컴파일러를 도와주세요.
