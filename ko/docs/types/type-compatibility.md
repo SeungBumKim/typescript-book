@@ -1,21 +1,6 @@
-* [Type Compatibility](#type-compatibility)
-* [Soundness](#soundness)
-* [Structural](#structural)
-* [Generics](#generics)
-* [Variance](#variance)
-* [Functions](#functions)
-  * [Return Type](#return-type)
-  * [Number of arguments](#number-of-arguments)
-  * [Optional and rest parameters](#optional-and-rest-parameters)
-  * [Types of arguments](#types-of-arguments)
-* [Enums](#enums)
-* [Classes](#classes)
-* [Generics](#generics)
-* [FootNote: Invariance](#footnote-invariance)
+## Type 호환성
 
-## Type Compatibility
-
-Type Compatibility (as we discuss here) determines if one thing can be assigned to another. E.g. `string` and `number` are not compatible:
+Type 호환성(여기서 다룰)은 어떤 값이 다른 곳에 할당 가능한지 결정하는 것입니다. 예를들면, `string`과 `number`는 호환되지 않습니다:
 
 ```ts
 let str: string = "Hello";
@@ -25,9 +10,9 @@ str = num; // ERROR: `number` is not assignable to `string`
 num = str; // ERROR: `string` is not assignable to `number`
 ```
 
-## Soundness
+## 견실성
 
-TypeScript's type system is designed to be convenient and allows for *unsound* behaviours e.g. anything can be assigned to `any` which essentially means you telling the compiler to allow you to do whatever you want:
+TypeScript의 type 시스템은 편리하고 *오류가능성 있는* 동작을 허용하도록 설계되었습니다. 예를들면 무엇이든`any`에 할당 할 수 있습니다. 근본적으로 컴파일러에게 여러분이 원하는 것을 무엇이든 하도록 허용한다는 것을 의미합니다:
 
 ```ts
 let foo: any = 123;
@@ -37,9 +22,9 @@ foo = "Hello";
 foo.toPrecision(3); // Allowed as you typed it as `any`
 ```
 
-## Structural
+## 구조적
 
-TypeScript objects are structurally typed. This means the *names* don't matter as long as the structures match
+TypeScript의 오브젝트는 구조적으로 구성 가능합니다. 즉, 구조가 일치하는 한 *이름*은 중요하지 않습니다.
 
 ```ts
 interface Point {
@@ -56,9 +41,9 @@ let p: Point;
 p = new Point2D(1,2);
 ```
 
-This allows you to create objects on the fly (like you do in vanilla JS) and still have safety for whenever it can be inferred.
+이를 통해 추측할 수 있을 때마다 안전성을 유지하면서 즉시(vanilla JS같이) 오브젝트를 생성 할 수 있습니다.
 
-Also *more* data is considered fine:
+또한 *추가적인* 데이터도 잘 처리됩니다:
 
 ```ts
 interface Point2D {
@@ -79,29 +64,29 @@ iTakePoint2D(point3D); // extra information okay
 iTakePoint2D({ x: 0 }); // Error: missing information `y`
 ```
 
-## Variance
+## 변환성
 
-Variance is an easy to understand and important concept for type compatibility analysis.
+변환성 type 호환성 분석을 위해 이해하기 쉽고 중요한 개념입니다.
 
-For simple types `Base` and `Child`, if `Child` is a child of `Base`, then instances of `Child` can be assigned to a variable to type `Base`.
+간단한 type `Base`와 `Child`가 있고, `Child`가 `Base`의 자식이면, `Child`의 인스턴스는 `Base` type의 변수에 할당 가능합니다.
 
-> This is polymorphism 101
+> 이 내용은 다형성 101입니다.
 
-In type compatibility of complex types composed of such `Base` and `Child` depending on where the `Base` and `Child` in similar scenarios is driven by *variance*.
+유사한 시나리오에서 `Base`와`Child`가 어디에 위치하는지에 따라 'Base'와 'Child'로 구성된 복합 type들의 type 호환성은 *변환성*에 의해 좌우됩니다.
 
-* Covariant : (corporate) only in *same direction*
-* Contravariant : (contra aka negative) only in *opposite direction*
-* Bivariant : (bi aka both) both co and contra.
-* Invariant : if the types are aren't exact then they are incompatible.
+* 같이 변화 : (함께) *같은 방향*으로만
+* 반대로 변화: (반대쪽) *반대 방향*으로만
+* 둘다 변화: (둘) both co and contra.(이해가 안가서요..)
+* 불변 : type이 정확하지 않으면 호환되지 않습니다.
+ 
+> 노트: JavaScript와 같이 변경 가능한 데이터가 있는 시스템의 경우 '불변'만 유효한 옵션입니다. 그러나 언급한 바와 같이 *편의성*은 우리로 하여금 오류가능성있는 선택을하도록 강요합니다.
 
-> Note: For a completely sound type system in the presence of mutable data like JavaScript, `invariant` is the only valid option. But as mentioned *convenience* forces us to make unsound choices.
+## 함수
 
-## Functions
+두개의 함수를을 비교할 때 고려해야 할 몇 가지 미묘한 사항이 있습니다.
 
-There are a few subtle things to consider when comparing two functions.
-
-### Return Type
-`covariant`: The return type must contain at least enough data.
+### 반환 Type
+`같변화`: 반환 type은 최소한 충분한 데이터를 포함해야합니다.
 
 ```ts
 /** Type Heirarchy */
@@ -117,8 +102,8 @@ iMakePoint2D = iMakePoint3D; // Okay
 iMakePoint3D = iMakePoint2D; // ERROR: Point2D is not assignable to Point3D
 ```
 
-### Number of arguments
-Less arguments are okay (i.e. functions can chose to ignore additional args). After all you are guaranteed to be called with at least enough arguments.
+### 인자의 갯수
+적은 인자의 갯수는 괜찮습니다.(예를들면, 함수는 추가되는 인자를 무시하도록 할 수 있습니다.). 결국 적어도 충분한 인자와 함께 호출을 보장 받을 수 있습니다.
 
 ```ts
 let iTakeSomethingAndPassItAnErr
@@ -132,9 +117,9 @@ iTakeSomethingAndPassItAnErr((err, data) => null) // Okay
 iTakeSomethingAndPassItAnErr((err, data, more) => null); // ERROR
 ```
 
-### Optional and Rest Parameters
+### 선택적이고 남는 매개변수
 
-Optional (pre determined count) and Rest parameters (any count of arguments) are compatible, again for convenience.
+선택적(미리 결정되는 갯수)이고 남는 매개변수(인자의 수)는 편의성을 위해서 호환가능합니다.
 
 ```ts
 let foo = (x:number, y: number) => { /* do something */ }
@@ -145,12 +130,10 @@ foo = bar = bas;
 bas = bar = foo;
 ```
 
-> Note: optional (in our example `bar`) and non optional (in our example `foo`) are only compatible if strictNullChecks is false.
+> 노트: 선택적이고(예제에서 `bar`) 선택적이지 않은(예제에서 `foo`)는 strictNullChecks가 false인 경우에만 호환됩니다. 
 
-
-### Types of arguments
-
-`bivariant` : This is designed to support common event handling scenarios
+### 인자의 Types
+`둘다변화`: 이것은 일반적인 이벤트 처리 시나리오를 지원하도록 설계되었습니다.
 
 ```ts
 /** Event Hierarchy */
@@ -175,9 +158,9 @@ addEventListener(EventType.Mouse, <(e: Event) => void>((e: MouseEvent) => consol
 addEventListener(EventType.Mouse, (e: number) => console.log(e));
 ```
 
-Also makes `Array<Child>` assignable to `Array<Base>` (covariance) as the functions are compatible. Array covariance requires all `Array<Child>` functions to be assignable to `Array<Base>` e.g. `push(t:Child)` is assignable to `push(t:Base)` which is made possible by function argument bivariance.
+함수가 호환되기 때문에 `Array <Base>`(같이 변화)에 `Array <Child>`를 할당 할 수 있게한다. 배열이 같이 변화하는 것은 모든 `Array<Child>`은 `Array<Base>`로 할당 가능하다는 것입니다. 예를들면, 함수 인자가 둘다변화가 가능 해졌기때문에 `push(t:Child)`는 `push(t:Base)`에 할당 가능합니다. 
 
-**This can be confusing for people coming from other languages** who would expect the following to error but will not in TypeScript:
+**이러한 내용은 다른 언어에서 온 사람들에게 혼란 스러울 수 있습니다.** 다음과 같은 오류를 기대하지만 TypeScrip에서는 그렇지 않습니다:
 
 ```ts
 /** Type Heirarchy */
@@ -192,9 +175,9 @@ iTakePoint3D = iTakePoint2D; // Okay : Reasonable
 iTakePoint2D = iTakePoint3D; // Okay : WHAT
 ```
 
-## Enums
+## 열거형
 
-* Enums are compatible with numbers, and numbers are compatible with enums.
+* 열거형은 numbers로 호환가능하고, numbers은 열거형으로 호환가능합니다.
 
 ```ts
 enum Status { Ready, Waiting };
@@ -206,7 +189,7 @@ status = num; // OKAY
 num = status; // OKAY
 ```
 
-* Enum values from different enum types are considered incompatible. This makes enums useable *nominally* (as opposed to structurally)
+* 다른 열거형 type에서 온 열거형 값은 호환되지 않습니다. 이것은 열거형을 쓸모없게 만들었습니다.(구조형과는 반대로)
 
 ```ts
 enum Status { Ready, Waiting };
@@ -218,9 +201,9 @@ let color = Color.Red;
 status = color; // ERROR
 ```
 
-## Classes
+## 클래스
 
-* Only instance members and methods are compared. *constructors* and *statics* play no part.
+* 오직 인스턴스 멤버와 함수만 비교됩니다.*생성자*와 *statics*는 아무 것도하지 않습니다.
 
 ```ts
 class Animal {
@@ -240,7 +223,7 @@ a = s;  // OK
 s = a;  // OK
 ```
 
-* `private` and `protected` members *must originate from the same class*. Such members essentially make the class *nominal*.
+* `private`와 `protected` 멤버는 *반드시 같은 클래스로부터 나오는 것이어야합니다*. 그러한 멤버는 본질적으로 클래스를 *유명무실하게* 만듭니다.
 
 ```ts
 /** A class hierarchy */
@@ -264,7 +247,7 @@ size = animal; // ERROR
 
 ## Generics
 
-Since TypeScript has a structural type system, type parameters only affect compatibility when used by member. For example, in the  following `T` has no impact on compatibility:
+TypeScript는 구조적인 type 시스템이므로 type 매개 변수는 멤버가 사용할 때만 호환성에 영향을 줍니다. 예를들면, 다음의 `T`는 호환성에 영향을 주지 않습니다:
 
 ```ts
 interface Empty<T> {
@@ -275,7 +258,7 @@ let y: Empty<string>;
 x = y;  // okay, y matches structure of x
 ```
 
-However the if `T` is used, it will play a role in compatibility based on its *instantiation* as shown below:
+그러나 `T`가 사용된다면, 아래 그림과 같이 *인스턴스화*를 기반으로한 호환성에서 역할을 수행합니다:
 
 ```ts
 interface NotEmpty<T> {
@@ -287,7 +270,7 @@ let y: NotEmpty<string>;
 x = y;  // error, x and y are not compatible
 ```
 
-In cases where generic arguments haven't been *instantiated* they are substituted by `any` before checking compatibility:
+generic 인자가 인스턴스화되지 않은 경우 호환성을 검사하기 전에`any`로 대체됩니다:
 
 ```ts
 let identity = function<T>(x: T): T {
@@ -301,9 +284,9 @@ let reverse = function<U>(y: U): U {
 identity = reverse;  // Okay because (x: any)=>any matches (y: any)=>any
 ```
 
-## FootNote: Invariance
+## 각주: 불변성
 
-We said invariance is the only sound option. Here is an example where both `contra` and `co` variance are shown to be unsafe for arrays.
+불변성이 유일한 정상적인 옵션이라고 말했다. 다음은 반대와 함께하는 변화성이 모두 배열에 안전하지 않은 것으로 보이는 예제입니다.
 
 ```ts
 /** Heirarchy */
