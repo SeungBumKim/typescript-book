@@ -1,13 +1,12 @@
-# Type Inference in TypeScript
+# TypeScript에서의 Type추론
 
-TypeScript can infer (and then check) the type of a variable based on a few simple rules. Because these rules
-are simple you can train your brain to recognize safe / unsafe code (it happened for me and my team mates quite quickly).
+TypeScript는 몇 가지 간단한 규칙을 기반으로 변수 type을 유추(및 확인) 할 수 있습니다. 이 규칙은 간단하기 때문에 안전하고 안전하지 않은 코드를 인식하도록 두뇌를 훈련시킬 수 있습니다.(그것은 나에게 일어 났고, 나의 팀 동료는 아주 빨리 일어났다.)
 
-> The types flowing is just how I imagine in my brain the flow of type information.
+> type의 흐름은 단지 뇌에서 type 정보의 흐름을 상상하는 것입니다.
 
-## Definition
+## 정의
 
-Types of a variable are inferred by definition.
+변수의 type은 정의에 의해 추론됩니다.
 
 ```ts
 let foo = 123; // foo is a `number`
@@ -15,11 +14,11 @@ let bar = "Hello"; // bar is a `string`
 foo = bar; // Error: cannot assign `string` to a `number`
 ```
 
-This is an example of types flowing from right to left.
+이것은 오른쪽에서 왼쪽으로 흐르는 유형의 예입니다.
 
-## Return
+## 반환
 
-The return type is inferred by the return statements e.g. the following function is inferred to return a `number`.
+반환 type은 return 문에 의해 유추됩니다. 예, 다음함수는 `number`가 반환 될 것입니다.
 
 ```ts
 function add(a: number, b: number) {
@@ -27,16 +26,16 @@ function add(a: number, b: number) {
 }
 ```
 
-This is an example of types flowing bottom out.
+이것은 맨 아래로 흐르는 유형의 예입니다.
 
-## Assignment
-The type of the function parameters / return can also be inferred by assignment e.g. here we say that `foo` is an `Adder`, that makes the type of `a` and `b` to infer as `number`.
+## 할당
+함수 매개 변수/반환의 type은  할당에의해 유추될 수 있습니다. 예, 여기서 `foo`는 `Adder`라고 말하고, `a`와`b`의 타입을 `number`로 추론합니다.
 
 ```ts
 type Adder = (a: number, b: number) => number;
 let foo: Adder = (a, b) => a + b;
 ```
-This fact can be demonstrated by the below code which raises an error as you would hope:
+이 사실은 오류를 발생시키는 아래 코드에 의해 증명 될 수 있습니다:
 
 ```ts
 type Adder = (a: number, b: number) => number;
@@ -45,9 +44,9 @@ let foo: Adder = (a, b) => {
     return a + b;
 }
 ```
-This is an example of types flowing from left to right.
+이것은 왼쪽에서 오른쪽으로 흐르는 유형의 예입니다.
 
-The same *assignment* style type inference works if you create a function for a callback argument. After all an `argument -> parameter`is just another form of variable assignment.
+콜백 인수에 대한 함수를 만들면 동일한 *할당* 스타일 type 유추가 작동합니다. 결국 `argument -> parameter`는 변수 할당의 다른 형태 일뿐입니다.
 
 ```ts
 type Adder = (a: number, b: number) => number;
@@ -60,8 +59,8 @@ iTakeAnAdder((a, b) => {
 })
 ```
 
-## Structuring
-These simple rules also work in the presence of **structuring** (object literal creation). For example in the following case the type of `foo` is inferred to be `{a:number, b:number}`
+## 구조화
+이러한 간단한 규칙은 **구조화** (객체 리터럴 생성)에서도 동작합니다. 예를들어 다음 케이스에서 `foo`의 type은 `{a:number, b:number}`로 추론됩니다.
 
 ```ts
 let foo = {
@@ -71,12 +70,12 @@ let foo = {
 // foo.a = "hello"; // Would Error: cannot assign `string` to a `number`
 ```
 
-Similarly for arrays:
+배열도 유사합니다:
 ```ts
 const bar = [1,2,3];
 // bar[0] = "hello"; // Would error: cannot assign `string` to a `number`
 ```
-And ofcourse any nesting:
+물론 안에서도 가능합니다:
 
 ```ts
 let foo = {
@@ -85,8 +84,8 @@ let foo = {
 foo.bar[0] = 'hello'; // Would error: cannot assign `string` to a `number`
 ```
 
-## Destructuring
-And of course, they also work with destructuring, both objects:
+## 비구조화
+그리고 물론, 그들은 또한 비구조화 함께 동작합니다. 두 객체를 보세요:
 
 ```ts
 let foo = {
@@ -96,7 +95,7 @@ let foo = {
 let {a} = foo;
 // a = "hello"; // Would Error: cannot assign `string` to a `number`
 ```
-and arrays:
+그리고 배열에서도:
 
 ```ts
 const bar = [1, 2];
@@ -104,7 +103,7 @@ let [a, b] = bar;
 // a = "hello"; // Would Error: cannot assign `string` to a `number`
 ```
 
-And if the function parameter can be inferred, so can its destructured properties. For example here we destructure the argument into its `a`/`b` members.
+함수 매개 변수를 추론 할 수 있는 경우, 비구조화된 프로퍼티도 할 수있습니다. 예를들어 여기서 우리는 인수를 그것의 `a`/`b` 멤버로 비구화시킵니다.
 
 ```ts
 type Adder = (numbers: { a: number, b: number }) => number;
@@ -117,21 +116,22 @@ iTakeAnAdder(({a, b}) => { // Types of `a` and `b` are inferred
 })
 ```
 
-## Type Guards
-We have already seen how [Type Guards](./typeGuard.md) help change and narrow down types (particularly in the case of unions). Type guards are just another form of type inference for a variable in a block.
+## Type 가드
+우리는 이미 [Type Guards] (./ typeGuard.md)가 type을 변경하고 범위를 좁히는데 도움이(특히 유니온의 경우) 되는 것을 보았습니다. 
+type 가드는 블록의 변수에 대한 type 유추의 또 다른 형식입니다.
 
 
-## Warnings
+## 경고
 
 ### Be careful around parameters
 
-Types do not flow into the function parameters if it cannot be inferred from an assignment. e.g. in the following case the compiler does not to know the type of `foo` so it cannot infer the type of `a` or `b`
+할당에서 유추 할 수 없는 경우 type이 함수 매개 변수로 유입되지 않습니다. 예를들어 다음 케이스를 보면 컴파일러는 `foo`의 type을 알지못합니다. 그래서 `a` 와 `b`의 type을 유추 할 수 없습니다.
 
 ```t
 const foo = (a,b) => { /* do something */ };
 ```
 
-However if `foo` was typed the function parameters type can be inferred (`a`,`b` are both inferred to be number below).
+그러나 `foo`가 입력되면 함수 매개 변수 유형을 유추 할 수 있습니다. (`a`,`b`는 둘 다 아래의 number로 유추됩니다).
 
 ```ts
 type TwoNumberFunction = (a: number, b: number) => void;
@@ -140,7 +140,7 @@ const foo: TwoNumberFunction = (a, b) => { /* do something */ };
 
 ### Be careful around return
 
-Although TypeScript can generally infer the return type of a function, it might not be what you expect. e.g. here function `foo` has a return type of `any`
+TypeScript는 일반적으로 함수의 반환 type을 유추 할 수 있지만 기대했던 것이 아닐 수도 있다. 예를들면 `foo`의 반환값은 `any` type을 갖고있습니다:
 ```ts
 function foo(a: number, b: number) {
     return a + addOne(b);
@@ -151,7 +151,7 @@ function addOne(a) {
 }
 ```
 
-This is because the return type is impacted by the poor type definition for `addOne` (`a` is `any` so the return of `addOne` is `any` so the return of `foo` is `any`).
+이는 리턴 type이 `addOne`에 대한 빈타입 정의의 영향을 받기 때문입니다(`a`는 `any`이므로 `addOne`의 리턴은 `any`이다. 그래서 `foo`의 리턴은`any`입니다.)
 
 > I find it simplest to always be explicit about function / returns. After all these annotations are a theorem and the function body is the proof.
 
