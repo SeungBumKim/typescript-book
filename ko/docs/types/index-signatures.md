@@ -1,8 +1,8 @@
-# Index Signatures
+# 인덱스 시그니처
 
-An `Object` in JavaScript (and hence TypeScript) can be accessed with a **string** to hold a reference to any other JavaScript **object**.
+JavaScript(및 TypeScript)의 `Object`는 다른 JavaScript **객체**에 대한 참조를 보유하기 위해 **문자열**을 사용하여 액세스 할 수 있습니다.
 
-Here is a quick example:
+여기서 빠르게 확인가능한 예제가 있습니다:
 
 ```ts
 let foo:any = {};
@@ -10,8 +10,7 @@ foo['Hello'] = 'World';
 console.log(foo['Hello']); // World
 ```
 
-We store a string `"World"` under the key `"Hello"`. Remember we said it can store any JavaScript **object**, so lets store a class instance just to show the concept:
-
+문자열 `"World"`을 `"Hello"`키로 저장했습니다. 우리는 JavaScript **객체**에는 어떠한 것도 저장할 수 있다고 말해왔고, 그래서 그러한 부분을 보여주기 위해 클래스 인스턴스를 저장하겠습니다:
 ```ts
 class Foo {
   constructor(public message: string){};
@@ -25,7 +24,7 @@ foo['Hello'] = new Foo('World');
 foo['Hello'].log(); // World
 ```
 
-Also remember that we said that it can be accessed with a **string**. If you pass some any other object to the index signature the JavaScript runtime actually calls `.toString` on it before getting the result. This is demonstrated below:
+또한 **문자열**을 사용하여 액세스 할 수 있다고 말한 것을 기억하십시오. 다른 객체를 인덱스 시그니처에 전달하면 JavaScript 런타임은 실제로 결과를 얻기 전에 `.toString`을 호출합니다. 이러한 내용은 아래에서 설명됩니다:
 
 ```ts
 let obj = {
@@ -40,20 +39,21 @@ foo[obj] = 'World'; // toString called
 console.log(foo[obj]); // toString called, World
 console.log(foo['Hello']); // World
 ```
-Note that `toString` will get called whenever the `obj` is used in an index position.
 
-Arrays are slightly different. For `number` indexing JavaScript VMs will try to optimise (depending on things like is it actually an array and do the structures of items stored match etc.). So `number` should be considered as a valid object accessor in its own right (distinct from `string`). Here is a simple array example:
+`toString`는 인덱스 위치에서 `obj`가 사용될 때마다 호출됩니다.
+
+배열은 약간 다릅니다. `number`인덱스를 위해 JavaScript VM은 최적화(같은값에 따라 실제로 배열에 일치하는 항목의 구조를 저장합니다.)를 시도합니다. 그래서`number`는 그 자체로 유효한(`string`과 구별되는) 객체 접근자로 간주되어야 합니다. 여기에 간단한 배열 예제가 있습니다:
 
 ```ts
 let foo = ['World'];
 console.log(foo[0]); // World
 ```
 
-So that's JavaScript. Now let's look at TypeScript graceful handling of this concept.
+이러한 내용이 JavaScript입니다. 이제 이러한 개념을 TypeScript로 훌륭하게 처리해 보겠습니다.
 
-## TypeScript Index Signature
+## TypeScript 인덱스 
 
-First off, because JavaScript *implicitly* calls `toString` on any object index signature, TypeScript will give you an error to prevent beginners from shooting themselves in the foot (I see users shooting themselves in their feet when using JavaScript all the time on stackoverflow):
+첫째, JavaScript는 *암시적*으로 모든 객체 인덱스 시그니처에서 `toString`을 호출하기 때문에, TypeScript는 초보자가 잘못된 코드를 막위해서 오류를 줄 것입니다.(stackoverflow에서 항상 JavaScript의 사용자중 이러한 경우를 많이 보았습니다.):
 
 ```ts
 let obj = {
@@ -71,7 +71,7 @@ foo[obj] = 'World';
 foo[obj.toString()] = 'World';
 ```
 
-The reason for forcing the user to be explicit is because the default `toString` implementation on an object is pretty awful, e.g. on v8 it always returns `[object Object]`:
+사용자에게 명시적으로 강요하는 이유는 객체의 기본 `toString` 구현이 상당히 끔찍하기 때문입니다. 예를들어 v8에서는 항상 `[object Object]`을 반환합니다:
 
 ```ts
 let obj = {message:'Hello'}
@@ -84,26 +84,26 @@ foo[obj] = 'World';
 console.log(foo["[object Object]"]); // World
 ```
 
-Of course `number` is supported because
+물론 `number`은 지원가는합니다. 아래 이유 때문에 필요합니다.
 
-1. its needed for excellent Array / Tuple support.
-1. even if you use it for an `obj` its default `toString` implementation is nice (not `[object Object]`).
+1. Array/Tuple의 지원을 위해서 필요하니다.
+1. 당신이 `obj`를 위해 `number`을 사용한다고 하더라도 디폴트 `toString` 구현은 필요(`[object Object]`는 아닙니다.)합니다.
 
-Point 2 is shown below:
+두번째 내용은 아래에서 예제를 보세요:
 
 ```ts
 console.log((1).toString()); // 1
 console.log((2).toString()); // 2
 ```
 
+여기서 첫번째 배울점은:
 So lesson 1:
 
-> TypeScript index signatures must be either `string` or `number`
+> TypeScript 인덱스 시그니처는 `string`나 `number`이어야합니다. 
 
-Quick note: `symbols` are also valid and supported by TypeScript. But let's not go there just yet. Baby steps.
+메모: `symbols`는 TypeScript에서도 유효하고 지원됩니다. 그러나 걸음마 단계인 아직은 설명하지는 않겠습니다. 
 
-
-### Declaring an index signature
+### 인덱스 시그니처 선언
 
 So we've been using `any` to tell TypeScript to let us do whatever we want. We can actually specify an *index* signature explicitly. E.g. say you want to make sure than anything that is stored in an object using a string conforms to the structure `{message: string}`. This can be done with the declaration `{ [index:string] : {message: string} }`. This is demonstrated below:
 
