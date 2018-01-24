@@ -1,8 +1,8 @@
-### Discriminated Union
+### 구별되는 조합
 
-If you have a class with a [*literal member*](./literal-types.md) then you can use that property to discriminate between union members.
+*리터럴 멤버* 클래스가 있다면 프로퍼티를 이용해서 조합 멤버를 구별 할 수 있습니다. 
 
-As an example consider the union of a `Square` and `Rectangle`, here we have a member `kind` that exists on both union members and is of a particular *literal type*:
+예제로 `Square`의 `Rectangle` 조합을 고려해보겠습니다. 여기에 우리는 두 멤버 모두에 존재하고 특별한 *리터럴 type*의 멤버인 `kind`를 가지고 있습니다:
 
 ```ts
 interface Square {
@@ -18,7 +18,7 @@ interface Rectangle {
 type Shape = Square | Rectangle;
 ```
 
-If you use a type guard style check (`==`, `===`, `!=`, `!==`) or `switch` on the *discriminant property* (here `kind`) TypeScript will realize that it means that the object must of the type that has that literal and do a type narrowing for you :)
+type 가드 스타일 체크(`==`, `===`, `!=`, `!==`)나 `switch`로 *구별되는 프러퍼티*(여기서는 `kind`)를 사용한다면, TypeScript는 객체가 해당 리터럴을 가진 type이어야하며 type이 사용자를 위해 좁아진다는 것을 의미한다는 것을 인식합니다:)
 
 ```ts
 function area(s: Shape) {
@@ -35,8 +35,8 @@ function area(s: Shape) {
 }
 ```
 
-### Exhaustive Checks
-Quite commonly you want to make sure that all members of a union have some code(action) against them.
+### 철저한 체크
+일반적으로 조합의 모든 구성이 각자에 대해 어떤 코드(행동)를 갖고 있는지 확인하고자 합니다.
 
 ```ts
 interface Square {
@@ -60,7 +60,7 @@ interface Circle {
 type Shape = Square | Rectangle | Circle;
 ```
 
-As an example of where stuff goes bad:
+잘못된 사용 예제입니다:
 
 ```ts
 function area(s: Shape) {
@@ -74,7 +74,7 @@ function area(s: Shape) {
 }
 ```
 
-You can do that by simply adding a fall through and making sure that the inferred type in that block is compatible with the `never` type. For example:
+간단하게 실패하는 상황에대해서 추가하고 그 블록의 유추된 type이 `never`type과 호환되는지 확인하십시오. 예를들면:
 
 ```ts
 function area(s: Shape) {
@@ -92,7 +92,7 @@ function area(s: Shape) {
 ```
 
 ### Switch
-TIP: of course you can also do it in a `switch` statement:
+팁: 물론 `switch`를 사용 할 수도 있습니다:
 
 ```ts
 function area(s: Shape) {
@@ -109,7 +109,7 @@ function area(s: Shape) {
 
 ### strictNullChecks
 
-If using strictNullChecks and doing exhaustive checks you should return the `_exhaustiveCheck` variable (of type `never`) as well, otherwise TypeScript infers a possible return of `undefined`. So:
+만약 strictNullChecks을 사용하고 철저한 검사를 하면 `_exhaustiveCheck` 변수(`never` type)도 반환해야합니다. 그렇지 않으면 TypeScript는`undefined`의 가능한 반환을 유추합니다. 그래서:
 
 ```ts
 function area(s: Shape) {
@@ -126,9 +126,10 @@ function area(s: Shape) {
 
 ### Redux
 
+유명한 라이브러리인 리덕스에서 이러한 방식을 사용합니다.
 A popular library that makes use of this is redux.
 
-Here is the [*gist of redux*](https://github.com/reactjs/redux#the-gist) with TypeScript type annotations added:
+여기에 TypeScript type 어노테이션이 추가된 redux의 *주요내용*([redux](https://github.com/reactjs/redux#the-gist))이 있습니다:
 
 ```ts
 import { createStore } from 'redux'
@@ -186,4 +187,5 @@ store.dispatch({ type: 'DECREMENT' })
 // 1
 ```
 
+이러한 것을 사용해서 TypeScript는 안전하게 잘못된 타이핑을 찾고, 리펙토리 능력을 시키고 스스로 문서화된 코드를 작성합니다. 
 Using it with TypeScript gives you safety against typo errors, increased refactor-ability and self documenting code .
