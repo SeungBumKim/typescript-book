@@ -127,7 +127,6 @@ function area(s: Shape) {
 ### Redux
 
 유명한 라이브러리인 리덕스에서 이러한 방식을 사용합니다.
-A popular library that makes use of this is redux.
 
 여기에 TypeScript type 어노테이션이 추가된 redux의 *주요내용*([redux](https://github.com/reactjs/redux#the-gist))이 있습니다:
 
@@ -188,4 +187,3 @@ store.dispatch({ type: 'DECREMENT' })
 ```
 
 이러한 것을 사용해서 TypeScript는 안전하게 잘못된 타이핑을 찾고, 리펙토리 능력을 시키고 스스로 문서화된 코드를 작성합니다. 
-Using it with TypeScript gives you safety against typo errors, increased refactor-ability and self documenting code .
