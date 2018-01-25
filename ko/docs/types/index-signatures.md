@@ -105,7 +105,7 @@ So lesson 1:
 
 ### 인덱스 시그니처 선언
 
-So we've been using `any` to tell TypeScript to let us do whatever we want. We can actually specify an *index* signature explicitly. E.g. say you want to make sure than anything that is stored in an object using a string conforms to the structure `{message: string}`. This can be done with the declaration `{ [index:string] : {message: string} }`. This is demonstrated below:
+그래서 우리는 TypeScript에게 우리가 원하는 것을 무엇이든지 하도록 알려주기 위해`any`를 사용했습니다. *인덱스* 시그니처를 명시적으로 지정할 수 있습니다. 예를들어, `{message : string}`구조체를 따르는 문자열을 사용하는 객체에 저장되는 것보다 더 확실하게 만들고 싶다고합시다. 이것은 `{ [index:string] : {message: string} }`선언으로 할 수 있습니다. 이러한 내용은 아래에서 설명됩니다:
 
 ```ts
 let foo:{ [index:string] : {message: string} } = {};
@@ -127,13 +127,13 @@ foo['a'].message;
 foo['a'].messages;
 ```
 
-> TIP: the name of the index signature e.g. `index` in `{ [index:string] : {message: string} }` has no significance for TypeScript and really for readability. e.g. if its user names you can do `{ [username:string] : {message: string} }` to help the next dev who looks at the code (which just might happen to be you).
+> TIP: 인덱스 시그니처의 이름 (예를들어 `{ [index:string] : {message: string} }`안의 `index`)는 TypeScript에서는 의미가 없으며 가독성을 위해 사용됩니다. 예를들자면 `{ [username:string] : {message: string} }`와 같이 사용자 이름을 사용한다면, 다음 개발자(그 개발자가 당신 일지라도)가 코드를 볼 때 도움이 될 것 입니다.
 
-Of course `number` indexes are also supported e.g. `{ [count: number] : SomeOtherTypeYouWantToStoreEgRebate }`
+물론 `number`인덱스는 `{ [count: number] : SomeOtherTypeYouWantToStoreEgRebate }`와 같이 지원됩니다.
 
-### All members must conform to the `string` index signature
+### 모든 멤버는`string` 인덱스 시그니처를 준수해야 합니다.
 
-As soon as you have a `string` index signature, all explicit members must also conform to that index signature. This is shown below:
+`string`을 인덱스 시그니처를 갖으면, 모든 명시적인 멤버도 해당 인덱스 시그니처를 준수해야합니다. 아래에 관련내용이 있습니다:
 
 ```ts
 /** Okay */
@@ -150,7 +150,7 @@ interface Bar {
 }
 ```
 
-This is to provide safety so that any string access gives the same result:
+안정성을 제공하기 위해서고 그래서 어떤 문자열 액세스에도 동일한 결과를 제공합니다:
 
 ```ts
 interface Foo {
@@ -166,9 +166,9 @@ foo['x']; // number
 let x = 'x'
 foo[x]; // number
 ```
-### Using a limited set of string literals
+### 제한된 문자열 리터럴 세트 사용
 
-An index signature can require that index strings be members of a union of literal strings e.g.:
+인덱스 시그니처는 해당 인덱스 문자열을 리터럴 문자열의 조합의 멤버로 요구할 수 있습니다. 예를들면:
 
 ```ts
 type Index = 'a' | 'b' | 'c'
@@ -181,19 +181,20 @@ const good: FromIndex = {b:1, c:2}
 //  Object literal may only specify known properties, and 'd' does not exist in type 'FromIndex'.
 const bad: FromIndex = {b:1, c:2, d:3};
 ```
-This is often used together with `keyof typeof` to capture vocabulary types, described on the next page.
 
-The specification of the vocabulary can be deferred generically:
+이것은 종종 `keyof typeof`와 함께 사용되어 어휘 type을 캡처합니다. 다음페이지에서 설명하겠습니다.
+
+어휘의 명세는 보통 미루어 짐작해 알 수 있습니다:
 
 ```ts
 type FromSomeIndex<K extends string> = { [key in K]: number }
 ```
 
-### Having both `string` and `number` indexers
+### `string`과 `number`인덱서를 모두 가지고 있는 경우
 
-This is not a common use case, but TypeScript compiler supports it nonetheless.
+이 경우는 일반적이지 않은 케이스이나 TypeScript 컴파일러는 이를 지원합니다.
 
-However it has the restriction that the `string` indexer is more strict than the `number` indexer. This is intentional e.g. to allow typing stuff like:
+그러나`string`인덱서가 `number` 인덱서보다 엄격하다는 제한이 있습니다. 이부분은 의도된 부분으로 예를들어 아래와 같은 타이핑을 허용하기 위한 것입니다:
 
 ```ts
 interface ArrStr {
@@ -206,11 +207,11 @@ interface ArrStr {
 }
 ```
 
-### Design Pattern: Nested index signature
+### 디자인 패턴: 중첩된 인덱스 시그니처
 
-> API consideration when adding index signatures
+> 인덱스 시그니처 추가시 API 고려 사항
 
-Quite commonly in the JS community you will see APIs that abuse string indexers. e.g. a common pattern among CSS in JS libraries:
+일반적으로 JS 커뮤니티에서 문자열 인덱서를 남용하는 API를 볼 수 있습니다. 예를들면, JS 라이브러리에서 CSS 사이의 공통 패턴으로:
 
 ```js
 interface NestedCSS {
@@ -225,7 +226,7 @@ const example: NestedCSS = {
   }
 }
 ```
-Try not to mix string indexers with *valid* values this way. E.g. a typo in the padding will remain uncaught:
+이런식으로 문자열 인덱서와 *유효한* 값을 섞지 마십시오. 예를들면, 패딩의 오타가 잡히지 않을 것입니다:
 
 ```js
 const failsSilently: NestedCSS = {
@@ -233,7 +234,7 @@ const failsSilently: NestedCSS = {
 }
 ```
 
-Instead seperate out the nesting into its own property e.g. in a name like `nest` (or `children` or `subnodes` etc.):
+대신 중첩된 것을 프로퍼티로 분리하십시오. 예를들면, `nest`(`children` 또는 `subnodes` 등)와 같은 이름으로:
 
 ```js
 interface NestedCSS {
