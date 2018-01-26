@@ -1,2 +1,2 @@
-# TIPs
-In this section we present a number of tips that we have collected over the course of using TypeScript in the real world.
+# 팁
+이 섹션에서는 실제로 TypeScript를 사용하는 과정에서 수집한 몇 가지 팁을 제시합니다.
