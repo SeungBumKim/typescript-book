@@ -1,6 +1,6 @@
-## Lazy Object Literal Initialization
+## 늦게하는 객체 리터럴 초기화
 
-Quite commonly in JavaScript code bases you would initialize and object literals in the following manner:
+JavaScript 코드에서는 일반적으로 다음과 같은 방법으로 초기화하고 리터럴을 처리합니다:
 
 ```ts
 let foo = {};
@@ -8,7 +8,7 @@ foo.bar = 123;
 foo.bas = "Hello World";
 ```
 
-As soon as you move the code to TypeScript you will start to get Errors like the following:
+코드를 TypeScript로 옮기면 다음과 같은 오류가 발생합니다:
 
 ```ts
 let foo = {};
@@ -16,11 +16,12 @@ foo.bar = 123; // Error: Property 'bar' does not exist on type '{}'
 foo.bas = "Hello World"; // Error: Property 'bas' does not exist on type '{}'
 ```
 
-This is because from the state `let foo = {}`, TypeScript *infers* the type of `foo` (left hand side of initializing assignment) to be the type of the right hand side `{}` (i.e. an object with no properties). So, it error if you try to assign to a property it doesn't know about.
 
-### Ideal Fix
+이것은 `let foo = {}` 상태 때문입니다. TypeScript는 `foo`(왼쪽방향으로 할당을 초기화)의 타입을 오른쪽의 `{}`(예, 오브젝트에는 프로퍼티가 없습니다.)의 타입으로 *유추*합니다. 따라서 알지 못하는 속성에 할당 하려고해서 오류가 발생한 것입니다.
 
-The *proper* way to initialize an object in TypeScript is to do it in the assignment:
+### 이상적인 수정방법
+
+TypeScript에서 객체를 초기화하는 *적절한*방법은 할당할 때 수행하는 것입니다:
 
 ```ts
 let foo = {
@@ -29,11 +30,11 @@ let foo = {
 };
 ```
 
-This is also great for code review and code maintainability purposes.
+이는 코드 검토 및 코드 유지관리 목적으로도 좋습니다.
 
-### Quick Fix
+### 빠르게하는 수정방법
 
-If you have a large JavaScript code base that you are migrating to TypeScript the ideal fix might not be a viable solution for you. In that case you can carefully use a *type assertion* to silence the compiler:
+TypeScript로 마이그레이션하는 JavaScript 코드가 많다면 이상적인 해결책이 실행 가능한 솔루션이 아닐 수도 있습니다. 이 경우 *type의 주장*을 사용하여 컴파일러를 통과 할 수 있습니다:
 
 ```ts
 let foo = {} as any;
@@ -41,14 +42,13 @@ foo.bar = 123;
 foo.bas = "Hello World";
 ```
 
-### Middle Ground
+### 중간방식의 수정방법
 
-Of course using the `any` assertion can be very bad as it sort of defeats the safety of TypeScript. The middle ground fix is to create an `interface` to ensure
+물론 `any`를 사용하는 것은 TypeScript의 안전을 무효화하여 매우 나쁠 수 있습니다. 그래서 중간방식의 수정은 '인터페이스'를 만들면 
+* 좋은 코드가 됩니다.
+* 안전하게 할당할 수 있습니다.
 
-* Good Docs
-* Safe assignment
-
-This is shown below:
+아래 내용을 보세요:
 
 ```ts
 interface Foo {
@@ -61,7 +61,8 @@ foo.bar = 123;
 foo.bas = "Hello World";
 ```
 
-Here is a quick example that shows the fact that using the interface can save you:
+
+인터페이스를 사용하면 도움이 된다는 사실을 보여주는 간단한 예가 있습니다:
 
 ```ts
 interface Foo {
