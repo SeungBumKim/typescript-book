@@ -1,6 +1,6 @@
 ## Currying
 
-Just use a chain of fat arrow functions:
+두꺼의 화살표함수의 체인을 사용하시면 됩니다:
 
 ```ts
 // A curried function
