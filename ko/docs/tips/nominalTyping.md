@@ -1,11 +1,11 @@
-## Nominal Typing
-The TypeScript type system is structural [and this is one of the main motivating benefits](../why-typescript.md). However, there are real-world use cases for a system where you want two variables to be differentiated because they have a different *type name* even if they have the same structure. A very common use case is *identity* structures (which are generally just strings with semantics associated with their *name* in languages like C#/Java).
+## 명목상 작성되는 코드
+TypeScript type 시스템은 구조적이며 이는 주요 이점 중 하나입니다.[why-typescript](../why-typescript.md). 그러나 동일한 구조를 갖고 있더라도 두 개의 변수가 다른 *type 이름*을 가지기 때문에 두 변수를 구별하기를 원하는 시스템의 실제 사용 사례가 있습니다. 매우 일반적인 사용 사례는 *identity* 구조입니다.(일반적으로 C#/Java와 같은 언어에서 *name*과 관련된 의미 체계가 있는 문자열입니다.)
 
-There are a few patterns that have emerged in the community. I cover them in decreasing order of personal preference:
+커뮤니티에 등장하는 몇가지 패턴이 있습니다. 선호하는 순서로 적어보겠습니다:
 
-## Using literal types
+## 리터럴 type의 사용
 
-This pattern uses generics and literal types: 
+이 패턴은 제네릭과 리터럴 type을 사용합니다:
 
 ```ts
 /** Generic Id type */
@@ -29,19 +29,19 @@ foo = bar; // Error
 foo = foo; // Okay
 ```
 
-* Advantages
-  - No need for any type assertions 
-* Disadvantage
-  - The structure `{type,value}` might not be desireable and need server serialization support
+* 장점
+  - 어떤 type의 어설션 필요 없음.
+* 단점
+  - 구조 `{type, value}`는 바람직하지 않고 서버 직렬화 지원을 필요로 함.
 
-## Using Enums
-[Enums in TypeScript](../enums.md) offer a certain level of nominal typing. Two enum types aren't equal if they differ by name. We can use this fact to provide nominal typing for types that are otherwise structurally compatible.
+## 열거형 사용
+열거형은 일정 수준의 명목적인 타이핑을 해야합니다. 두 개의 열거 type은 이름이 다른 경우 동일하지 않습니다. 이 사실을 사용하여 구조적으로 호환 가능한 type에 대해 명목적인 타이핑을 해야합니다.
 
-The workaround involves:
-* Creating a *brand* enum.
-* Creating the type as an *intersection* (`&`) of the brand enum + the actual structure.
+해결 방법은 다음과 같습니다.
+* *브랜드* 열거형 생성
+* 브랜드 열거형 + 실제 구조의 *intersection* (`&`) type을 만듭니다.
 
-This is demonstrated below where the structure of the types is just a string:
+다음은 type의 구조가 단순한 문자열인 경우입니다:
 
 ```ts
 // FOO
@@ -72,15 +72,15 @@ str = fooId;
 str = barId;
 ```
 
-## Using Interfaces
+## 인터페이스 사용
 
-Because `numbers` are type compatible with `enum`s the previous technique cannot be used for them. Instead we can use interfaces to break the structural compatibility. This method is still used by the TypeScript compiler team, so worth mentioning. Using `_` prefix and a `Brand` suffix is a convention I strongly recommend (and [the one followed by the TypeScript team](https://github.com/Microsoft/TypeScript/blob/7b48a182c05ea4dea81bab73ecbbe9e013a79e99/src/compiler/types.ts#L693-L698)).
+`numbers`는 `enum`과 type 호환이 가능하기 때문에 앞의 기술을 사용할 수 없습니다. 대신 인터페이스를 사용하여 구조적 호환성을 깨뜨릴 수 있습니다. 이 방법은 TypeScript 컴파일러 팀에서 계속 사용하므로 언급할만한 가치가 있습니다. `_` 접두어와 `Brand` 접미어를 사용하는 것을 추천합니다.([TypeScript team](https://github.com/Microsoft/TypeScript/blob/7b48a182c05ea4dea81bab73ecbbe9e013a79e99/src/compiler/types.ts#L693-L698)).
 
-The workaround involves the following:
-* adding an unused property on a type to break structural compatibility.
-* using a type assertion when needing to new up or cast down.
+해결 방법은 다음과 같습니다:
+* 구조적 호환성을 손상위한 type에 사용되지 않는 속성을 추가합니다.
+* 새로운 것을 필요로 할 때 type 어설션을 사용합니다.
 
-This is demonstrated below:
+여기에 대한 설명이 아래있습니다:
 
 ```ts
 // FOO
