@@ -1,5 +1,5 @@
 ## `strictNullChecks`
-By default `null` and `undefined` are assignable to all types in TypeScript e.g.
+기본적으로 `null`과 `undefined`는 TypeScript의 모든 타입에 할당 가능합니다. 예:
 
 ```ts
 let foo: number = 123;
@@ -7,16 +7,16 @@ foo = null; // Okay
 foo = undefined; // Okay
 ```
 
-This is modelled after how a lot of people write JavaScript. However like all things TypeScript allows you to be *explicit* about what *can and cannot be* assigned a `null` or `undefined`.
+이것은 많은 사람들이 JavaScript를 작성한 방법을 모방 한 것입니다. 그러나 모든것들처럼 TypeScript는 `null` 또는 `undefined`가 될 수 있는 것과 될 수없는 것에 대해 *명시적으로* 할 수 있게합니다.
 
-In strict null checking mode, `null` and `undefined` are different:
+엄격한 null 검사 모드에서 `null`와 `undefined`는 다릅니다:
 
 ```ts
 let foo = undefined;
 foo = null; // NOT Okay
 ``` 
 
-Let say we have a `Member` interface:
+`Member` 인터페이스가 있다고 가정해 봅시다:
 
 ```ts
 interface Member {
@@ -25,9 +25,9 @@ interface Member {
 }
 ```
 
-Not every member will provide their age, so the `age` is an optional property. It means the value of `age` will probably be `undefined`.
+모든 회원이 나이를 제공하는 것은 아니므로 `나이`은 선택사항입니다. `age`의 값은 아마도`undefined`가 될 것입니다.
 
-`undefined` is the root of all evil. It always lead to runtime error. We are always easy to write some code that will probably throw `Error`:
+`undefined`은 잘못된 사용의 근원입니다. 항상 런타임 오류를 발생시킵니다. `Error`를 던지는 코드를 작성하는 것이 나을것 입니다:
 
 ```ts
 getMember()
@@ -36,7 +36,7 @@ getMember()
   })
 ```
 
-But in strict null checking mode, it will throw an error at compile time:
+그러나 엄격한 null 검사 모드에서는 컴파일시 오류가 발생합니다:
 
 ```ts
 getMember()
@@ -45,9 +45,9 @@ getMember()
   })
 ```
 
-### Non-Null Assertion Operator
+### Non-Null 경고 연산자
 
-A new `!` post-fix expression operator may be used to assert that its operand is non-null and non-undefined in contexts where the type checker is unable to conclude that fact. For example: 
+새로운`!` 후위 표현 연산자는 type 검사기가 그 사실을 결론 지을 수 없는 문맥에서 그것의 피연산자가 null이 아니고 정의되지 않았음을 주장하는데 사용될 수 있습니다. 예를들면:
 
 ```ts
 // Compiled with --strictNullChecks
@@ -61,4 +61,4 @@ function processEntity(e?: Entity) {
     let b = e!.name;  // Assert that e is non-null. This allows you to access name
 }
 ```
-> Note that it is just an assertion, and just like type assertions *you are responsible* for making sure the value is not null. A null assertion is essentially you telling the compiler "I know its not null so let me use it as though its not null".
+> 이것은 단지 경고이며, type경고와 마찬가지로 값이 null이 아님을 확인해야하는 책임이 있습니다. null 경고는 본질적으로 컴파일러에게 "null이 아니라는 것을 알기 때문에 null이 아닌 것처럼 사용하도록 해달라"라고 말해주는겁니다.
