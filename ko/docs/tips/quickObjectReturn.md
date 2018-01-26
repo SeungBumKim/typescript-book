@@ -1,13 +1,13 @@
-## Return an object literal
+## 객체 리터럴 반환
 
-Sometimes you need a function that just returns a simple object literal. However, something like
+때로는 간단한 객체 리터럴만 반환하는 함수가 필요합니다. 그러나 다음과 같은 경우에는
 
 ```ts
 var foo = () => {
     bar: 123
 };
 ```
-is parsed as a *block* containing a *JavaScript Label* by JavaScript runtimes (cause of the JavaScript specification). If that doesn't make sense, don't worry, as you get a nice compiler error from TypeScript saying "unused label" anyways. You can fix it by surrounding the object literal with `()`:
+JavaScript 런타임에서 *JavaScript Label*을 포함하는 *블록*으로 구문 분석됩니다.(JavaScript 스펙이 원인입니다.). 이 말이 맞지 않는다면, TypeScript에서 "unused label"이라고 컴파일러 오류를 발생하므로 걱정하지 마십시오. `()`를 사용하여 객체 리터럴을 둘러 쌈으로써 고칠 수 있습니다:
 
 ```ts
 var foo = () => ({
