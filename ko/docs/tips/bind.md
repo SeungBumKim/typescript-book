@@ -56,7 +56,6 @@ useAdd((x) => adder.add(x)); // Error: number is not assignable to string
 
 
 **예상되는** 전달할 클래스 멤버 함수가 있다면, 처음부터 화살표 함수([arrow-function](../arrow-functions.md))를 사용하세요. 예를들어 같은 `Adder` 클래스를 사용하겠습니다:
-If you have a class member function that you **expect** to pass around, [use an arrow function in the first place](../arrow-functions.md) e.g one would write the same `Adder` class as:
 
 ```ts
 class Adder {
