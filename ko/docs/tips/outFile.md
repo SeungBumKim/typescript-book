@@ -1,104 +1,104 @@
-# `--outFile` is BAD
+# `--outFile` 좋지 않습니다. 
 
-Its a bad idea for you to use because of the following reasons:
+다음과 같은 이유로 사용하는 것은 좋지 않습니다: 
 
-* Runtime Errors
-* Fast compile
-* Global scope
-* Hard to analyze
-* Hard to scale
+* 런타임 에러
+* 빠른 컴파일
+* 전역 범위
+* 분석의 어려움
+* 스케일의 어려움
 * `_references`
-* Code reuse
-* Multiple Targets
-* Isolated Compile
+* 코드 재사용성
+* 다중의 타겟
+* 고립된 컴파일
 
-## Runtime Errors
+## 런타임 에러
 
-If your code depends on any form of js ordering you will get random errors at runtime.
+코드가 특정 js 형식의 의존되어 있다면 런타임에 임의의 오류가 발생합니다.
 
 * **class inheritance can break at runtime.**
 
-Consider `foo.ts`: 
+`foo.ts`을 보면: 
 ```ts
 class Foo {
     
 }
 ```
 
-and a `bar.ts`:
+그리고 `bar.ts`:
 ```ts
 class Bar extends Foo {
     
 }
 ```
 
-If you fail to compile it in correct order e.g. perhaps alphabetically `tsc bar.ts foo.ts` the code will compile fine but error at runtime with `ReferenceError`. 
+예를들어 `tsc bar.ts foo.ts`와 같이 알파벳 순서로 잡고 올바른 순서로 컴파일하지 않으면 컴파일은 괜찮을 것이나 런타임에 `ReferenceError`에러가 발생할 것입니다.
 
-* **module splitting can fail at runtime.**
+* **런타임시 모듈 분할이 실패 할 수 있습니다.**
 
-Consider `foo.ts`: 
+`foo.ts`을 보면: 
 ```ts
 module App {
     export var foo = 123;
 }
 ```
-And `bar.ts`: 
+그리고 `bar.ts`: 
 ```ts
 module App {
     export var bar = foo + 456;
 }
 ```
 
-If you fail to compile it in correct order e.g. perhaps alphabetically `tsc bar.ts foo.ts` the code will compile fine but  *silently* fail at runtime with `bar` set to `NaN`. 
+예를들어 `tsc bar.ts foo.ts`와 같이 알파벳 순서로 잡고 올바른 순서로 컴파일하지 않으면 컴파일은 괜찮을 것이나 런타임에 `bar`에는  `NaN`이 셋팅되어있어 *조용하게* 실패 할 것입니다. 
 
-## Fast compile
-If you use `--out` then single `.ts` files cannot be codegened into single `.js` files in isolation without unnecessary hacks. `--out` essentially forces a slower incremental build.
+## 빠른 컴파일
+`--out`을 사용하면 단일 `.ts` 파일을 불필요한 관여없이 격리된 단일 `.js` 파일로 코드화 할 수 없습니다. `--out`은 근본적으로 느린 증분 빌드를 강제합니다.
 
-Also source maps are positionally sensitive and run-length encoded so most of the map has to be rebuilt on a recompile if you use source maps (which you should!). At high-10s to 100s kloc combined it’s going to get slow.
+또한 소스맵은 위치에 민감하고 run-length 인코딩됩니다. 그래서 소스맵을 사용하는 경우 대부분의 맵을 다시 컴파일해야합니다. 10000 줄에서 100000 줄의 코드가  될 때가 되면 느려질 것입니다.
 
-## Global Scope
-Sure you can use name spaces but its still on `window` if you run it in the browser. Namespaces are just an unnecessary workaround. Also `/// <reference` comments introduce an global context in *your code* that can get hard to maintain.
+## 전역 범위
+물론 네임스페이스를 사용할 수는 있지만 브라우저에서 실행하면 `window`에 계속 남아 있습니다. Namespaces는 워크어라운드로 불필요합니다. 또한 `/// <reference` 코멘트는 유지 보수하기가 어려울 수 있게 *당신의 코드*에 글로벌 컨텍스트를 적용합니다.
 
-Also if your company has several teams working independently and then someone decides to try integrating two independently written apps there is a high likelihood of a name conflict.
+또한 회사가 독립적으로 작업하는 여러 팀을 보유하고 있고 누군가 독자적으로 작성된 두 개의 응용 프로그램을 통합하려고하면 이름 충돌이 발생할 가능성이 큽니다.
 
-## Hard to analyze
-We wish to provide more code analysis tools. These will be easier if you provide us with the dependency chain (implicitly there on a silver platter using external modules). 
+## 분석의 어려움
+우리는 더 많은 코드 분석 도구를 제공하고자합니다. 종속성 체인(암묵적으로 외부 모듈을 사용하면)을 제공하면 이러한 작업이 더 쉬울 것입니다.
 
-Also its not just the *dev tools* that have a hard time making sense of the code. The next human needs to understand a lot of the code base before they start to understand where stuff is actually imported from. Using internal modules also makes code difficult to review in isolation e.g. on github.
+또한 코드의 의미를 만드는데 어려움을 겪는 *개발 도구*가 아닙니다. 다음 사람은 코드가 실제로 어디에서 가져 왔는지 이해하기 전에 많은 코드베이스를 이해해야 합니다. 내부 모듈을 사용하면 코드를 독립적으로 검토하기가 어렵습니다.(예를들어, 깃허브에서).
 
-## Hard to scale
-Really just a result of random runtime errors + slower and slower compile times + difficulty in understanding someone else's code.
+## 스케일의 어려움
+실제로 임의 런타임 오류 + 느리고 느린 컴파일 시간 + 다른 사람의 코드 이해의 어려움의 결과입니다. 
 
 ## `_references.ts`
-Isn't supported by `tsconfig.json` : https://github.com/Microsoft/TypeScript/issues/2472#issuecomment-85330803 You'll have to manually sort the  `files` array. 
+`tsconfig.json`(https://github.com/Microsoft/TypeScript/issues/2472#issuecomment-85330803)에서 지원되지 않습니다. `files` 배열을 수동으로 정렬해야합니다.
 
-## Code reuse
-If you want to reuse a portion of your code in another project, with all that *implicit* dependency management, it will be difficult to port it over without potential runtime errors. 
+## 코드 재사용성
+*암시적으로* 의존성을 관리하는 다른 프로젝트에서 작성한 코드의 일부를 재사용하려면, 잠재적인 런타임 오류없이 이식하는 것은 어려울 것입니다.
 
-## Multiple Targets
-Also if you decide to reuse your browser code in something like nodejs (e.g. for *testing* APIs) you are going to need to port it over to a module system or come up with ugly hacks to make the nodejs `global` your new global scope (i.e. `window`).
+## 다중의 타겟
+또한 nodejs(예, *testing* APIs)의 브라우저 코드를 재사용하기로 결정한 경우, node 시스템을 모듈 시스템으로 이식하거나 이쁘지 못한 접근을 하는 nodejs를 "전역적"으로 새 전역 범위로 만들 필요가 있습니다. (예, `window`)
 
-## Isolated Compile
-Files cannot be compiled in isolation. E.g. consider `a.ts`: 
+## 고립된 컴파일
+파일을 별도로 컴파일 할 수는 없습니다. 예를들어, `a.ts`를 보면: 
 ```ts
 module M {
   var s = t;
 }
 ```
-Will have different output depending upon whether there is a `b.ts` of the form: 
+형식의 `b.ts`가 있는지 여부에 따라 출력이 달라집니다:
 ```ts
 module M {
   export var t = 5;
 }
 ```
-or 
+또는
 ```ts
 var t = 5;
 ```
-So `a.ts` [cannot be compiled in isolation](https://github.com/Microsoft/TypeScript/issues/2715).
+그래서`a.ts` 격리되어 컴파일 될 수 없습니다.[isolation](https://github.com/Microsoft/TypeScript/issues/2715)
 
-## Summary
-`--out` is really the job of some build tool. And even such a build tool can benefit from the dependency mentions provided by external modules. So we recommend you use external modules and then let the build tool create a single `.js` for you if you so desire.
+## 요약
+`--out`은 실제로 일부 빌드 도구의 작업입니다. 그리고 그러한 빌드 도구조차도 외부 모듈이 제공하는 의존성 언급으로부터 이익을 얻을 수 있습니다. 따라서 외부 모듈을 사용하고 원하는 경우 빌드 도구에서 단일 `.js`파일을 생성 할 것을 권장합니다.
 
 https://twitter.com/nycdotnet/status/613705850574778368 
 
