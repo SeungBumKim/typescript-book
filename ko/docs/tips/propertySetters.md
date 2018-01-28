@@ -1,8 +1,8 @@
-## Limit usage of property setters
+## 속성 설정자의 사용 제한
 
-Prefer explicit set/get functions (e.g. `setBar` and `getBar` functions) over setters/getters.
+setter/getters에 대한 명시적인 set/get 함수 (예 :`setBar` 및 `getBar` 함수)를 선호합니다.
 
-Consider the following code:
+다음 코드를 보겠습니다:
 
 ```ts
 foo.bar = {
@@ -11,7 +11,7 @@ foo.bar = {
 };
 ```
 
-In the presence of setter/getters:
+setter/getters가 있는 모습을 보면:
 
 ```ts
 class Foo {
@@ -25,6 +25,7 @@ class Foo {
 let foo = new Foo();
 ```
 
-This is not a *good* use of property setters. The person reading the first code sample has no context about all the things that will change. Where as someone calling `foo.setBar(value)` might have an idea that something might change on `foo`.
+이것은 속성 설정자의 *좋은* 사용하지 않습니다. 첫 번째 코드 샘플을 읽는 사람은 변경될 모든 것에 대한 컨텍스트가 없습니다. 
+`foo.setBar (value)`를 호출하는 누군가가 `foo`에서 어떤 것이 바뀔지 모른다는 생각을 가질 수 있습니다.
 
-> Bonus points: Find references works better if you have different functions. In TypeScript tools if you find references for a getter or a setter you get *both* whereas with explicit function calls you only get references to the relevant function.
+> 보너스 포인트: 다른 기능를 사용하면 참조 찾기가 더 잘 작동합니다. TypeScript 도구에서는 getter 또는 setter에 대한 참조를 찾으면 *모두*를 얻지만 명시적 함수 호출에서는 관련 함수에 대한 참조만 얻을 수 있습니다.
