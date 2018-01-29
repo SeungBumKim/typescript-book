@@ -1,6 +1,6 @@
-## Typesafe Event Emitter
+## type안전한 이벤트 발행
 
-Conventionally in Node.js and traditional JavaScript you have a single event emitter. This event emitter internally tracks listener for different event types e.g. 
+일반적으로 Node.js와 전통적인 JavaScript에는 단일 이벤트 발행자가 있습니다. 이 이벤트 발행자는 내부적으로 다양한 이벤트 type에 대한 리스너를 추적합니다. 예를들어:
 
 ```js
 const emitter = new EventEmitter();
@@ -11,11 +11,11 @@ emitter.emit('bar', bar);
 emitter.on('foo', (foo)=>console.log(foo));
 emitter.on('bar', (bar)=>console.log(bar));
 ```
-Essentially `EventEmitter` internally stores data in the form of mapped arrays: 
+필수적으로 `EventEmitter`는 내부적으로 매핑된 배열 형태로 데이터를 저장합니다: 
 ```js
 {foo: [fooListeners], bar: [barListeners]}
 ```
-Instead, for the sake of *event* type safety, you can create an emitter *per* event type:
+대신 *event* type 안전을 위해 발행*당* 이벤트 type을 만들 수 있습니다:
 ```js
 const onFoo = new TypedEvent<Foo>();
 const onBar = new TypedEvent<Bar>();
@@ -28,12 +28,12 @@ onFoo.on((foo)=>console.log(foo));
 onBar.on((bar)=>console.log(bar));
 ```
 
-This has the following advantages: 
-* The types of events are easily discoverable as variables.
-* The event emitter variables are easily refactored independently.
-* Type safety for event data structures.
+이는 다음과 같은 이점이 있습니다:
+* 이벤트의 type은 변수로 쉽게 찾을 수 있습니다.
+* 이벤트 발행 변수는 독립적으로 쉽게 리팩토링됩니다.
+* Type안정적인 인벤트 데이터 구조가됩니다.
 
-### Reference TypedEvent
+### 참조 Type이벤트
 ```js
 export interface Listener<T> {
   (event: T): any;
