@@ -1,8 +1,8 @@
 ## Barrel
 
-A barrel is a way to rollup exports from several modules into a single convenient module. The barrel itself is a module file that re-exports selected exports of other modules.
+배럴은 여러 모듈에서 하나의 편리한 모듈로 익스포트를 묶는 방법입니다. 배럴 자체는 다른 모듈의 선택된 익스포트를 다시 익스포트하는 모듈 파일입니다.
 
-Imagine the following class structure in a library: 
+다음과 같이 라이브러리안의 클래스구조를 생각해보겠습니다: 
 
 ```ts
 // demo/foo.ts
@@ -15,7 +15,7 @@ export class Bar {}
 export class Baz {}
 ```
 
-Without a barrel, a consumer would need three import statements:
+배럴이 없다면, 3개의 임포트문의 작성이 필요합니다:
 
 ```ts
 import { Foo } from '../demo/foo';
@@ -23,7 +23,7 @@ import { Bar } from '../demo/bar';
 import { Baz } from '../demo/baz';
 ```
 
-You can instead add a barrel `demo/index.ts` containing the following: 
+대신 배럴 `demo/index.ts`에 다음과 같이 추가하면:
 
 ```ts
 // demo/index.ts
@@ -32,14 +32,14 @@ export * from './bar'; // re-export all of its exports
 export * from './baz'; // re-export all of its exports
 ```
 
-Now the consumer can import what it needs from the barrel:
+배럴에서 필요한 것만 임포트 할 수 있습니다:
 
 ```ts
 import { Foo, Bar, Baz } from '../demo'; // demo/index.ts is implied
 ```
 
-### Named exports
-Instead of exporting * you can chose to export the module in a name. Eg. assume that `baz.ts` has functions:
+### 명명된 익스포트
+익스포트 대신에 이름을 붙여 익스포트 할 수 있도록 선택할 수 있습니다. 예를들면 `baz.ts` 다음과 같이 함수가 있다고 하면:
 
 ```ts
 // demo/foo.ts
@@ -53,7 +53,7 @@ export function getBaz() {}
 export function setBaz() {}
 ```
 
-If you would rather not export `getBaz` / `setBaz` from demo you can instead put them in a variable by importing them in a name and exporting that name as shown below: 
+데모에서 `getBaz` / `setBaz`을 익스포트 하는 대신에 대신 변수를 이름으로 가져와서 아래에 표시된대로 그 이름을 내보내 변수에 넣을 수 있습니다:
 
 ```ts
 // demo/index.ts
@@ -64,7 +64,7 @@ import * as baz from './baz'; // import as a name
 export { baz }; // export the name
 ```
 
-And now the consumer would look like: 
+사용할 때는 아래와 같이 하면됩니다: 
 
 ```ts
 import { Foo, Bar, baz } from '../demo'; // demo/index.ts is implied
