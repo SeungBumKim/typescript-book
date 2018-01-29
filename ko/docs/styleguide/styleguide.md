@@ -245,4 +245,3 @@ const foo: string = "hello";
 파일이름은 `camelCase`을 사용합니다. 예 `accordian.tsx`, `myControl.tsx`, `utils.ts`, `map.ts` 등.
 
 > 이유: JS팀에서 많이 사용합니다. 
-> Reason: Conventional across many JS teams.
