@@ -1,6 +1,6 @@
-# Singleton Pattern
+# 싱글턴 패턴
 
-The conventional singleton pattern is really something that is used to overcome the fact that all code must be in a `class`.
+전통적인 싱글턴 패턴은 실제로 모든 코드가 클래스에 있어야 한다는 사실을 극복하는데 사용되는 무언가입니다.
 
 ```ts
 class Singleton {
@@ -23,7 +23,7 @@ let something = new Singleton() // Error: constructor of 'Singleton' is private.
 let instance = Singleton.getInstance() // do something with the instance...
 ```
 
-However if you don't want lazy initialization you can instead just use a `namespace`: 
+그러나 늦은 초기화를 원하지 않는다면 대신에 `namespace`를 사용할 수 있습니다:
 
 ```ts
 namespace Singleton {
@@ -34,9 +34,9 @@ namespace Singleton {
 Singleton.someMethod();
 ```
 
-> Warning : Singleton is just a fancy name for [global](http://stackoverflow.com/a/142450/390330)
+> 경고: 싱글턴은 전역적으로 사용할 수 있는 이름이됩니다.[global](http://stackoverflow.com/a/142450/390330)
 
-For most projects `namespace` can additionally be replaced by a *module*.
+대부분의 프로젝트에서 `namespace`는 *module*로 대체 될 수 있습니다.
 
 ```ts
 // someFile.ts
