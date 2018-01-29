@@ -1,29 +1,13 @@
-# TypeScript StyleGuide and Coding Conventions
+# TypeScript 스타일 가이드 및 코딩 컨벤션
 
-> An unofficial TypeScript StyleGuide
+> 비공식 TypeScript 스타일 가이드
 
-People have asked me for my opinions on this. Personally I don't enforce these a lot on my teams and projects but it does help to have these mentioned as a tie breaker when someone feels the need to have such strong consistency. There are other things that I feel much more strongly about and those are covered in the [tips chapter](../tips/main.md) (e.g. type assertion is bad, property setters are bad) 🌹.
+사람들은 내 의견을 물었습니다. 개인적으로 나는 팀과 프로젝트에 많은 것을 시행하지 않지만 강한 일관성을 가질 필요가 있을 때 타이 브레이커로 언급하는 것은 도움이 될 것 입니다. 내가 더 강하게 느끼는 다른 것들이 있으며 그것들은 팁 채터에 작성했습니다. [tips](../tips/main.md)(예, type 주장은 좋지 않으며, 프로퍼티 세터도 좋지 않습니다.)🌹.
 
-Key Sections:
+## 변수와 함수
+* 변수와 함수 이름에 `camelCase`를 사용합니다.
 
-* [Variable](#variable-and-function)
-* [Class](#class)
-* [Interface](#interface)
-* [Type](#type)
-* [Namespace](#namespace)
-* [Enum](#enum)
-* [`null` vs. `undefined`](#null-vs-undefined)
-* [Formatting](#formatting)
-* [Single vs. Double Quotes](#quotes)
-* [Tabs vs. Spaces](#spaces)
-* [Use semicolons](#semicolons)
-* [Annotate Arrays as `Type[]`](#array)
-* [File Names](#filename)
-
-## Variable and Function
-* Use `camelCase` for variable and function names
-
-> Reason: Conventional JavaScript
+> 이유: 기존의 JavaScript 때문에
 
 **Bad**
 ```ts
@@ -36,10 +20,10 @@ var fooVar;
 function barFunc() { }
 ```
 
-## Class
-* Use `PascalCase` for class names.
+## 클래스
+* 클래스이름을 위해서는 `PascalCase`를 사용합니다.
 
-> Reason: This is actually fairly conventional in standard JavaScript.
+> 이유: 실제로 이것은 표준 JavaScript에서 상당히 일반적입니다.
 
 **Bad**
 ```ts
@@ -49,9 +33,9 @@ class foo { }
 ```ts
 class Foo { }
 ```
-* Use `camelCase` of class members and methods
+클래스 멤버와 메소드에는 `camelCase`을 사용합니다.
 
-> Reason: Naturally follows from variable and function naming convention.
+> 이유: 자연스럽게 변수와 함수 네이밍을 컨벤션을 따라왔습니다.
 
 **Bad**
 ```ts
@@ -67,19 +51,19 @@ class Foo {
     baz() { }
 }
 ```
-## Interface
+## 인터페이스
 
-* Use `PascalCase` for name.
+* 이름을 위해서 `PascalCase`을 사용합니다.
 
-> Reason: Similar to class
+> 이유: 클래스와 유사합니다.
 
-* Use `camelCase` for members.
+* 멤버를 위해서는 `camelCase`를 사용합니다.
 
-> Reason: Similar to class
+> 이유: 클래스와 유사합니다.
 
-* **Don't** prefix with `I`
+* 앞에 `I`를 **붙이지 않습니다.**
 
-> Reason: Unconventional. `lib.d.ts` defines important interfaces without an `I` (e.g. Window, Document etc).
+> 이유: 통상적이지 않습니다. `lib.d.ts`의 중요한 인터페이스 정의는 `I`가 없습니다.(예, Window, Document등).
 
 **Bad**
 ```ts
@@ -94,20 +78,19 @@ interface Foo {
 
 ## Type
 
-* Use `PascalCase` for name.
+* 이름을 위해서 `PascalCase`을 사용합니다.
 
-> Reason: Similar to class
+> 이유: 클래스와 유사합니다.
 
-* Use `camelCase` for members.
+* 멤버에는 `camelCase`을 사용합니다.
 
-> Reason: Similar to class
+> 이유: 클래스와 유사합니다.
 
+## 네임스페이스
 
-## Namespace
+* 이름에는 `PascalCase`을 사용합니다.
 
-* Use `PascalCase` for names
-
-> Reason: Convention followed by the TypeScript team. Namespaces are effectively just a class with static members. Class names are `PascalCase` => Namespace names are `PascalCase`
+> 이유: TypeScript팀을 따라서 적용합니다. 네임스페이스는 실제로 정적멤버가 있는 클래스입니다. 클래스 이름은 `PascalCase` 이고 => 그래서 네임스페이스 이름은 `PascalCase`입니다. 
 
 **Bad**
 ```ts
@@ -122,9 +105,9 @@ namespace Foo {
 
 ## Enum
 
-* Use `PascalCase` for enum names
+* 열거형의 이름은 `PascalCase`을 사용합니다.
 
-> Reason: Similar to Class. Is a Type.
+> 이유: 클래스와 유사합니다. Type입니다.
 
 **Bad**
 ```ts
@@ -137,9 +120,9 @@ enum Color {
 }
 ```
 
-* Use `PascalCase` for enum member
+* 열거형 멤버에는 `PascalCase`을 사용합니다.
 
-> Reason: Convention followed by TypeScript team i.e. the language creators e.g `SyntaxKind.StringLiteral`. Also helps with translation (code generation) of other languages into TypeScript.
+> 이유: TypeScript을 따라갑니다. 예를들어, 언어 생성자 `SyntaxKind.StringLiteral`와 같은경우. 또한 TypeScript에서 다른 언어의 번역(코드 생성)에  도움이 됩니다.
 
 **Bad**
 ```ts
@@ -154,7 +137,7 @@ enum Color {
 }
 ```
 
-## Null vs. Undefined
+## Null 대 Undefined
 
 * Prefer not to use either for explicit unavailability
 
