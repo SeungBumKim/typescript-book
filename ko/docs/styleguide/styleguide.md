@@ -139,9 +139,9 @@ enum Color {
 
 ## Null 대 Undefined
 
-* Prefer not to use either for explicit unavailability
+* 명시적으로 사용할 수 없는 용도로 사용하지 않아야합니다.
 
-> Reason: these values are commonly used to keep a consistent structure between values. In TypeScript you use *types* to denote the structure
+> 이유: 이 값은 일반적으로 값 사이의 일관된 구조를 유지하는 데 사용됩니다. TypeScript에서는 *type*을 사용하여 구조체를 나타냅니다.
 
 **Bad**
 ```ts
@@ -152,7 +152,7 @@ let foo = {x:123,y:undefined};
 let foo:{x:number,y?:number} = {x:123};
 ```
 
-* Use `undefined` in general (do consider returning an object like `{valid:boolean,value?:Foo}` instead)
+* 보통 `undefined`을 사용합니다.(`{valid : boolean, value? : Foo}`와 같은 객체를 반환하는 것을 고려하지 마세요.)
 
 ***Bad***
 ```ts
@@ -163,9 +163,9 @@ return null;
 return undefined;
 ```
 
-* Use `null` where its a part of the API or conventional
+* `null`는 API 또는 기존 API의 일부에 사용합니다.
 
-> Reason: It is conventional in Node.js e.g. `error` is `null` for NodeBack style callbacks.
+> 이유: Node.js에서 통상적으로 사용합니다. 예, NodeBack스타일의 콜백은 `error`는 `null`입니다.
 
 **Bad**
 ```ts
@@ -176,7 +176,7 @@ cb(undefined)
 cb(null)
 ```
 
-* Use *truthy* check for **objects** being `null` or `undefined`
+* **오브젝트의**의 *truthy*체크는 `null`또는 `undefined`입니다.
 
 **Bad**
 ```ts
@@ -187,7 +187,7 @@ if (error === null)
 if (error)
 ```
 
-* Use `== undefined` / `!= undefined` (not `===` / `!==`) to check for `null` / `undefined` on primitives as it works for both `null`/`undefined` but not other falsy values (like `''`,`0`,`false`) e.g.
+* `== undefined` / `!= undefined`사용(`===` / `!==`아닙니다.)은 원시형은 `null` /`undefined` 둘 다 작동하지만 다른 falsy값(`''`,`0`,`false`와 같은)에 작동하지 않는 `null` / `undefined`의 체크를 위한 것 입니다. 예:
 
 **Bad**
 ```ts
@@ -198,14 +198,14 @@ if (error !== null)
 if (error != undefined)
 ```
 
-PS: [More about `null`](../tips/null.md)
+PS: 추가내용은 다음을 보세요.[`null`](../tips/null.md)
 
 ## Formatting
-The TypeScript compiler ships with a very nice formatting language service. Whatever output it gives by default is good enough to reduce the cognitive overload on the team.
+TypeScript 컴파일러는 매우 훌륭한 type 지정 언어 서비스와 함께 제공됩니다. 기본적으로 제공되는 출력은 팀의 인지적 과부하를 줄이는데 충분할만큼 모두 괜찮습니다.
 
-Use [`tsfmt`](https://github.com/vvakame/typescript-formatter) to automatically format your code on the command line. Also your IDE (atom/vscode/vs/sublime) already has formatting support built-in.
+`tsfmt`을 사용하면 명령 행에서 코드를 자동으로 형식화합니다.[`tsfmt`](https://github.com/vvakame/typescript-formatter). 또한 IDE (atom/vscode/vs/sublime)에는 이미 포맷 지원 기능이 내장되어 있습니다.
 
-Examples: 
+예: 
 ```ts
 // Space before type i.e. foo:<space>string
 const foo: string = "hello";
@@ -213,35 +213,36 @@ const foo: string = "hello";
 
 ## Quotes
 
-* Prefer single quotes (`'`) unless escaping.
+* 양식에 벗어나지 않는한 따옴표(`'`)를 사용합니다.
 
-> Reason: More JavaScript teams do this (e.g. [airbnb](https://github.com/airbnb/javascript), [standard](https://github.com/feross/standard), [npm](https://github.com/npm/npm), [node](https://github.com/nodejs/node), [google/angular](https://github.com/angular/angular/), [facebook/react](https://github.com/facebook/react)). Its easier to type (no shift needed on most keyboards). [Prettier team recommends single quotes as well](https://github.com/prettier/prettier/issues/1105)
+> 이유: 많은 JavaScript팀에서 사용합니다.(예, [airbnb](https://github.com/airbnb/javascript), [standard](https://github.com/feross/standard), [npm](https://github.com/npm/npm), [node](https://github.com/nodejs/node), [google/angular](https://github.com/angular/angular/), [facebook/react](https://github.com/facebook/react)). 입력하기가 더 쉽니다.(키보드의 시프트 키를 안눌러도 됩니다.)[Prettier team recommends single quotes as well](https://github.com/prettier/prettier/issues/1105)
 
-> Double quotes are not without merit: Allows easier copy paste of objects into JSON. Allows people to use other languages to work without changing their quote character. Allows you to use apostrophes e.g. `He's not going.`. But I'd rather not deviate from where the JS Community is fairly decided.
+> 쌍따옴표는 다음의 이점이 있습니다: JSON으로 개체 붙여 넣기를 쉽게 복사 할 수 있습니다. 다른 언어를 사용하여 인용 부호를 변경하지 않고도 작업 할 수 있습니다. 어퍼스트로피를 사용할 수 있습니다.(예, `He's not going.`). 그러나 나는 JS 공동체가 공정하게 결정하는 것에서 벗어나지 않을 것입니다.
 
-* When you can't use double quotes, try using back ticks (\`).
+* 쌍 따옴표를 사용할 수 없는 경우 역 따옴표(\`)를 사용해보십시오.
 
-> Reason: These generally represent the intent of complex enough strings.
+> 이유: 이들은 일반적으로 복잡한 복잡한 문자열을 나타냅니다.
 
-## Spaces
+## 공백
 
-* Use `2` spaces. Not tabs.
+* `2`개 공백을 사용하세요. 탭이 아닙니다. 
 
-> Reason: More JavaScript teams do this (e.g. [airbnb](https://github.com/airbnb/javascript), [idiomatic](https://github.com/rwaldron/idiomatic.js), [standard](https://github.com/feross/standard), [npm](https://github.com/npm/npm), [node](https://github.com/nodejs/node), [google/angular](https://github.com/angular/angular/), [facebook/react](https://github.com/facebook/react)). The TypeScript/VSCode teams use 4 spaces but are definitely the exception in the ecosystem.
+> 이유: 많은 JavaScript팀에서 사용합니다.(예. [airbnb](https://github.com/airbnb/javascript), [idiomatic](https://github.com/rwaldron/idiomatic.js), [standard](https://github.com/feross/standard), [npm](https://github.com/npm/npm), [node](https://github.com/nodejs/node), [google/angular](https://github.com/angular/angular/), [facebook/react](https://github.com/facebook/react)). TypeScript/VSCode 팀은 4개의 공백을 사용하지만 예외입니다.
 
-## Semicolons
+## 세미콜론
 
-* Use semicolons.
+* 세미콜론을 사용하세요.
 
-> Reasons: Explicit semicolons helps language formatting tools give consistent results. Missing ASI (automatic semicolon insertion) can trip new devs e.g. `foo() \n (function(){})` will be a single statement (not two).
+> 이유: 명시적 세미콜론은 언어 서식 도구가 일관된 결과를 제공하는 데 도움이됩니다. 누락된 ASI(자동 세미콜론 삽입)는 예를 들어 새로운 devs를 트립 할 수 있습니다. `foo () \ n (function () {})`은(하나가 아닌) 하나의 문장이 될 것입니다.
 
-## Array
+## 배열
 
-* Annotate arrays as `foos:Foo[]` instead of `foos:Array<Foo>`.
+* 어노테이션 배열은 `foos:Array<Foo>`대신에 `foos:Foo[]`을 사용하세요.
 
-> Reasons: Its easier to read. Its used by the TypeScript team. Makes easier to know something is an array as the mind is trained to detect `[]`.
+> 이유: 읽기가 쉽습니다. TypeScript팀에서 사용됩니다. `[]`을 알 수 있도록 훈련되어있을 때 무엇이 배열인지 쉽게 알 수 있습니다.
 
-## Filename
-Name files with `camelCase`. E.g. `accordian.tsx`, `myControl.tsx`, `utils.ts`, `map.ts` etc.
+## 파일이름
+파일이름은 `camelCase`을 사용합니다. 예 `accordian.tsx`, `myControl.tsx`, `utils.ts`, `map.ts` 등.
 
+> 이유: JS팀에서 많이 사용합니다. 
 > Reason: Conventional across many JS teams.
