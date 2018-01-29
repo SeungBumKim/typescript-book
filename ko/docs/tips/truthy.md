@@ -1,6 +1,6 @@
 ## Truthy
 
-JavaScript has a concept of `truthy` i.e. things that evaluate like `true` would in certain positions (e.g. `if` conditions and the boolean `&&` `||` operators). The following things are truthy in JavaScript. An example is any number other than `0` e.g.
+JavaScript에는 `truthy`의 개념이 있는데, 예를들어 특정 위치(예, `if`와 `&&` `||` 의 불리언)에서 `true`과 같은 평가를 하는 것입니다. 다음과 같은 내용이 JavaScript의 truthy입니다. 예를들어 `0`이 아닌 다른 숫자값은
 
 ```ts
 if (123) { // Will be treated like `true`
@@ -8,9 +8,9 @@ if (123) { // Will be treated like `true`
 }
 ```
 
-Something that isn't truthy is called `falsy`.
+truthy가 아닌경우는 `falsy`로 불립니다.
 
-Here's a handy table for your reference.
+여기에 참조할만한 간단한 테이블이 있습니다.
 
 | Variable Type   | When it is *falsy*       | When it is *truthy*      |
 |-----------------|--------------------------|--------------------------|
@@ -22,14 +22,13 @@ Here's a handy table for your reference.
 | Any other Object including empty ones like `{}`,`[]` | never | always |
 
 
-### Being explicit
+### 명시적으로 표현
 
-> The `!!` pattern
+> `!!` 패턴
 
-Quite commonly it helps to be explicit that the intent is to treat the value as a `boolean` and convert it into a *true boolean* (one of `true`|`false`). You can easily convert values to a true boolean by prefixing it with `!!` e.g. `!!foo`. Its just `!` used *twice*. The first `!` converts the variable (in this case `foo`) to a boolean but inverts the logic (*truthy* -`!`> `false`, *falsy* -`!`> `true`). The second one toggles it again to match the nature of the original object (e.g. *truthy* -`!`> `false` -`!`> `true`).
+일반적인 의도는 값을 '불리언'으로 취급하고 그것을 실제로 불리언(`true`|`false` 중 한개로)으로 변환하는 것입니다. 간단하게 `!!`을 앞에 붙이는 것으로 불리언으로 변경할 수 있습니다. 예, `!!foo`. `!`을 *두개*사용합니다. 첫번째 `!`는  변수(여기서는 `foo`)를 부울로 변환하지만 논리를 반전합니다.(*truthy* -`!`> `false`, *falsy* -`!`> `true`). 두번째는 원래 개체의 특성과 일치하도록 다시 토글합니다.(예, *truthy* -`!`> `false` -`!`> `true`).
 
-It is common to use this pattern in lots of places e.g.
-
+많은 장소에서 이 패턴을 사용하는 것이 일반적입니다. 예:
 ```ts
 // Direct variables
 const hasName = !!name;
